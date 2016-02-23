@@ -20,9 +20,10 @@ Next, be sure to enable the bundles in your application kernel:
             // ...
             // Dependency (check that you don't already have this line)
             new Symfony\Cmf\Bundle\CoreBundle\CmfCoreBundle(),
-            new Knp\Bundle\MenuBundle\KnpMenuBundle(),
             new Sonata\CoreBundle\SonataCoreBundle(),
+            new JMS\SerializerBundle\JMSSerializerBundle($this),
             // Vendor specifics bundles
+            new Liip\ImagineBundle\LiipImagineBundle(),
             new Sonata\IntlBundle\SonataIntlBundle(),
             new Sonata\MediaBundle\SonataMediaBundle(),
             new Positibe\Bundle\OrmMediaBundle\PositibeOrmMediaBundle(),
