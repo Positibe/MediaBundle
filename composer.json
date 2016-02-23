@@ -1,0 +1,44 @@
+{
+    "name": "positibe/orm-media-bundle",
+    "type": "symfony-bundle",
+    "description": "Symfony PositibeOrmMenuBundle",
+    "keywords": [
+        "cmf",
+        "media",
+        "file upload",
+        "image",
+        "positibe",
+        "positibelabs"
+    ],
+    "homepage": "http://positibelabs.blogspot.com/bundles/media",
+    "license": "Private",
+    "version": "0.3.0.0",
+    "authors": [
+        {
+            "name": "Pedro Carlos Abreu Jiménez",
+            "email": "pcabreus@gmail.com",
+            "homepage": "https://github.com/pcabreus"
+        },
+        {
+            "name": "PositibeLabs Cooperative",
+            "homepage": "https://github.com/positibelabs"
+        }
+    ],
+    "require": {
+        "symfony/framework-bundle": "~2.3",
+        "gedmo/doctrine-extensions": "2.3.*",
+        "symfony-cmf/media-bundle": "1.2.*",
+        "doctrine/orm": "~2.4",
+        "liip/imagine-bundle": "1.2.*",
+        "sonata-project/media-bundle": "2.3.*",
+        "positibe/orm-block-bundle": "~0.0."
+    },
+    "autoload": {
+        "psr-4": {"Positibe\\Bundle\\OrmMediaBundle\\": ""}
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.1.x-dev"
+        }
+    }
+}

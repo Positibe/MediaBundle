@@ -1,0 +1,44 @@
+parameters:
+    positibe_orm_media.media_basepath: /web/upload/image
+
+services:
+
+#### Form Types ####
+    positibe_orm_media.form.block_media:
+        class: Positibe\Bundle\OrmMediaBundle\Form\Type\MediaBlockType
+        arguments: [%block_locations%]
+        tags:
+            - {name: form.type, alias: positibe_media_block }
+
+    positibe_orm_media.form.image_media:
+        class: Positibe\Bundle\OrmMediaBundle\Form\Type\ImageBlockType
+        tags:
+            - {name: form.type, alias: positibe_image_block }
+
+    positibe_orm_media.form.slideshow_media:
+        class: Positibe\Bundle\OrmMediaBundle\Form\Type\SlideshowBlockType
+        tags:
+            - {name: form.type, alias: positibe_slideshow_block }
+
+    positibe_orm_media.form.galllery_form:
+        class: Positibe\Bundle\OrmMediaBundle\Form\Type\GalleryType
+        tags:
+            - {name: form.type, alias: positibe_media_gallery }
+
+#### Block Services ####
+    positibe_orm_media.block_media:
+        class: Positibe\Bundle\OrmMediaBundle\Block\MediaBlockService
+        arguments: ['positibe_orm_media.block_media', @templating]
+        tags:
+            - {name: sonata.block }
+    positibe_orm_media.block_image:
+        class: Positibe\Bundle\OrmMediaBundle\Block\ImageBlockService
+        arguments: ['positibe_orm_media.block_image', @templating]
+        tags:
+            - {name: sonata.block }
+
+    positibe_orm_media.block_slideshow:
+        class: Positibe\Bundle\OrmMediaBundle\Block\SlideshowBlockService
+        arguments: ['positibe_orm_media.block_slideshow', @templating]
+        tags:
+            - {name: sonata.block }
