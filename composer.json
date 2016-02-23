@@ -30,15 +30,14 @@
         "symfony-cmf/media-bundle": "1.2.*",
         "doctrine/orm": "~2.4",
         "liip/imagine-bundle": "1.2.*",
-        "sonata-project/media-bundle": "2.3.*",
-        "positibe/orm-block-bundle": "~0.0."
+        "sonata-project/media-bundle": "2.3.*"
     },
     "autoload": {
         "psr-4": {"Positibe\\Bundle\\OrmMediaBundle\\": ""}
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "0.1.x-dev"
+            "dev-master": "0.3.x-dev"
         }
     }
 }

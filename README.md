@@ -25,8 +25,6 @@ Next, be sure to enable the bundles in your application kernel:
             // Vendor specifics bundles
             new Sonata\IntlBundle\SonataIntlBundle(),
             new Sonata\MediaBundle\SonataMediaBundle(),
-            new Sonata\BlockBundle\SonataBlockBundle(),
-            new Positibe\Bundle\OrmBlockBundle\PositibeOrmBlockBundle(),
             new Positibe\Bundle\OrmMediaBundle\PositibeOrmMediaBundle(),
 
             // ...

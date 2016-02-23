@@ -1,15 +1,2 @@
 input:
   upload: Añadir archivo
-block:
-    form:
-        name_label: Nombre
-        block_location_label: Ubicación
-        publishable_label: Publicado
-        publish_start_label: Publicar a partir de:
-        publish_end_label: Despublicar en:
-media_block:
-    form:
-        media_label: Imágenes
-slideshow_block:
-    form:
-        image_blocks_label: Bloques de imágenes
