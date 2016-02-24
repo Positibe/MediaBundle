@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @author Pedro Carlos Abreu <pcabreus@gmail.com>
  *
- * @ORM\Table(name="positibe_media_gallery")
+ * @ORM\Table(name="positibe_gallery")
  * @ORM\Entity
  */
 class Gallery extends BaseGallery

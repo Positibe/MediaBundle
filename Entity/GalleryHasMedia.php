@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @author Pedro Carlos Abreu <pcabreus@gmail.com>
  *
- * @ORM\Table(name="positibe_media_gallery_media")
+ * @ORM\Table(name="positibe_gallery_media")
  * @ORM\Entity
  */
 class GalleryHasMedia extends BaseGalleryHasMedia
