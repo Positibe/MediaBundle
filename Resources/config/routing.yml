@@ -1,15 +1,15 @@
-#cmf_media_file:
-#   resource: "@CmfMediaBundle/Resources/config/routing/file.xml"
-#
-#cmf_media_image:
-#   resource: "@CmfMediaBundle/Resources/config/routing/image.xml"
-gallery:
-    resource: '@SonataMediaBundle/Resources/config/routing/gallery.xml'
-    prefix: /media/gallery
+cmf_media_file:
+   resource: "@CmfMediaBundle/Resources/config/routing/file.xml"
 
-media:
-    resource: '@SonataMediaBundle/Resources/config/routing/media.xml'
-    prefix: /media
+cmf_media_image:
+   resource: "@CmfMediaBundle/Resources/config/routing/image.xml"
+
+cmf_media_download:
+    path: /media/download/{path}
+    defaults: { _controller: PositibeOrmMediaBundle:File:download }
+    requirements:
+        _method: GET
+        path: .*
 
 _liip_imagine:
    resource: "@LiipImagineBundle/Resources/config/routing.xml"

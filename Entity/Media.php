@@ -2,7 +2,6 @@
 
 namespace Positibe\Bundle\OrmMediaBundle\Entity;
 
-use Sonata\MediaBundle\Entity\BaseMedia as BaseMedia;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -14,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="positibe_media")
  * @ORM\Entity
  */
-class Media extends BaseMedia
+class Media extends AbstractMedia
 {
     /**
      * @var integer

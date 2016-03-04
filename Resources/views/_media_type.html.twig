@@ -1,0 +1,8 @@
+{% block positibe_media_type_widget %}
+    {{ form_widget(form) }}
+    {% block positibe_media_image_widget_preview %}
+        {% if form.vars.data and form.vars.data.id is defined and form.vars.data.id %}
+            <img src="{{ cmf_media_display_url(form.vars.data, { imagine_filter : 'image_upload_thumbnail' }) }}" alt="" />
+        {% endif %}
+    {% endblock %}
+{% endblock %}

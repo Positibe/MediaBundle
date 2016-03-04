@@ -1,7 +1,7 @@
 PositibeOrmMediaBundle
 ======================
 
-This bundle provide a ORM entities to use Sonata MediaBundle.
+This bundle provide a ORM entities to use Symfony Cmf MediaBundle.
 
 Installation
 ------------
@@ -20,12 +20,9 @@ Next, be sure to enable the bundles in your application kernel:
             // ...
             // Dependency (check that you don't already have this line)
             new Symfony\Cmf\Bundle\CoreBundle\CmfCoreBundle(),
-            new Sonata\CoreBundle\SonataCoreBundle(),
-            new JMS\SerializerBundle\JMSSerializerBundle($this),
             // Vendor specifics bundles
             new Liip\ImagineBundle\LiipImagineBundle(),
-            new Sonata\IntlBundle\SonataIntlBundle(),
-            new Sonata\MediaBundle\SonataMediaBundle(),
+            new Symfony\Cmf\Bundle\MediaBundle\CmfMediaBundle(),
             new Positibe\Bundle\OrmMediaBundle\PositibeOrmMediaBundle(),
 
             // ...
@@ -47,7 +44,6 @@ Agrega las rutas públicas para la descarga de las imágenes
     # ...
     positibe_orm_media:
         resource: "@PositibeOrmMediaBundle/Resources/config/routing.yml"
-        prefix:   /public/media
 
 If they are not already created, you need to add specific folder to allow uploads from users:
 

@@ -1,58 +1,11 @@
-doctrine:
-    dbal:
-        types:
-            json: Sonata\Doctrine\Types\JsonType
+twig:
+    form:
+        resources:
+            - 'PositibeOrmMediaBundle::_media_type.html.twig'
 
-sonata_media:
-    # if you don't use default namespace configuration
-    class:
-        media: Positibe\Bundle\OrmMediaBundle\Entity\Media
-        gallery: Positibe\Bundle\OrmMediaBundle\Entity\Gallery
-        gallery_has_media: Positibe\Bundle\OrmMediaBundle\Entity\GalleryHasMedia
-    default_context: default
-    db_driver: doctrine_orm
-    providers:
-        image:
-            resizer:  sonata.media.resizer.simple  #sonata.media.resizer.square
-    contexts:
-        default:  # the default context is mandatory
-            providers:
-                - sonata.media.provider.image
-                - sonata.media.provider.file
-                - sonata.media.provider.youtube
-
-            formats:
-                small: { width: 100 , quality: 70}
-                big:   { width: 500 , quality: 70}
-        avatar:
-            providers:
-                - sonata.media.provider.image
-            formats:
-                xs: { width: 30, height: 30, quality: 90 }
-                small: { width: 45, height: 45, quality: 90 }
-                big:   { width: 150, quality: 90 }
-        page:
-            providers:
-                - sonata.media.provider.image
-                - sonata.media.provider.youtube
-            formats:
-                small: { width: 100, quality: 95}
-                big:   { width: 300 , quality: 90}
-
-        slideshow:
-            providers:
-                - sonata.media.provider.image
-                - sonata.media.provider.youtube
-            formats:
-                small: { width: 200 , quality: 95}
-                medium: { width: 550, height: 175 , quality: 90}
-                big:   { width: 1412, height: 245 , quality: 90}
-
-    cdn:
-        server:
-            path: /uploads/media
-
-    filesystem:
-        local:
-            directory:  %kernel.root_dir%/../web/uploads/media
-            create:     false
+liip_imagine:
+    filter_sets:
+        # define the filter to be used with the image preview
+        image_upload_thumbnail:
+            filters:
+                thumbnail: { size: [100, 100], mode: outbound }
