@@ -30,7 +30,7 @@
         "symfony-cmf/media-bundle": "1.2.*",
         "doctrine/orm": "~2.4",
         "liip/imagine-bundle": "1.2.*",
-        "knplabs/gaufrette": "~v0.1"
+        "knplabs/gaufrette": "~0.1"
     },
     "autoload": {
         "psr-4": {"Positibe\\Bundle\\OrmMediaBundle\\": ""}
