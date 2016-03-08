@@ -22,6 +22,8 @@ class PositibeOrmMediaExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
+        $container->setParameter('positibe_orm_media.media.class' ,'Positibe\Bundle\OrmMediaBundle\Entity\Media');
+
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.yml');
     }

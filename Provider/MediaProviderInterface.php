@@ -21,6 +21,10 @@ use Positibe\Bundle\OrmMediaBundle\Model\MediaInterface;
  */
 interface MediaProviderInterface {
     /**
+     * @return string
+     */
+    public static function getName();
+    /**
      *
      * @param MediaInterface $media
      *

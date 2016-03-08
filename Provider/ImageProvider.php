@@ -44,4 +44,8 @@ class ImageProvider extends MediaProvider
         $media->setProviderStatus(MediaInterface::STATUS_OK);
     }
 
+    public static function getName()
+    {
+        return 'positibe_orm_media.image_provider';
+    }
 } 

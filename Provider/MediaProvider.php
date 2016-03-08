@@ -44,6 +44,15 @@ class MediaProvider implements ContainerAwareInterface, MediaProviderInterface
     }
 
     /**
+     * @return string
+     */
+    public static function getName()
+    {
+        return 'positibe_orm_media.media_provider';
+    }
+
+
+    /**
      *
      * @param MediaInterface $media
      *
