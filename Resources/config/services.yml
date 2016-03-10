@@ -40,9 +40,17 @@ services:
         class: Positibe\Bundle\OrmMediaBundle\Media\MediaManager
         arguments: [%positibe_orm_media.filesystem_path%]
 
+    positibe_orm_media.local_gaufrette_adapter:
+        class: Positibe\Bundle\OrmMediaBundle\Adapter\LocalGaufretteAdapter
+        arguments: [%positibe_orm_media.filesystem_path%]
+
+    positibe_orm_media.filesystem:
+        class: Gaufrette\Filesystem
+        arguments: [@positibe_orm_media.local_gaufrette_adapter]
+
     positibe_orm_media.upload_file_helper:
         class: Symfony\Cmf\Bundle\MediaBundle\File\UploadFileHelperDoctrine
-        arguments: [@doctrine, ~, ~, '/', @positibe_orm_media.media_manager]
+        arguments: [@doctrine, ~, %positibe_orm_media.media.class%, '/', @positibe_orm_media.media_manager]
 
     positibe_orm_media.twig.extension:
         class: Symfony\Cmf\Bundle\MediaBundle\Twig\Extension\CmfMediaExtension
@@ -56,10 +64,8 @@ services:
         tags:
             - { name: templating.helper, alias: cmf_media }
 
-    positibe_orm_media.local_gaufrette_adapter:
-        class: Positibe\Bundle\OrmMediaBundle\Adapter\LocalGaufretteAdapter
-        arguments: [%positibe_orm_media.filesystem_path%]
-
-    positibe_orm_media.filesystem:
-        class: Gaufrette\Filesystem
-        arguments: [@positibe_orm_media.local_gaufrette_adapter]
+    positibe_orm_media.upload_editor_helper.ckeditor:
+        class: Symfony\Cmf\Bundle\MediaBundle\Editor\Helper\UploadCkeditorHelper
+        arguments: [@positibe_orm_media.media_manager, @router]
+        tags:
+            - { name: cmf_media.upload_editor_helper, alias: ckeditor }

@@ -1,8 +1,15 @@
-cmf_media_file:
-   resource: "@CmfMediaBundle/Resources/config/routing/file.xml"
+#cmf_media_file:
+#   resource: "@CmfMediaBundle/Resources/config/routing/file.xml"
 
-cmf_media_image:
-   resource: "@CmfMediaBundle/Resources/config/routing/image.xml"
+#cmf_media_image:
+#   resource: "@CmfMediaBundle/Resources/config/routing/image.xml"
+
+cmf_media_image_display:
+    path: /media/image/{path}
+    defaults: { _controller: PositibeOrmMediaBundle:File:display }
+    requirements:
+        _method: GET
+        path: .*
 
 cmf_media_download:
     path: /media/download/{path}
@@ -10,6 +17,12 @@ cmf_media_download:
     requirements:
         _method: GET
         path: .*
+
+cmf_media_upload:
+    path: /media/image/upload/{editor}
+    defaults: { _controller: PositibeOrmMediaBundle:File:upload, editor: ckeditor, _format: json }
+    requirements:
+        _method: POST
 
 _liip_imagine:
    resource: "@LiipImagineBundle/Resources/config/routing.xml"

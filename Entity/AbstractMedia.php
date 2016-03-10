@@ -156,7 +156,7 @@ abstract class AbstractMedia extends CmfAbstractMedia implements FileSystemInter
      */
     public function getContentAsString()
     {
-        // TODO: Implement getContentAsString() method.
+        return $this->path;
     }
 
     /**
