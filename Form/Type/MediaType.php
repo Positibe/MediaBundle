@@ -41,27 +41,43 @@ class MediaType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->addModelTransformer(new ProviderDataTransformer($this->class, array(
-                    'provider'      => $options['provider'],
-                    'empty_on_new'  => $options['empty_on_new'],
+        $builder->addModelTransformer(
+            new ProviderDataTransformer(
+                $this->class, array(
+                    'provider' => $options['provider'],
+                    'empty_on_new' => $options['empty_on_new'],
                     'new_on_update' => $options['new_on_update'],
-                )));
+                )
+            )
+        );
 
-        $builder->addEventListener(FormEvents::SUBMIT, function(FormEvent $event) {
+        $builder->addEventListener(
+            FormEvents::SUBMIT,
+            function (FormEvent $event) {
                 if ($event->getForm()->get('unlink')->getData()) {
                     $event->setData(null);
                 }
-            });
+            }
+        );
 
-        $builder->add('binaryContent', 'file', array(
+        $builder->add(
+            'binaryContent',
+            'file',
+            array(
                 'required' => false
-            ));
+            )
+        );
 
-        $builder->add('unlink', 'checkbox', array(
-                'mapped'   => false,
-                'data'     => false,
-                'required' => false
-            ));
+        $builder->add(
+            'unlink',
+            'checkbox',
+            array(
+                'mapped' => false,
+                'data' => false,
+                'required' => false,
+                'label' => 'input.unlink',
+            )
+        );
     }
 
     /**
@@ -75,6 +91,7 @@ class MediaType extends AbstractType
                 'provider' => null,
                 'empty_on_new' => true,
                 'new_on_update' => true,
+                'translation_domain' => 'PositibeOrmMediaBundle'
             )
         );
     }
