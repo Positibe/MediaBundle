@@ -30,11 +30,17 @@ services:
         tags:
             - { name: positibe.media.provider }
 
-    positibe_orm_media.form.image_type:
+    positibe_orm_media.form.media_type:
         class: Positibe\Bundle\OrmMediaBundle\Form\Type\MediaType
         arguments: [%positibe_orm_media.media.class%]
         tags:
             - { name: form.type , alias: positibe_media_type }
+
+    positibe_orm_media.form.image_type:
+        class: Positibe\Bundle\OrmMediaBundle\Form\Type\ImageType
+        arguments: [%positibe_orm_media.media.class%]
+        tags:
+            - { name: form.type , alias: positibe_image_type }
 
     positibe_orm_media.media_manager:
         class: Positibe\Bundle\OrmMediaBundle\Media\MediaManager

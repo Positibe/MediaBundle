@@ -19,7 +19,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 
 /**
- * Class ImageType
+ * Class MediaType
  * @package Positibe\Bundle\OrmMediaBundle\Form\Type
  *
  * @author Pedro Carlos Abreu <pcabreus@gmail.com>
