@@ -24,7 +24,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
  *
  * @author Pedro Carlos Abreu <pcabreus@gmail.com>
  */
-class imageType extends AbstractType
+class ImageType extends AbstractType
 {
     public function getParent()
     {
