@@ -89,11 +89,6 @@ class MediaEntityListener
      */
     public function postRemove(MediaInterface $media, LifecycleEventArgs $args)
     {
-//        if (!($provider = $this->getProvider($media))) {
-//            return;
-//        }
-//
-//        $provider->postRemove($media);
     }
 
     /**

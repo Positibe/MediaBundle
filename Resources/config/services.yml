@@ -7,10 +7,15 @@ services:
 
 #### Form Types ####
 
-#    positibe_orm_media.form.gallery_form:
-#        class: Positibe\Bundle\OrmMediaBundle\Form\Type\GalleryType
-#        tags:
-#            - {name: form.type, alias: positibe_media_gallery }
+    positibe_orm_media.form.gallery_type:
+        class: Positibe\Bundle\OrmMediaBundle\Form\Type\GalleryType
+        tags:
+            - {name: form.type, alias: positibe_gallery_type }
+
+    positibe_orm_media.form.gallery_has_media_type:
+        class: Positibe\Bundle\OrmMediaBundle\Form\Type\GalleryHasMediaType
+        tags:
+            - {name: form.type, alias: positibe_gallery_has_media_type }
 
     positibe_orm_media.media_entity_listener:
         class: Positibe\Bundle\OrmMediaBundle\EventListener\MediaEntityListener

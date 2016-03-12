@@ -1,3 +1,12 @@
 input:
   upload: Añadir archivo
   unlink: Quitar
+
+gallery_has_media:
+    form:
+        media: Imagem:
+        title: Título:
+        body: Descripción:
+gallery:
+    form:
+        gallery_has_medias: Imágenes:

@@ -15,6 +15,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="positibe_gallery")
  * @ORM\Entity
+ * @ORM\HasLifecycleCallbacks
  */
 class Gallery implements GalleryInterface
 {
@@ -41,23 +42,31 @@ class Gallery implements GalleryInterface
 
     /**
      * @var string $name
+     *
+     * @ORM\Column(name="name", type="string", length=255)
      */
     protected $name;
 
     /**
      * @var boolean $enabled
+     *
+     * @ORM\Column(name="enabled", type="boolean")
      */
     protected $enabled;
 
     /**
-     * @var \Datetime $updatedAt
-     */
-    protected $updatedAt;
-
-    /**
-     * @var \Datetime $createdAt
+     * @var \DateTime
+     *
+     * @ORM\Column(name="created_at", type="datetime")
      */
     protected $createdAt;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="updated_at", type="datetime")
+     */
+    protected $updatedAt;
 
     protected $defaultFormat;
 
@@ -76,7 +85,7 @@ class Gallery implements GalleryInterface
         $this->galleryHasMedias = new ArrayCollection();
         $this->name = uniqid('gallery');
         $this->enabled = true;
-        $this->defaultFormat = 'txt';
+        $this->defaultFormat = 'jpg';
     }
 
     /**

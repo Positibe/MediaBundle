@@ -124,7 +124,6 @@ class FileController extends Controller
      */
     protected function checkSecurityUpload(Request $request)
     {
-        return;
         $securityContext = $this->container->get('security.context');
 
         if ($securityContext

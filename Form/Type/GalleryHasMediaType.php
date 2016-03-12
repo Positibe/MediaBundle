@@ -28,11 +28,24 @@ class GalleryHasMediaType extends AbstractType
         $builder
             ->add(
                 'media',
-                'sonata_media_type',
+                'positibe_image_type',
                 array(
-                    'label' => 'Archivo',
-                    'provider' => 'sonata.media.provider.file',
-                    'context' => 'page'
+                    'label' => 'gallery_has_media.form.media',
+                    'provider' => 'positibe_orm_media.image_provider'
+                )
+            )
+            ->add(
+                'title',
+                null,
+                array(
+                    'label' => 'gallery_has_media.form.title'
+                )
+            )
+            ->add(
+                'body',
+                null,
+                array(
+                    'label' => 'gallery_has_media.form.title'
                 )
             );
     }
@@ -41,7 +54,8 @@ class GalleryHasMediaType extends AbstractType
     {
         $resolver->setDefaults(
             array(
-                'data_class' => 'Positibe\Bundle\OrmMediaBundle\Entity\GalleryHasMedia'
+                'data_class' => 'Positibe\Bundle\OrmMediaBundle\Entity\GalleryHasMedia',
+                'translation_domain' => 'PositibeOrmMediaBundle'
             )
         );
     }
@@ -53,7 +67,7 @@ class GalleryHasMediaType extends AbstractType
      */
     public function getName()
     {
-        return 'positibe_media_gallery_has_media';
+        return 'positibe_gallery_has_media_type';
     }
 
 } 

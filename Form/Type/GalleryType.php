@@ -30,9 +30,9 @@ class GalleryType extends AbstractType
                 'gallery_has_medias',
                 'collection',
                 array(
-                    'label' => 'Adjuntos',
+                    'label' => 'gallery.form.gallery_has_medias',
                     'by_reference' => false,
-                    'type' => new GalleryHasMediaType(),
+                    'type' => 'positibe_gallery_has_media_type',
                     'allow_add' => true,
                     'allow_delete' => true,
                     'options' => array(
@@ -48,6 +48,7 @@ class GalleryType extends AbstractType
         $resolver->setDefaults(
             array(
                 'data_class' => 'Positibe\Bundle\OrmMediaBundle\Entity\Gallery',
+                'translation_domain' => 'PositibeOrmMediaBundle'
             )
         );
     }
@@ -60,7 +61,7 @@ class GalleryType extends AbstractType
      */
     public function getName()
     {
-        return 'positibe_media_gallery';
+        return 'positibe_gallery_type';
     }
 
 } 

@@ -6,6 +6,7 @@ use Positibe\Bundle\OrmMediaBundle\Model\GalleryHasMediaInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Positibe\Bundle\OrmMediaBundle\Model\GalleryInterface;
 use Positibe\Bundle\OrmMediaBundle\Model\MediaInterface;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Class GalleryHasMedia
@@ -15,6 +16,7 @@ use Positibe\Bundle\OrmMediaBundle\Model\MediaInterface;
  *
  * @ORM\Table(name="positibe_gallery_media")
  * @ORM\Entity
+ * @ORM\HasLifecycleCallbacks
  */
 class GalleryHasMedia implements GalleryHasMediaInterface
 {
@@ -26,6 +28,22 @@ class GalleryHasMedia implements GalleryHasMediaInterface
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
+
+    /**
+     * @var string
+     *
+     * @Gedmo\Translatable
+     * @ORM\Column(name="title", type="string", length=255, nullable=TRUE)
+     */
+    protected $title;
+
+    /**
+     * @var string
+     *
+     * @Gedmo\Translatable
+     * @ORM\Column(name="body", type="text", nullable=TRUE)
+     */
+    protected $body;
 
     /**
      * @var Media
@@ -41,13 +59,40 @@ class GalleryHasMedia implements GalleryHasMediaInterface
      */
     protected $gallery;
 
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="position", type="integer")
+     */
     protected $position;
 
-    protected $updatedAt;
+    /**
+     * @var boolean $enabled
+     *
+     * @ORM\Column(name="enabled", type="boolean")
+     */
+    protected $enabled;
 
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="created_at", type="datetime")
+     */
     protected $createdAt;
 
-    protected $enabled;
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="updated_at", type="datetime")
+     */
+    protected $updatedAt;
+
+    /**
+     * @var string
+     *
+     * @Gedmo\Locale
+     */
+    protected $locale;
 
     public function __construct()
     {
@@ -64,6 +109,24 @@ class GalleryHasMedia implements GalleryHasMediaInterface
     public function preUpdate()
     {
         $this->updatedAt = new \DateTime();
+    }
+    /**
+     * @return mixed
+     */
+    public function getLocale()
+    {
+        return $this->locale;
+    }
+
+    /**
+     * @param $locale
+     * @return $this
+     */
+    public function setLocale($locale)
+    {
+        $this->locale = $locale;
+
+        return $this;
     }
 
     /**
