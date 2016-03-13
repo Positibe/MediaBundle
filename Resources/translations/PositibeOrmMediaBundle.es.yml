@@ -4,7 +4,7 @@ input:
 
 gallery_has_media:
     form:
-        media: Imagem:
+        media: Imagen:
         title: Título:
         body: Descripción:
 gallery:

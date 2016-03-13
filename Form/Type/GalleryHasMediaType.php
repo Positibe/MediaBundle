@@ -45,7 +45,7 @@ class GalleryHasMediaType extends AbstractType
                 'body',
                 null,
                 array(
-                    'label' => 'gallery_has_media.form.title'
+                    'label' => 'gallery_has_media.form.body'
                 )
             );
     }

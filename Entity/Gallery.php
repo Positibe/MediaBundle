@@ -89,16 +89,15 @@ class Gallery implements GalleryInterface
     }
 
     /**
-     * Pre Persist method
+     * @ORM\PrePersist
      */
     public function prePersist()
     {
         $this->createdAt = new \DateTime();
         $this->updatedAt = new \DateTime();
     }
-
     /**
-     * Pre Update method
+     * @ORM\PreUpdate
      */
     public function preUpdate()
     {

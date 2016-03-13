@@ -100,16 +100,54 @@ class GalleryHasMedia implements GalleryHasMediaInterface
         $this->enabled = false;
     }
 
+    /**
+     * @ORM\PrePersist
+     */
     public function prePersist()
     {
         $this->createdAt = new \DateTime();
         $this->updatedAt = new \DateTime();
     }
-
+    /**
+     * @ORM\PreUpdate
+     */
     public function preUpdate()
     {
         $this->updatedAt = new \DateTime();
     }
+
+    /**
+     * @return string
+     */
+    public function getBody()
+    {
+        return $this->body;
+    }
+
+    /**
+     * @param string $body
+     */
+    public function setBody($body)
+    {
+        $this->body = $body;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * @param string $title
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+    }
+
     /**
      * @return mixed
      */
