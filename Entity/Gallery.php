@@ -3,6 +3,7 @@
 namespace Positibe\Bundle\OrmMediaBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Gedmo\Sluggable\Util\Urlizer;
 use Positibe\Bundle\OrmMediaBundle\Model\GalleryHasMediaInterface;
 use Positibe\Bundle\OrmMediaBundle\Model\GalleryInterface;
 use Doctrine\ORM\Mapping as ORM;
@@ -43,7 +44,7 @@ class Gallery implements GalleryInterface
     /**
      * @var string $name
      *
-     * @ORM\Column(name="name", type="string", length=255)
+     * @ORM\Column(name="name", type="string", length=255, unique=TRUE)
      */
     protected $name;
 
@@ -109,7 +110,7 @@ class Gallery implements GalleryInterface
      */
     public function setName($name)
     {
-        $this->name = $name;
+        $this->name = Urlizer::urlize($name);
     }
 
     /**
