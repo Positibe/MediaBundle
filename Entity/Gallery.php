@@ -32,7 +32,7 @@ class Gallery implements GalleryInterface
     /**
      * @var GalleryHasMedia[]|ArrayCollection
      *
-     * @ORM\OneToMany(targetEntity="Positibe\Bundle\OrmMediaBundle\Entity\GalleryHasMedia", mappedBy="gallery", cascade="{"persist", "remove"}", orphanRemoval=TRUE, fetch="EXTRA_LAZY")
+     * @ORM\OneToMany(targetEntity="Positibe\Bundle\OrmMediaBundle\Entity\GalleryHasMedia", mappedBy="gallery", cascade={"persist", "remove"}, orphanRemoval=TRUE, fetch="EXTRA_LAZY")
      */
     protected $galleryHasMedias;
 
