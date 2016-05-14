@@ -1,6 +1,6 @@
 input:
   upload: Añadir archivo
-  unlink: Quitar
+  unlink: Remover archivo
 
 gallery_has_media:
     form:
