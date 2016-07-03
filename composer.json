@@ -11,8 +11,8 @@
         "positibelabs"
     ],
     "homepage": "http://positibelabs.blogspot.com/bundles/media",
-    "license": "Private",
-    "version": "0.4.0.0",
+    "license": "MIT",
+    "version": "0.4.1.0",
     "authors": [
         {
             "name": "Pedro Carlos Abreu Jiménez",
