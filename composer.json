@@ -1,7 +1,7 @@
 {
-    "name": "positibe/orm-media-bundle",
+    "name": "positibe/media-bundle",
     "type": "symfony-bundle",
-    "description": "Symfony PositibeOrmMenuBundle",
+    "description": "Symfony PositibeMenuBundle",
     "keywords": [
         "cmf",
         "media",
@@ -12,7 +12,7 @@
     ],
     "homepage": "http://positibelabs.blogspot.com/bundles/media",
     "license": "MIT",
-    "version": "0.4.1.0",
+    "version": "1.0.0.0",
     "authors": [
         {
             "name": "Pedro Carlos Abreu Jiménez",
@@ -20,24 +20,24 @@
             "homepage": "https://github.com/pcabreus"
         },
         {
-            "name": "PositibeLabs Cooperative",
-            "homepage": "https://github.com/positibelabs"
+            "name": "PositibeLabs",
+            "homepage": "https://github.com/Positibe"
         }
     ],
     "require": {
-        "symfony/framework-bundle": "~2.7",
-        "gedmo/doctrine-extensions": "~2.3",
-        "symfony-cmf/media-bundle": "~1.2",
-        "doctrine/orm": "~2.4",
-        "liip/imagine-bundle": "1.2.*",
-        "knplabs/gaufrette": "~0.1"
+        "symfony/framework-bundle": "~2.7|~3.0",
+        "gedmo/doctrine-extensions": "~2.4",
+        "symfony-cmf/media-bundle": "~1.3",
+        "doctrine/orm": "~2.5",
+        "liip/imagine-bundle": "1.6.*",
+        "knplabs/gaufrette": "~0.2"
     },
     "autoload": {
-        "psr-4": {"Positibe\\Bundle\\OrmMediaBundle\\": ""}
+        "psr-4": {"Positibe\\Bundle\\MediaBundle\\": ""}
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "0.4.x-dev"
+            "dev-master": "1.0.x-dev"
         }
     }
 }

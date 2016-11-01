@@ -8,13 +8,13 @@
  * file that was distributed with this source code.
  */
 
-namespace Positibe\Bundle\OrmMediaBundle\Provider;
+namespace Positibe\Bundle\MediaBundle\Provider;
 
-use Positibe\Bundle\OrmMediaBundle\Model\MediaInterface;
+use Positibe\Bundle\MediaBundle\Model\MediaInterface;
 
 /**
  * Class ImageProvider
- * @package Positibe\Bundle\OrmMediaBundle\Provider
+ * @package Positibe\Bundle\MediaBundle\Provider
  *
  * @author Pedro Carlos Abreu <pcabreus@gmail.com>
  */
@@ -46,6 +46,6 @@ class ImageProvider extends MediaProvider
 
     public static function getName()
     {
-        return 'positibe_orm_media.image_provider';
+        return 'positibe_media.image_provider';
     }
 } 

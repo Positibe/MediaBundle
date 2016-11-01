@@ -1,16 +1,16 @@
 <?php
 
-namespace Positibe\Bundle\OrmMediaBundle\Entity;
+namespace Positibe\Bundle\MediaBundle\Entity;
 
-use Positibe\Bundle\OrmMediaBundle\Model\GalleryHasMediaInterface;
+use Positibe\Bundle\MediaBundle\Model\GalleryHasMediaInterface;
 use Doctrine\ORM\Mapping as ORM;
-use Positibe\Bundle\OrmMediaBundle\Model\GalleryInterface;
-use Positibe\Bundle\OrmMediaBundle\Model\MediaInterface;
+use Positibe\Bundle\MediaBundle\Model\GalleryInterface;
+use Positibe\Bundle\MediaBundle\Model\MediaInterface;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Class GalleryHasMedia
- * @package Positibe\Bundle\OrmMediaBundle\Entity
+ * @package Positibe\Bundle\MediaBundle\Entity
  *
  * @author Pedro Carlos Abreu <pcabreus@gmail.com>
  *
@@ -48,20 +48,22 @@ class GalleryHasMedia implements GalleryHasMediaInterface
     /**
      * @var Media
      *
-     * @ORM\ManyToOne(targetEntity="Positibe\Bundle\OrmMediaBundle\Entity\Media", cascade="all")
+     * @ORM\ManyToOne(targetEntity="Positibe\Bundle\MediaBundle\Entity\Media", cascade="all")
      */
     protected $media;
 
     /**
      * @var Gallery
      *
-     * @ORM\ManyToOne(targetEntity="Positibe\Bundle\OrmMediaBundle\Entity\Gallery", inversedBy="galleryHasMedias")
+     * @Gedmo\SortableGroup
+     * @ORM\ManyToOne(targetEntity="Positibe\Bundle\MediaBundle\Entity\Gallery", inversedBy="galleryHasMedias")
      */
     protected $gallery;
 
     /**
      * @var integer
      *
+     * @Gedmo\SortablePosition
      * @ORM\Column(name="position", type="integer")
      */
     protected $position;
@@ -76,6 +78,7 @@ class GalleryHasMedia implements GalleryHasMediaInterface
     /**
      * @var \DateTime
      *
+     * @Gedmo\Timestampable(on="create")
      * @ORM\Column(name="created_at", type="datetime")
      */
     protected $createdAt;
@@ -83,6 +86,7 @@ class GalleryHasMedia implements GalleryHasMediaInterface
     /**
      * @var \DateTime
      *
+     * @Gedmo\Timestampable(on="update")
      * @ORM\Column(name="updated_at", type="datetime")
      */
     protected $updatedAt;

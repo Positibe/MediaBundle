@@ -8,10 +8,10 @@
  * file that was distributed with this source code.
  */
 
-namespace Positibe\Bundle\OrmMediaBundle\Provider;
+namespace Positibe\Bundle\MediaBundle\Provider;
 
 use Gaufrette\Filesystem;
-use Positibe\Bundle\OrmMediaBundle\Model\MediaInterface;
+use Positibe\Bundle\MediaBundle\Model\MediaInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\File\File;
@@ -20,7 +20,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * Class MediaProvider
- * @package Positibe\Bundle\OrmMediaBundle\Provider
+ * @package Positibe\Bundle\MediaBundle\Provider
  *
  * @author Pedro Carlos Abreu <pcabreus@gmail.com>
  */
@@ -48,7 +48,7 @@ class MediaProvider implements ContainerAwareInterface, MediaProviderInterface
      */
     public static function getName()
     {
-        return 'positibe_orm_media.media_provider';
+        return 'positibe_media.media_provider';
     }
 
 
@@ -65,7 +65,7 @@ class MediaProvider implements ContainerAwareInterface, MediaProviderInterface
 
     /**
      *
-     * @param \Positibe\Bundle\OrmMediaBundle\Model\MediaInterface $media
+     * @param \Positibe\Bundle\MediaBundle\Model\MediaInterface $media
      *
      * @return void
      */
@@ -92,7 +92,7 @@ class MediaProvider implements ContainerAwareInterface, MediaProviderInterface
     }
 
     /**
-     * @param \Positibe\Bundle\OrmMediaBundle\Model\MediaInterface $media
+     * @param \Positibe\Bundle\MediaBundle\Model\MediaInterface $media
      *
      * @return void
      */
@@ -102,15 +102,12 @@ class MediaProvider implements ContainerAwareInterface, MediaProviderInterface
     }
 
     /**
-     * @param \Positibe\Bundle\OrmMediaBundle\Model\MediaInterface $media
+     * @param \Positibe\Bundle\MediaBundle\Model\MediaInterface $media
      *
      * @return void
      */
     public function prePersist(MediaInterface $media)
     {
-        $media->setCreatedAt(new \Datetime());
-        $media->setUpdatedAt(new \Datetime());
-
         $media->setPath($this->createPath($media));
     }
 
@@ -164,7 +161,7 @@ class MediaProvider implements ContainerAwareInterface, MediaProviderInterface
     /**
      * Set the file contents for an image
      *
-     * @param \Positibe\Bundle\OrmMediaBundle\Model\MediaInterface $media
+     * @param \Positibe\Bundle\MediaBundle\Model\MediaInterface $media
      * @param string $contents path to contents, defaults to MediaInterface BinaryContent
      *
      * @return void
@@ -185,7 +182,7 @@ class MediaProvider implements ContainerAwareInterface, MediaProviderInterface
      */
     public function getFilesystem()
     {
-        return $this->container->get('positibe_orm_media.filesystem');
+        return $this->container->get('positibe_media.filesystem');
     }
 
     /**
@@ -196,11 +193,11 @@ class MediaProvider implements ContainerAwareInterface, MediaProviderInterface
         $rep_first_level = (int)($media->getId() / 100000);
         $rep_second_level = (int)(($media->getId() - ($rep_first_level * 100000)) / 1000);
 
-        return sprintf('%s/%04s/%02s', $this->container->getParameter('positibe_orm_media.url_path'), $rep_first_level + 1, $rep_second_level + 1);
+        return sprintf('%s/%04s/%02s', $this->container->getParameter('positibe_media.url_path'), $rep_first_level + 1, $rep_second_level + 1);
     }
 
     /**
-     * @param \Positibe\Bundle\OrmMediaBundle\Model\MediaInterface $media
+     * @param \Positibe\Bundle\MediaBundle\Model\MediaInterface $media
      * @return string
      */
     protected function generateReferenceName(MediaInterface $media)
@@ -209,7 +206,7 @@ class MediaProvider implements ContainerAwareInterface, MediaProviderInterface
     }
 
     /**
-     * @param \Positibe\Bundle\OrmMediaBundle\Model\MediaInterface $media
+     * @param \Positibe\Bundle\MediaBundle\Model\MediaInterface $media
      */
     protected function fixBinaryContent(MediaInterface $media)
     {
@@ -226,7 +223,7 @@ class MediaProvider implements ContainerAwareInterface, MediaProviderInterface
     }
 
     /**
-     * @param \Positibe\Bundle\OrmMediaBundle\Model\MediaInterface $media
+     * @param \Positibe\Bundle\MediaBundle\Model\MediaInterface $media
      */
     protected function fixFilename(MediaInterface $media)
     {

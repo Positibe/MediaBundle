@@ -8,16 +8,16 @@
  * file that was distributed with this source code.
  */
 
-namespace Positibe\Bundle\OrmMediaBundle\Form\Type;
+namespace Positibe\Bundle\MediaBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 
 /**
  * Class GalleryHasMediaType
- * @package Positibe\Bundle\OrmMediaBundle\Form\Type
+ * @package Positibe\Bundle\MediaBundle\Form\Type
  *
  * @author Pedro Carlos Abreu <pcabreus@gmail.com>
  */
@@ -28,46 +28,49 @@ class GalleryHasMediaType extends AbstractType
         $builder
             ->add(
                 'media',
-                'positibe_image_type',
+                'Positibe\Bundle\MediaBundle\Form\Type\ImageType',
                 array(
                     'label' => 'gallery_has_media.form.media',
-                    'provider' => 'positibe_orm_media.image_provider'
+                    'provider' => $options['provider'],
                 )
             )
             ->add(
                 'title',
                 null,
                 array(
-                    'label' => 'gallery_has_media.form.title'
+                    'label' => 'gallery_has_media.form.title',
                 )
             )
             ->add(
                 'body',
                 null,
                 array(
-                    'label' => 'gallery_has_media.form.body'
+                    'label' => 'gallery_has_media.form.body',
+                )
+            )
+            ->add(
+                'position',
+                null,
+                array(
+                    'label' => 'gallery_has_media.form.position',
                 )
             );
     }
 
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(
             array(
-                'data_class' => 'Positibe\Bundle\OrmMediaBundle\Entity\GalleryHasMedia',
-                'translation_domain' => 'PositibeOrmMediaBundle'
+                'data_class' => 'Positibe\Bundle\MediaBundle\Entity\GalleryHasMedia',
+                'translation_domain' => 'PositibeMediaBundle',
+                'provider' => 'positibe_media.image_provider',
             )
         );
-    }
 
-    /**
-     * Returns the name of this type.
-     *
-     * @return string The name of this type
-     */
-    public function getName()
-    {
-        return 'positibe_gallery_has_media_type';
+        $resolver->addAllowedValues(
+            'provider',
+            ['positibe_media.image_provider', 'positibe_media.media_provider']
+        );
     }
 
 } 

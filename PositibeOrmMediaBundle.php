@@ -1,12 +1,12 @@
 <?php
 
-namespace Positibe\Bundle\OrmMediaBundle;
+namespace Positibe\Bundle\MediaBundle;
 
-use Positibe\Bundle\OrmMediaBundle\DependencyInjection\Compiler\OrmMediaCompilerPass;
+use Positibe\Bundle\MediaBundle\DependencyInjection\Compiler\MediaCompilerPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class PositibeOrmMediaBundle extends Bundle
+class PositibeMediaBundle extends Bundle
 {
     public function build(ContainerBuilder $container)
     {
@@ -16,6 +16,6 @@ class PositibeOrmMediaBundle extends Bundle
         ) {
             return;
         }
-        $container->addCompilerPass(new OrmMediaCompilerPass());
+        $container->addCompilerPass(new MediaCompilerPass());
     }
 }

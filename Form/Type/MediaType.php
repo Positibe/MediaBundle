@@ -8,19 +8,19 @@
  * file that was distributed with this source code.
  */
 
-namespace Positibe\Bundle\OrmMediaBundle\Form\Type;
+namespace Positibe\Bundle\MediaBundle\Form\Type;
 
-use Positibe\Bundle\OrmMediaBundle\Form\DataTransformer\ProviderDataTransformer;
+use Positibe\Bundle\MediaBundle\Form\DataTransformer\ProviderDataTransformer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 
 /**
  * Class MediaType
- * @package Positibe\Bundle\OrmMediaBundle\Form\Type
+ * @package Positibe\Bundle\MediaBundle\Form\Type
  *
  * @author Pedro Carlos Abreu <pcabreus@gmail.com>
  */
@@ -62,20 +62,22 @@ class MediaType extends AbstractType
 
         $builder->add(
             'binaryContent',
-            'file',
+            'Symfony\Component\Form\Extension\Core\Type\FileType',
             array(
-                'required' => false
+                'required' => false,
+                'translation_domain' => 'PositibeMediaBundle'
             )
         );
 
         $builder->add(
             'unlink',
-            'checkbox',
+            'Symfony\Component\Form\Extension\Core\Type\CheckboxType',
             array(
                 'mapped' => false,
                 'data' => false,
                 'required' => false,
                 'label' => 'input.unlink',
+                'translation_domain' => 'PositibeMediaBundle'
             )
         );
     }
@@ -83,27 +85,16 @@ class MediaType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(
             array(
                 'data_class' => $this->class,
-                'provider' => null,
+                'provider' => 'positibe_media.media_provider',
                 'empty_on_new' => true,
-                'new_on_update' => true,
-                'translation_domain' => 'PositibeOrmMediaBundle'
+                'new_on_update' => true
             )
         );
-    }
-
-    /**
-     * Returns the name of this type.
-     *
-     * @return string The name of this type
-     */
-    public function getName()
-    {
-        return 'positibe_media_type';
     }
 
 } 

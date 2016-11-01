@@ -1,16 +1,16 @@
 <?php
 
-namespace Positibe\Bundle\OrmMediaBundle\Entity;
+namespace Positibe\Bundle\MediaBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Gedmo\Sluggable\Util\Urlizer;
-use Positibe\Bundle\OrmMediaBundle\Model\GalleryHasMediaInterface;
-use Positibe\Bundle\OrmMediaBundle\Model\GalleryInterface;
+use Positibe\Bundle\MediaBundle\Model\GalleryHasMediaInterface;
+use Positibe\Bundle\MediaBundle\Model\GalleryInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Class Gallery
- * @package Positibe\Bundle\OrmMediaBundle\Entity
+ * @package Positibe\Bundle\MediaBundle\Entity
  *
  * @author Pedro Carlos Abreu <pcabreus@gmail.com>
  *
@@ -32,7 +32,8 @@ class Gallery implements GalleryInterface
     /**
      * @var GalleryHasMedia[]|ArrayCollection
      *
-     * @ORM\OneToMany(targetEntity="Positibe\Bundle\OrmMediaBundle\Entity\GalleryHasMedia", mappedBy="gallery", cascade={"persist", "remove"}, orphanRemoval=TRUE, fetch="EXTRA_LAZY")
+     * @ORM\OrderBy({"position" = "ASC"})
+     * @ORM\OneToMany(targetEntity="Positibe\Bundle\MediaBundle\Entity\GalleryHasMedia", mappedBy="gallery", cascade={"persist", "remove"}, orphanRemoval=TRUE, fetch="EXTRA_LAZY")
      */
     protected $galleryHasMedias;
 
@@ -58,6 +59,7 @@ class Gallery implements GalleryInterface
     /**
      * @var \DateTime
      *
+     * @Gedmo\Timestampable(on="create")
      * @ORM\Column(name="created_at", type="datetime")
      */
     protected $createdAt;
@@ -65,6 +67,7 @@ class Gallery implements GalleryInterface
     /**
      * @var \DateTime
      *
+     * @Gedmo\Timestampable(on="update")
      * @ORM\Column(name="updated_at", type="datetime")
      */
     protected $updatedAt;

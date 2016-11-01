@@ -1,82 +1,85 @@
 parameters:
-    positibe_orm_media.media_basepath: /web/upload/image
-    positibe_orm_media.filesystem_path: '%kernel.root_dir%/../web/'
-    positibe_orm_media.url_path: 'uploads/media'
+    positibe_media.media_basepath: "/web/upload/image"
+    positibe_media.filesystem_path: '%kernel.root_dir%/../web/'
+    positibe_media.url_path: 'uploads/media'
+    positibe_media.media.class: "Positibe\Bundle\MediaBundle\Entity\Media"
 
 services:
 
 #### Form Types ####
 
-    positibe_orm_media.form.gallery_type:
-        class: Positibe\Bundle\OrmMediaBundle\Form\Type\GalleryType
+    positibe_media.form.gallery_type:
+        class: Positibe\Bundle\MediaBundle\Form\Type\GalleryType
         tags:
-            - {name: form.type, alias: positibe_gallery_type }
+            - {name: form.type }
 
-    positibe_orm_media.form.gallery_has_media_type:
-        class: Positibe\Bundle\OrmMediaBundle\Form\Type\GalleryHasMediaType
+    positibe_media.form.gallery_has_media_type:
+        class: Positibe\Bundle\MediaBundle\Form\Type\GalleryHasMediaType
         tags:
-            - {name: form.type, alias: positibe_gallery_has_media_type }
+            - {name: form.type}
 
-    positibe_orm_media.media_entity_listener:
-        class: Positibe\Bundle\OrmMediaBundle\EventListener\MediaEntityListener
-        arguments: [@service_container]
+    positibe_media.media_entity_listener:
+        class: Positibe\Bundle\MediaBundle\EventListener\MediaEntityListener
+        arguments: ['@service_container']
+        tags:
+            - { name: doctrine_phpcr.event_listener }
 
-    positibe_orm_media.media_provider:
-        class: Positibe\Bundle\OrmMediaBundle\Provider\MediaProvider
+    positibe_media.media_provider:
+        class: Positibe\Bundle\MediaBundle\Provider\MediaProvider
         calls:
-            - [ setContainer, [@service_container]]
+            - [ setContainer, ['@service_container']]
         tags:
             - { name: positibe.media.provider }
 
-    positibe_orm_media.image_provider:
-        class: Positibe\Bundle\OrmMediaBundle\Provider\ImageProvider
+    positibe_media.image_provider:
+        class: Positibe\Bundle\MediaBundle\Provider\ImageProvider
         calls:
-            - [ setContainer, [@service_container]]
+            - [ setContainer, ['@service_container']]
         tags:
             - { name: positibe.media.provider }
 
-    positibe_orm_media.form.media_type:
-        class: Positibe\Bundle\OrmMediaBundle\Form\Type\MediaType
-        arguments: [%positibe_orm_media.media.class%]
+    positibe_media.form.media_type:
+        class: Positibe\Bundle\MediaBundle\Form\Type\MediaType
+        arguments: ['%positibe_media.media.class%']
         tags:
-            - { name: form.type , alias: positibe_media_type }
+            - { name: form.type }
 
-    positibe_orm_media.form.image_type:
-        class: Positibe\Bundle\OrmMediaBundle\Form\Type\ImageType
-        arguments: [%positibe_orm_media.media.class%]
+    positibe_media.form.image_type:
+        class: Positibe\Bundle\MediaBundle\Form\Type\ImageType
+        arguments: ['%positibe_media.media.class%']
         tags:
-            - { name: form.type , alias: positibe_image_type }
+            - { name: form.type }
 
-    positibe_orm_media.media_manager:
-        class: Positibe\Bundle\OrmMediaBundle\Media\MediaManager
-        arguments: [%positibe_orm_media.filesystem_path%]
+    positibe_media.media_manager:
+        class: Positibe\Bundle\MediaBundle\Media\MediaManager
+        arguments: ['%positibe_media.filesystem_path%', '@doctrine.orm.entity_manager']
 
-    positibe_orm_media.local_gaufrette_adapter:
-        class: Positibe\Bundle\OrmMediaBundle\Adapter\LocalGaufretteAdapter
-        arguments: [%positibe_orm_media.filesystem_path%]
+    positibe_media.local_gaufrette_adapter:
+        class: Gaufrette\Adapter\Local
+        arguments: ['%positibe_media.filesystem_path%']
 
-    positibe_orm_media.filesystem:
+    positibe_media.filesystem:
         class: Gaufrette\Filesystem
-        arguments: [@positibe_orm_media.local_gaufrette_adapter]
+        arguments: ['@positibe_media.local_gaufrette_adapter']
 
-    positibe_orm_media.upload_file_helper:
+    positibe_media.upload_file_helper:
         class: Symfony\Cmf\Bundle\MediaBundle\File\UploadFileHelperDoctrine
-        arguments: [@doctrine, ~, %positibe_orm_media.media.class%, '/', @positibe_orm_media.media_manager]
+        arguments: ['@doctrine', ~, '%positibe_media.media.class%', '/','@positibe_media.media_manager']
 
-    positibe_orm_media.twig.extension:
+    positibe_media.twig.extension:
         class: Symfony\Cmf\Bundle\MediaBundle\Twig\Extension\CmfMediaExtension
-        arguments: [@positibe_orm_media.templating.helper]
+        arguments: ['@positibe_media.templating.helper']
         tags:
             - { name: twig.extension }
 
-    positibe_orm_media.templating.helper:
+    positibe_media.templating.helper:
         class: Symfony\Cmf\Bundle\MediaBundle\Templating\Helper\CmfMediaHelper
-        arguments: [@positibe_orm_media.media_manager, @router, @liip_imagine.templating.helper]
+        arguments: ['@positibe_media.media_manager', '@router', '@liip_imagine.templating.helper']
         tags:
             - { name: templating.helper, alias: cmf_media }
 
-    positibe_orm_media.upload_editor_helper.ckeditor:
+    positibe_media.upload_editor_helper.ckeditor:
         class: Symfony\Cmf\Bundle\MediaBundle\Editor\Helper\UploadCkeditorHelper
-        arguments: [@positibe_orm_media.media_manager, @router]
+        arguments: ['@positibe_media.media_manager', '@router']
         tags:
             - { name: cmf_media.upload_editor_helper, alias: ckeditor }

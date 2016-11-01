@@ -8,11 +8,11 @@
  * file that was distributed with this source code.
  */
 
-namespace Positibe\Bundle\OrmMediaBundle\Model;
+namespace Positibe\Bundle\MediaBundle\Model;
 
 /**
  * Interface GalleryInterface
- * @package Positibe\Bundle\OrmMediaBundle\Model
+ * @package Positibe\Bundle\MediaBundle\Model
  *
  * @author Pedro Carlos Abreu <pcabreus@gmail.com>
  */

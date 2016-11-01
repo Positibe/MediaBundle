@@ -8,18 +8,18 @@
  * file that was distributed with this source code.
  */
 
-namespace Positibe\Bundle\OrmMediaBundle\EventListener;
+namespace Positibe\Bundle\MediaBundle\EventListener;
 
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Events;
-use Positibe\Bundle\OrmMediaBundle\Model\MediaInterface;
-use Positibe\Bundle\OrmMediaBundle\Provider\MediaProviderInterface;
+use Positibe\Bundle\MediaBundle\Model\MediaInterface;
+use Positibe\Bundle\MediaBundle\Provider\MediaProviderInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 
 /**
  * Class MediaEntityListener
- * @package Positibe\Bundle\OrmMediaBundle\EventListener
+ * @package Positibe\Bundle\MediaBundle\EventListener
  *
  * @author Pedro Carlos Abreu <pcabreus@gmail.com>
  */
@@ -42,7 +42,6 @@ class MediaEntityListener
             Events::preUpdate,
             Events::preRemove,
             Events::postUpdate,
-            Events::postRemove,
             Events::postPersist,
         );
     }
@@ -71,7 +70,7 @@ class MediaEntityListener
     }
 
     /**
-     * @param \Positibe\Bundle\OrmMediaBundle\Model\MediaInterface $media
+     * @param \Positibe\Bundle\MediaBundle\Model\MediaInterface $media
      * @param LifecycleEventArgs $args
      */
     public function postUpdate(MediaInterface $media, LifecycleEventArgs $args)
@@ -84,15 +83,7 @@ class MediaEntityListener
     }
 
     /**
-     * @param MediaInterface $media
-     * @param LifecycleEventArgs $args
-     */
-    public function postRemove(MediaInterface $media, LifecycleEventArgs $args)
-    {
-    }
-
-    /**
-     * @param \Positibe\Bundle\OrmMediaBundle\Model\MediaInterface $media
+     * @param \Positibe\Bundle\MediaBundle\Model\MediaInterface $media
      * @param LifecycleEventArgs $args
      */
     public function preUpdate(MediaInterface $media, LifecycleEventArgs $args)

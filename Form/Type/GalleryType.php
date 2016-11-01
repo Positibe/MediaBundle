@@ -8,16 +8,17 @@
  * file that was distributed with this source code.
  */
 
-namespace Positibe\Bundle\OrmMediaBundle\Form\Type;
+namespace Positibe\Bundle\MediaBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 
 /**
  * Class GalleryType
- * @package Positibe\Bundle\OrmMediaBundle\Form\Type
+ * @package Positibe\Bundle\MediaBundle\Form\Type
  *
  * @author Pedro Carlos Abreu <pcabreus@gmail.com>
  */
@@ -28,40 +29,35 @@ class GalleryType extends AbstractType
         $builder
             ->add(
                 'gallery_has_medias',
-                'collection',
+                CollectionType::class,
                 array(
                     'label' => 'gallery.form.gallery_has_medias',
                     'by_reference' => false,
-                    'type' => 'positibe_gallery_has_media_type',
+                    'type' => 'Positibe\Bundle\MediaBundle\Form\Type\GalleryHasMediaType',
                     'allow_add' => true,
                     'allow_delete' => true,
                     'options' => array(
                         'required' => false,
+                        'provider' => $options['provider'],
                     ),
                     'required' => false,
                 )
             );
     }
 
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(
             array(
-                'data_class' => 'Positibe\Bundle\OrmMediaBundle\Entity\Gallery',
-                'translation_domain' => 'PositibeOrmMediaBundle'
+                'data_class' => 'Positibe\Bundle\MediaBundle\Entity\Gallery',
+                'provider' => 'positibe_media.image_provider',
             )
         );
-    }
 
+        $resolver->addAllowedValues(
+            'provider', ['positibe_media.image_provider', 'positibe_media.media_provider']
+        );
 
-    /**
-     * Returns the name of this type.
-     *
-     * @return string The name of this type
-     */
-    public function getName()
-    {
-        return 'positibe_gallery_type';
     }
 
 } 

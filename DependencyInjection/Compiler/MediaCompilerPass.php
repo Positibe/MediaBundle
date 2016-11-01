@@ -8,7 +8,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Positibe\Bundle\OrmMediaBundle\DependencyInjection\Compiler;
+namespace Positibe\Bundle\MediaBundle\DependencyInjection\Compiler;
 
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -16,12 +16,12 @@ use Symfony\Component\DependencyInjection\Reference;
 
 
 /**
- * Class OrmMediaCompilerPass
- * @package Positibe\Bundle\OrmMediaBundle\DependencyInjection\Compiler
+ * Class MediaCompilerPass
+ * @package Positibe\Bundle\MediaBundle\DependencyInjection\Compiler
  *
  * @author Pedro Carlos Abreu <pcabreus@gmail.com>
  */
-class OrmMediaCompilerPass implements CompilerPassInterface
+class MediaCompilerPass implements CompilerPassInterface
 {
     /**
      * You can modify the container here before it is dumped to PHP code.
@@ -32,26 +32,18 @@ class OrmMediaCompilerPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        // doctrine entity listener
-        $container->getDefinition('doctrine.orm.default_entity_listener_resolver')->addMethodCall(
-            'register',
-            ['entityListener' => $container->getDefinition('positibe_orm_media.media_entity_listener')]
-        );
-
-        // added the editor to own upload editor
-        $tags = $container->findTaggedServiceIds('cmf_media.upload_editor_helper');
-
-        if (count($tags) > 0) {
-            if ($container->has('positibe_orm_media.upload_file_helper')) {
-                $manager = $container->findDefinition('positibe_orm_media.upload_file_helper');
+        // adding the cmf editor to the own upload editor
+        if ($tags = $container->findTaggedServiceIds('cmf_media.upload_editor_helper')) {
+            if ($container->has('positibe_media.upload_file_helper')) {
+                $manager = $container->findDefinition('positibe_media.upload_file_helper');
 
                 foreach ($tags as $id => $tag) {
                     $manager->addMethodCall('addEditorHelper', array($tag[0]['alias'], new Reference($id)));
                 }
             }
 
-            if ($container->has('positibe_orm_media.upload_image_helper')) {
-                $manager = $container->findDefinition('positibe_orm_media.upload_image_helper');
+            if ($container->has('positibe_media.upload_image_helper')) {
+                $manager = $container->findDefinition('positibe_media.upload_image_helper');
 
                 foreach ($tags as $id => $tag) {
                     $manager->addMethodCall('addEditorHelper', array($tag[0]['alias'], new Reference($id)));
@@ -59,11 +51,9 @@ class OrmMediaCompilerPass implements CompilerPassInterface
             }
         }
 
-        $tags = $container->findTaggedServiceIds('cmf_media.browser_file_helper');
-
-        if (count($tags) > 0) {
-            if ($container->has('positibe_orm_media.browser_file_helper')) {
-                $manager = $container->findDefinition('positibe_orm_media.browser_file_helper');
+        if ($tags = $container->findTaggedServiceIds('cmf_media.browser_file_helper')) {
+            if ($container->has('positibe_media.browser_file_helper')) {
+                $manager = $container->findDefinition('positibe_media.browser_file_helper');
 
                 foreach ($tags as $id => $tag) {
                     $manager->addMethodCall(
@@ -74,5 +64,4 @@ class OrmMediaCompilerPass implements CompilerPassInterface
             }
         }
     }
-
-} 
+}

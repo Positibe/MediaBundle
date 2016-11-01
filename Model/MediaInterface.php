@@ -8,27 +8,29 @@
  * file that was distributed with this source code.
  */
 
-namespace Positibe\Bundle\OrmMediaBundle\Model;
+namespace Positibe\Bundle\MediaBundle\Model;
 
 use Symfony\Cmf\Bundle\MediaBundle\ImageInterface;
 use Symfony\Cmf\Bundle\MediaBundle\MediaInterface as CmfMediaInterface;
 use Symfony\Cmf\Bundle\MediaBundle\MetadataInterface;
+use Symfony\Cmf\Bundle\MediaBundle\BinaryInterface;
+use Symfony\Cmf\Bundle\MediaBundle\FileSystemInterface;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * Class MediaInterface
- * @package Positibe\Bundle\OrmMediaBundle\Media
+ * @package Positibe\Bundle\MediaBundle\Media
  *
  * @author Pedro Carlos Abreu <pcabreus@gmail.com>
  */
-interface MediaInterface extends CmfMediaInterface, MetadataInterface, ImageInterface
+interface MediaInterface extends CmfMediaInterface, MetadataInterface, ImageInterface, FileSystemInterface, BinaryInterface
 {
-    const STATUS_OK          = 1;
-    const STATUS_SENDING     = 2;
-    const STATUS_PENDING     = 3;
-    const STATUS_ERROR       = 4;
-    const STATUS_ENCODING    = 5;
+    const STATUS_OK = 1;
+    const STATUS_SENDING = 2;
+    const STATUS_PENDING = 3;
+    const STATUS_ERROR = 4;
+    const STATUS_ENCODING = 5;
 
     /**
      * @return string

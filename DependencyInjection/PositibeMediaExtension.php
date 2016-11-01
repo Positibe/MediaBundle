@@ -1,6 +1,6 @@
 <?php
 
-namespace Positibe\Bundle\OrmMediaBundle\DependencyInjection;
+namespace Positibe\Bundle\MediaBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
@@ -12,7 +12,7 @@ use Symfony\Component\DependencyInjection\Loader;
  *
  * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html}
  */
-class PositibeOrmMediaExtension extends Extension
+class PositibeMediaExtension extends Extension
 {
     /**
      * {@inheritdoc}
@@ -21,8 +21,6 @@ class PositibeOrmMediaExtension extends Extension
     {
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
-
-        $container->setParameter('positibe_orm_media.media.class' ,'Positibe\Bundle\OrmMediaBundle\Entity\Media');
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.yml');

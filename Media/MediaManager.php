@@ -8,21 +8,30 @@
  * file that was distributed with this source code.
  */
 
-namespace Positibe\Bundle\OrmMediaBundle\Media;
+namespace Positibe\Bundle\MediaBundle\Media;
 
-
+use Doctrine\ORM\EntityManager;
+use Positibe\Bundle\MediaBundle\Entity\Media;
 use Symfony\Cmf\Bundle\MediaBundle\MediaInterface;
-use Symfony\Cmf\Bundle\MediaBundle\MediaManagerInterface;
 
 
 /**
  * Class MediaManager
- * @package Positibe\Bundle\OrmMediaBundle\Media
+ * @package Positibe\Bundle\MediaBundle\Media
  *
  * @author Pedro Carlos Abreu <pcabreus@gmail.com>
  */
 class MediaManager implements MediaManagerInterface
 {
+    protected $manager;
+    protected $filesystemPath;
+
+    public function __construct($filesystemPath, EntityManager $entityManager)
+    {
+        $this->filesystemPath = $filesystemPath;
+        $this->manager = $entityManager;
+    }
+
     /**
      * Get path, like:
      * - /path/to/file/filename.ext
@@ -31,7 +40,7 @@ class MediaManager implements MediaManagerInterface
      * It is similar to a filesystem path only always uses "/" to separate
      * parents, and therefore allows to get the parent from the path.
      *
-     * @param MediaInterface|\Positibe\Bundle\OrmMediaBundle\Model\MediaInterface $media
+     * @param MediaInterface|\Positibe\Bundle\MediaBundle\Model\MediaInterface $media
      *
      * @return string
      */
@@ -43,7 +52,7 @@ class MediaManager implements MediaManagerInterface
     /**
      * Get an url safe path
      *
-     * @param MediaInterface|\Positibe\Bundle\OrmMediaBundle\Model\MediaInterface $media
+     * @param MediaInterface|\Positibe\Bundle\MediaBundle\Model\MediaInterface $media
      *
      * @return string
      */
@@ -103,4 +112,17 @@ class MediaManager implements MediaManagerInterface
         return $path;
     }
 
+    /**
+     * @param $path
+     * @return \Positibe\Bundle\MediaBundle\Entity\Media
+     */
+    public function getMediaByPath($path)
+    {
+        return $this->manager->getRepository('PositibeMediaBundle:Media')->findOneBy(array('path' => $path));
+    }
+
+    public function getFilename(Media $media)
+    {
+        return $this->filesystemPath . $media->getPath();
+    }
 } 

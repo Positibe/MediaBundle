@@ -8,14 +8,14 @@
  * file that was distributed with this source code.
  */
 
-namespace Positibe\Bundle\OrmMediaBundle\Provider;
+namespace Positibe\Bundle\MediaBundle\Provider;
 
-use Positibe\Bundle\OrmMediaBundle\Model\MediaInterface;
+use Positibe\Bundle\MediaBundle\Model\MediaInterface;
 
 
 /**
  * Class MediaProviderInterface
- * @package Positibe\Bundle\OrmMediaBundle\Provider
+ * @package Positibe\Bundle\MediaBundle\Provider
  *
  * @author Pedro Carlos Abreu <pcabreus@gmail.com>
  */
@@ -34,28 +34,28 @@ interface MediaProviderInterface {
 
     /**
      *
-     * @param \Positibe\Bundle\OrmMediaBundle\Model\MediaInterface $media
+     * @param \Positibe\Bundle\MediaBundle\Model\MediaInterface $media
      *
      * @return void
      */
     public function postUpdate(MediaInterface $media);
 
     /**
-     * @param \Positibe\Bundle\OrmMediaBundle\Model\MediaInterface $media
+     * @param \Positibe\Bundle\MediaBundle\Model\MediaInterface $media
      *
      * @return void
      */
     public function preRemove(MediaInterface $media);
 
     /**
-     * @param \Positibe\Bundle\OrmMediaBundle\Model\MediaInterface $media
+     * @param \Positibe\Bundle\MediaBundle\Model\MediaInterface $media
      *
      * @return void
      */
     public function postRemove(MediaInterface $media);
 
     /**
-     * @param \Positibe\Bundle\OrmMediaBundle\Model\MediaInterface $media
+     * @param \Positibe\Bundle\MediaBundle\Model\MediaInterface $media
      *
      * @return void
      */
@@ -70,7 +70,7 @@ interface MediaProviderInterface {
     public function postPersist(MediaInterface $media);
 
     /**
-     * @param \Positibe\Bundle\OrmMediaBundle\Model\MediaInterface $media
+     * @param \Positibe\Bundle\MediaBundle\Model\MediaInterface $media
      */
     public function transform(MediaInterface $media);
 } 

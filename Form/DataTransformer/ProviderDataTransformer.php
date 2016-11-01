@@ -8,15 +8,15 @@
  * file that was distributed with this source code.
  */
 
-namespace Positibe\Bundle\OrmMediaBundle\Form\DataTransformer;
+namespace Positibe\Bundle\MediaBundle\Form\DataTransformer;
 
-use Positibe\Bundle\OrmMediaBundle\Model\MediaInterface;
+use Positibe\Bundle\MediaBundle\Model\MediaInterface;
 use Symfony\Component\Form\DataTransformerInterface;
 
 
 /**
  * Class ProviderDataTransformer
- * @package Positibe\Bundle\OrmMediaBundle\Form\DataTransformer
+ * @package Positibe\Bundle\MediaBundle\Form\DataTransformer
  *
  * @author Pedro Carlos Abreu <pcabreus@gmail.com>
  */

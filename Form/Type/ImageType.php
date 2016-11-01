@@ -8,32 +8,34 @@
  * file that was distributed with this source code.
  */
 
-namespace Positibe\Bundle\OrmMediaBundle\Form\Type;
+namespace Positibe\Bundle\MediaBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
-
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Class ImageType
- * @package Positibe\Bundle\OrmMediaBundle\Form\Type
+ * @package Positibe\Bundle\MediaBundle\Form\Type
  *
  * @author Pedro Carlos Abreu <pcabreus@gmail.com>
  */
 class ImageType extends AbstractType
 {
-    public function getParent()
+    /**
+     * {@inheritdoc}
+     */
+    public function configureOptions(OptionsResolver $resolver)
     {
-        return 'positibe_media_type';
+        $resolver->setDefaults(
+            array(
+                'provider' => 'positibe_media.image_provider'
+            )
+        );
     }
 
-    /**
-     * Returns the name of this type.
-     *
-     * @return string The name of this type
-     */
-    public function getName()
+    public function getParent()
     {
-        return 'positibe_image_type';
+        return 'Positibe\Bundle\MediaBundle\Form\Type\MediaType';
     }
 
 } 
