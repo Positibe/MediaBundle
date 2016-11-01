@@ -1,4 +1,0 @@
-twig:
-    form:
-        resources:
-            - 'PositibeMediaBundle::_media_type.html.twig'
