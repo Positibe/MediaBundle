@@ -53,3 +53,11 @@ If they are not already created, you need to create some specific folder to allo
     chmod -R 0777 web/media
 
 For more information see the Sonata MediaBundle documentation on [http://sonata-project.org/bundles/media/master/doc/index.html](http://sonata-project.org/bundles/media/master/doc/index.html) and [Symfony CmfMediaBundle documentation](http://symfony.com/doc/master/cmf/bundles/media/index.html)
+
+Documentation
+-------------
+
+ToDo
+----
+
+Document how to create a Media from binaryContent and how to create, assign a Media and show a Gallery.

@@ -214,6 +214,7 @@ class Gallery implements GalleryInterface
     public function addGalleryHasMedias(GalleryHasMediaInterface $galleryHasMedia)
     {
         $galleryHasMedia->setGallery($this);
+        $galleryHasMedia->getMedia()->setProviderMetadata(['gallery' <= $this->name]);
 
         $this->galleryHasMedias[] = $galleryHasMedia;
     }
@@ -250,6 +251,7 @@ class Gallery implements GalleryInterface
     public function addGalleryHasMedia(GalleryHasMedia $galleryHasMedia)
     {
         $galleryHasMedia->setGallery($this);
+        $galleryHasMedia->getMedia()->addProviderMetadata('gallery', $this->name);
 
         $this->galleryHasMedias[] = $galleryHasMedia;
 
@@ -265,5 +267,18 @@ class Gallery implements GalleryInterface
         $this->galleryHasMedias->removeElement($galleryHasMedia);
 
         return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getMedias()
+    {
+        $medias = [];
+        foreach ($this->galleryHasMedias as $galleryHasMedia) {
+            $medias[] = $galleryHasMedia->getMedia();
+        }
+
+        return $medias;
     }
 }
