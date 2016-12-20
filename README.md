@@ -1,5 +1,5 @@
 PositibeMediaBundle
-======================
+===================
 
 This bundle provide a ORM entities to use Symfony Cmf MediaBundle.
 

@@ -361,6 +361,15 @@ class Media extends CmfMedia implements MediaInterface
     }
 
     /**
+     * @param $name
+     * @param $value
+     */
+    public function addProviderMetadata($name, $value)
+    {
+        $this->providerMetadata[$name] = $value;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function setContentType($contentType)

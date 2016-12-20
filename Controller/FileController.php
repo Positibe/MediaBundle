@@ -102,9 +102,8 @@ class FileController extends Controller
      * @throws AccessDeniedException if the current user is not allowed to
      *                               upload.
      *
-     * @param Request $request
      */
-    protected function checkSecurityUpload(Request $request)
+    protected function checkSecurityUpload()
     {
         if ($this->container->get('security.authorization_checker')->isGranted(
             $this->container->getParameter('cmf_media.upload_file_role')

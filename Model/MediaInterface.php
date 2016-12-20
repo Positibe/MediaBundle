@@ -96,6 +96,12 @@ interface MediaInterface extends CmfMediaInterface, MetadataInterface, ImageInte
     public function getProviderMetadata();
 
     /**
+     * @param $name
+     * @param $value
+     */
+    public function addProviderMetadata($name, $value);
+
+    /**
      * Set content_type
      *
      * @param string $contentType
