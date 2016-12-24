@@ -1,7 +1,7 @@
 {
     "name": "positibe/media-bundle",
     "type": "symfony-bundle",
-    "description": "Symfony PositibeMenuBundle",
+    "description": "Symfony PositibeMediaBundle",
     "keywords": [
         "cmf",
         "media",
