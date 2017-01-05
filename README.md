@@ -35,6 +35,20 @@ Some `form_themes` are available in twig.
         form_themes:
             - 'PositibeMediaBundle::_media_type.html.twig'
 
+    # also you have to configure some util filter to be able to properly display the images
+    liip_imagine:
+        filter_sets:
+            # define the filter to be used with the image preview
+            image_upload_thumbnail:
+                filters:
+                    thumbnail: { size: [100, 100], mode: outbound }
+            image_thumbnail:
+                filters:
+                    thumbnail: { size: [250, 250], mode: outbound }
+            image_thumbnail_small:
+                filters:
+                    thumbnail: { size: [50, 50], mode: outbound }
+
 Add the public routes for the image's download.
     # app/config/routing.yml
 

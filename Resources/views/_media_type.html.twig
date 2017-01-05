@@ -1,7 +1,9 @@
 {% block positibe_image_widget %}
-    <link href="{{ asset('bundles/positibecmf/jquery-file-upload/css/file-upload.all.min.css') }}" rel="stylesheet"
-          type="text/css"/>
-
+    <style>
+        .btn-file-remove {
+            padding-left: 20px;
+        }
+    </style>
     <div class="fileupload fileupload-new row" data-provides="fileupload">
         <div class="col-xs-4">
             <div class="fileupload-preview fileupload-exists thumbnail"
@@ -15,7 +17,7 @@
                 {{ form_widget(form.binaryContent, {'required':false, 'attr': {'style': 'cursor: pointer;' }}) }}
             </div>
             <div class="input-sm btn-file-remove">
-                <div class="md-checkbox has-error">
+                <div class="has-error">
                     {{ form_widget(form.unlink) }}
                 </div>
             </div>
@@ -26,8 +28,7 @@
 {% endblock positibe_image_widget %}
 
 {% block positibe_media_widget %}
-    <link href="{{ asset('bundles/positibecmf/jquery-file-upload/css/file-upload.all.min.css') }}" rel="stylesheet"
-          type="text/css"/>
+
     {% set label_attr = label_attr|merge({class: (label_attr.class|default('') ~ ' fileupload fileupload-new')|trim}) %}
 
     <div {{ block('widget_attributes') }} data-provides="fileupload">
@@ -101,8 +102,7 @@
 
 {% block positibe_image_type_small_widget %}
     {% set form = form.media %}
-    <link href="{{ asset('bundles/positibecmf/jquery-file-upload/css/file-upload.all.min.css') }}" rel="stylesheet"
-          type="text/css"/>
+
     <style>
         .fileupload .thumbnail > img {
             max-width: 60px;
