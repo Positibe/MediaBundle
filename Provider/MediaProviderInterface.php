@@ -19,11 +19,16 @@ use Positibe\Bundle\MediaBundle\Model\MediaInterface;
  *
  * @author Pedro Carlos Abreu <pcabreus@gmail.com>
  */
-interface MediaProviderInterface {
+interface MediaProviderInterface
+{
+    const MEDIA_PROVIDER = 'positibe_media.media_provider';
+    const IMAGE_PROVIDER = 'positibe_media.image_provider';
+
     /**
      * @return string
      */
     public static function getName();
+
     /**
      *
      * @param MediaInterface $media

@@ -7,6 +7,7 @@ use Gedmo\Sluggable\Util\Urlizer;
 use Positibe\Bundle\MediaBundle\Model\GalleryHasMediaInterface;
 use Positibe\Bundle\MediaBundle\Model\GalleryInterface;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Class Gallery
@@ -100,6 +101,7 @@ class Gallery implements GalleryInterface
         $this->createdAt = new \DateTime();
         $this->updatedAt = new \DateTime();
     }
+
     /**
      * @ORM\PreUpdate
      */
@@ -196,7 +198,7 @@ class Gallery implements GalleryInterface
         $this->galleryHasMedias = new ArrayCollection();
 
         foreach ($galleryHasMedias as $galleryHasMedia) {
-            $this->addGalleryHasMedias($galleryHasMedia);
+            $this->addGalleryHasMedia($galleryHasMedia);
         }
     }
 
@@ -211,8 +213,12 @@ class Gallery implements GalleryInterface
     /**
      * {@inheritdoc}
      */
-    public function addGalleryHasMedias(GalleryHasMediaInterface $galleryHasMedia)
+    public function addMedia(Media $media, $title = null, $body = null)
     {
+        $galleryHasMedia = new GalleryHasMedia();
+        $galleryHasMedia->setTitle($title);
+        $galleryHasMedia->setBody($body);
+        $galleryHasMedia->setMedia($media);
         $galleryHasMedia->setGallery($this);
         $galleryHasMedia->getMedia()->setProviderMetadata(['gallery' <= $this->name]);
 
@@ -245,10 +251,10 @@ class Gallery implements GalleryInterface
     }
 
     /**
-     * @param GalleryHasMedia $galleryHasMedia
+     * @param GalleryHasMediaInterface $galleryHasMedia
      * @return $this
      */
-    public function addGalleryHasMedia(GalleryHasMedia $galleryHasMedia)
+    public function addGalleryHasMedia(GalleryHasMediaInterface $galleryHasMedia)
     {
         $galleryHasMedia->setGallery($this);
         $galleryHasMedia->getMedia()->addProviderMetadata('gallery', $this->name);

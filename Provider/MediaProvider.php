@@ -48,9 +48,8 @@ class MediaProvider implements ContainerAwareInterface, MediaProviderInterface
      */
     public static function getName()
     {
-        return 'positibe_media.media_provider';
+        return self::MEDIA_PROVIDER;
     }
-
 
     /**
      *
@@ -193,7 +192,12 @@ class MediaProvider implements ContainerAwareInterface, MediaProviderInterface
         $rep_first_level = (int)($media->getId() / 100000);
         $rep_second_level = (int)(($media->getId() - ($rep_first_level * 100000)) / 1000);
 
-        return sprintf('%s/%04s/%02s', $this->container->getParameter('positibe_media.url_path'), $rep_first_level + 1, $rep_second_level + 1);
+        return sprintf(
+            '%s/%04s/%02s',
+            $this->container->getParameter('positibe_media.url_path'),
+            $rep_first_level + 1,
+            $rep_second_level + 1
+        );
     }
 
     /**
@@ -202,7 +206,7 @@ class MediaProvider implements ContainerAwareInterface, MediaProviderInterface
      */
     protected function generateReferenceName(MediaInterface $media)
     {
-        return sha1($media->getName() . rand(11111, 99999)) . '.' . $media->getBinaryContent()->guessExtension();
+        return sha1($media->getName().rand(11111, 99999)).'.'.$media->getBinaryContent()->guessExtension();
     }
 
     /**
@@ -213,7 +217,7 @@ class MediaProvider implements ContainerAwareInterface, MediaProviderInterface
         // if the binary content is a filename => convert to a valid File
         if (!$media->getBinaryContent() instanceof File) {
             if (!is_file($media->getBinaryContent())) {
-                throw new \RuntimeException('The file does not exist : ' . $media->getBinaryContent());
+                throw new \RuntimeException('The file does not exist : '.$media->getBinaryContent());
             }
 
             $binaryContent = new File($media->getBinaryContent());

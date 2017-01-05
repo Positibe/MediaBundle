@@ -59,5 +59,12 @@ class GalleryType extends AbstractType
         );
 
     }
+    /**
+     * @return string
+     */
+    public function getBlockPrefix()
+    {
+        return 'positibe_gallery';
+    }
 
 } 

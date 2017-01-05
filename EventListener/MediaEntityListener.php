@@ -10,6 +10,7 @@
 
 namespace Positibe\Bundle\MediaBundle\EventListener;
 
+use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Events;
 use Positibe\Bundle\MediaBundle\Model\MediaInterface;
@@ -23,7 +24,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *
  * @author Pedro Carlos Abreu <pcabreus@gmail.com>
  */
-class MediaEntityListener
+class MediaEntityListener implements EventSubscriber
 {
     protected $container;
 
@@ -37,13 +38,13 @@ class MediaEntityListener
      */
     public function getSubscribedEvents()
     {
-        return array(
+        return [
             Events::prePersist,
             Events::preUpdate,
             Events::preRemove,
             Events::postUpdate,
             Events::postPersist,
-        );
+        ];
     }
 
     public function prePersist(MediaInterface $media, LifecycleEventArgs $args)

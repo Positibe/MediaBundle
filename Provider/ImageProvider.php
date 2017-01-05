@@ -46,6 +46,6 @@ class ImageProvider extends MediaProvider
 
     public static function getName()
     {
-        return 'positibe_media.image_provider';
+        return self::IMAGE_PROVIDER;
     }
 } 

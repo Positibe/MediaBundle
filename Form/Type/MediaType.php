@@ -65,7 +65,7 @@ class MediaType extends AbstractType
             'Symfony\Component\Form\Extension\Core\Type\FileType',
             array(
                 'required' => false,
-                'translation_domain' => 'PositibeMediaBundle'
+                'translation_domain' => 'PositibeMediaBundle',
             )
         );
 
@@ -77,7 +77,7 @@ class MediaType extends AbstractType
                 'data' => false,
                 'required' => false,
                 'label' => 'input.unlink',
-                'translation_domain' => 'PositibeMediaBundle'
+                'translation_domain' => 'PositibeMediaBundle',
             )
         );
     }
@@ -92,9 +92,17 @@ class MediaType extends AbstractType
                 'data_class' => $this->class,
                 'provider' => 'positibe_media.media_provider',
                 'empty_on_new' => true,
-                'new_on_update' => true
+                'new_on_update' => true,
             )
         );
+    }
+
+    /**
+     * @return string
+     */
+    public function getBlockPrefix()
+    {
+        return 'positibe_media';
     }
 
 } 

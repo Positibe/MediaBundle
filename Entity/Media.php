@@ -4,6 +4,7 @@ namespace Positibe\Bundle\MediaBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Positibe\Bundle\MediaBundle\Model\MediaInterface;
+use Positibe\Bundle\MediaBundle\Provider\MediaProviderInterface;
 use Symfony\Cmf\Bundle\MediaBundle\Model\AbstractMedia as CmfMedia;
 use Gedmo\Mapping\Annotation as Gedmo;
 
@@ -94,7 +95,7 @@ class Media extends CmfMedia implements MediaInterface
      *
      * @ORM\Column(name="provider_name", type="string", length=255, nullable=TRUE)
      */
-    protected $providerName;
+    protected $providerName = MediaProviderInterface::MEDIA_PROVIDER;
 
     /**
      * @var integer $provider_status

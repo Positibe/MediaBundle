@@ -28,7 +28,7 @@ class ImageType extends AbstractType
     {
         $resolver->setDefaults(
             array(
-                'provider' => 'positibe_media.image_provider'
+                'provider' => 'positibe_media.image_provider',
             )
         );
     }
@@ -36,6 +36,14 @@ class ImageType extends AbstractType
     public function getParent()
     {
         return 'Positibe\Bundle\MediaBundle\Form\Type\MediaType';
+    }
+
+    /**
+     * @return string
+     */
+    public function getBlockPrefix()
+    {
+        return 'positibe_image';
     }
 
 } 

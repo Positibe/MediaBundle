@@ -1,0 +1,12 @@
+input:
+  upload: Upload file
+  unlink: Remove file
+
+gallery_has_media:
+    form:
+        media: Image:
+        title: Title:
+        body: Description:
+gallery:
+    form:
+        gallery_has_medias: Images:

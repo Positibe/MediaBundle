@@ -108,7 +108,7 @@ interface GalleryInterface {
     /**
      * @param GalleryHasMediaInterface $galleryHasMedia
      */
-    public function addGalleryHasMedias(GalleryHasMediaInterface $galleryHasMedia);
+    public function addGalleryHasMedia(GalleryHasMediaInterface $galleryHasMedia);
 
     /**
      * @return string

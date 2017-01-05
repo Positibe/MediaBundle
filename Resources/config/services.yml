@@ -20,9 +20,9 @@ services:
 
     positibe_media.media_entity_listener:
         class: Positibe\Bundle\MediaBundle\EventListener\MediaEntityListener
-        arguments: ['@service_container']
+        arguments: ["@service_container"]
         tags:
-            - { name: doctrine_phpcr.event_listener }
+            - { name: doctrine.orm.entity_listener }
 
     positibe_media.media_provider:
         class: Positibe\Bundle\MediaBundle\Provider\MediaProvider
@@ -52,7 +52,7 @@ services:
 
     positibe_media.media_manager:
         class: Positibe\Bundle\MediaBundle\Media\MediaManager
-        arguments: ['%positibe_media.filesystem_path%', '@doctrine.orm.entity_manager']
+        arguments: ['%positibe_media.filesystem_path%', "@doctrine.orm.entity_manager"]
 
     positibe_media.local_gaufrette_adapter:
         class: Gaufrette\Adapter\Local

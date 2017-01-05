@@ -73,4 +73,11 @@ class GalleryHasMediaType extends AbstractType
         );
     }
 
+    /**
+     * @return string
+     */
+    public function getBlockPrefix()
+    {
+        return 'positibe_gallery_has_media';
+    }
 } 
