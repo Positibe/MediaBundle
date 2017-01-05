@@ -1,7 +1,7 @@
 PositibeMediaBundle
 ===================
 
-This bundle provide entities for Symfony-Cmf MediaBundle.
+This bundle provides entities for Symfony-Cmf MediaBundle.
 
 Installation
 ------------
