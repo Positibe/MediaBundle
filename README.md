@@ -97,10 +97,3 @@ A simple example using Gallery entity:
 
     $manager->persist($gallery);
     $manager->flush();
-
-
-
-ToDo
-----
-
-Document how to create a Media from binaryContent and how to create, assign a Media and show a Gallery.
