@@ -8,21 +8,21 @@ cmf_media_image_display:
     path: /media/image/{path}
     defaults: { _controller: PositibeMediaBundle:File:display }
     requirements:
-        _method: GET
+        method: GET
         path: .*
 
 cmf_media_download:
     path: /media/download/{path}
     defaults: { _controller: PositibeMediaBundle:File:download }
     requirements:
-        _method: GET
+        method: GET
         path: .*
 
 cmf_media_upload:
     path: /media/image/upload/{editor}
     defaults: { _controller: PositibeMediaBundle:File:upload, editor: ckeditor, _format: json }
     requirements:
-        _method: POST
+        method: POST
 
 _liip_imagine:
    resource: "@LiipImagineBundle/Resources/config/routing.xml"

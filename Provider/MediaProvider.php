@@ -121,7 +121,7 @@ class MediaProvider implements ContainerAwareInterface, MediaProviderInterface
         if ($media->getBinaryContent() === null) {
             return;
         }
-
+        //@fixme @todo Esto crear el path de nuevo de la imágen cuando si posee un id, pero cuando se crear el path en el prePersist no tiene id y la coloca siempre en 0001/01
         $this->setFileContents($media);
 
 //        $this->generateThumbnails($media);

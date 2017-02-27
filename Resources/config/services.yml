@@ -2,7 +2,7 @@ parameters:
     positibe_media.media_basepath: "/web/upload/image"
     positibe_media.filesystem_path: '%kernel.root_dir%/../web/'
     positibe_media.url_path: 'uploads/media'
-    positibe_media.media.class: "Positibe\Bundle\MediaBundle\Entity\Media"
+    positibe_media.media.class: 'Positibe\Bundle\MediaBundle\Entity\Media'
 
 services:
 

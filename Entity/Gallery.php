@@ -282,7 +282,9 @@ class Gallery implements GalleryInterface
     {
         $medias = [];
         foreach ($this->galleryHasMedias as $galleryHasMedia) {
-            $medias[] = $galleryHasMedia->getMedia();
+            $media = $galleryHasMedia->getMedia();
+            $media->setName($galleryHasMedia->getTitle() ?: $media->getName());
+            $medias[] = $media;
         }
 
         return $medias;
