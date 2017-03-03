@@ -1,0 +1,16 @@
+twig:
+    form_themes:
+        - 'PositibeMediaBundle::_media_type.html.twig'
+
+liip_imagine:
+    filter_sets:
+        # define the filter to be used with the image preview
+        image_upload_thumbnail:
+            filters:
+                thumbnail: { size: [100, 100], mode: outbound }
+        image_thumbnail:
+            filters:
+                thumbnail: { size: [250, 250], mode: outbound }
+        image_thumbnail_small:
+            filters:
+                thumbnail: { size: [50, 50], mode: outbound }
