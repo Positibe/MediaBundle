@@ -5,7 +5,6 @@ namespace Positibe\Bundle\MediaBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Positibe\Bundle\MediaBundle\Model\MediaInterface;
 use Positibe\Bundle\MediaBundle\Provider\MediaProviderInterface;
-use Symfony\Cmf\Bundle\MediaBundle\Model\AbstractMedia as CmfMedia;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
@@ -18,7 +17,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * @ORM\Entity
  * @ORM\EntityListeners({"Positibe\Bundle\MediaBundle\EventListener\MediaEntityListener"})
  */
-class Media extends CmfMedia implements MediaInterface
+class Media implements MediaInterface
 {
     /**
      * @var integer
@@ -152,6 +151,11 @@ class Media extends CmfMedia implements MediaInterface
      */
     protected $locale;
 
+    public function __toString()
+    {
+        return $this->name;
+    }
+
     /**
      * Get id
      *
@@ -211,57 +215,7 @@ class Media extends CmfMedia implements MediaInterface
      */
     public function getExtension()
     {
-        // TODO: Implement getExtension() method.
-    }
-
-    /**
-     * Get the path to the file on the file system.
-     *
-     * @return string
-     */
-    public function getFileSystemPath()
-    {
-        // TODO: Implement getFileSystemPath() method.
-    }
-
-    /**
-     * Get the parent node.
-     *
-     * @return Object|null
-     */
-    public function getParent()
-    {
-        // TODO: Implement getParent() method.
-    }
-
-    /**
-     * Set the parent node.
-     *
-     * @param Object $parent
-     *
-     * @return boolean
-     */
-    public function setParent($parent)
-    {
-        // TODO: Implement setParent() method.
-    }
-
-    /**
-     * Get a php stream with the data of this file.
-     *
-     * @return mixed
-     */
-    public function getContentAsStream()
-    {
-        // TODO: Implement getContentAsStream() method.
-    }
-
-    /**
-     * @param $stream
-     */
-    public function setContentFromStream($stream)
-    {
-        // TODO: Implement setContentFromStream() method.
+        return strtolower(str_replace('.', '', strrchr($this->name, '.')));
     }
 
     /**
@@ -295,7 +249,6 @@ class Media extends CmfMedia implements MediaInterface
     {
         $this->providerName = $providerName;
     }
-
 
     /**
      * @return string
@@ -479,4 +432,107 @@ class Media extends CmfMedia implements MediaInterface
         return $this;
     }
 
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setCopyright($copyright)
+    {
+        $this->copyright = $copyright;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getCopyright()
+    {
+        return $this->copyright;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setAuthorName($authorName)
+    {
+        $this->authorName = $authorName;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getAuthorName()
+    {
+        return $this->authorName;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setMetadata(array $metadata)
+    {
+        $this->metadata = $metadata;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getMetadata()
+    {
+        return $this->metadata;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getMetadataValue($name, $default = null)
+    {
+        return isset($this->metadata[$name]) ? $this->metadata[$name] : $default;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setMetadataValue($name, $value)
+    {
+        $this->metadata[$name] = $value;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function unsetMetadataValue($name)
+    {
+        unset($this->metadata[$name]);
+    }
 }

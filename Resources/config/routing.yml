@@ -1,24 +1,18 @@
-#cmf_media_file:
-#   resource: "@CmfMediaBundle/Resources/config/routing/file.xml"
-
-#cmf_media_image:
-#   resource: "@CmfMediaBundle/Resources/config/routing/image.xml"
-
-cmf_media_image_display:
+positibe_media_image_display:
     path: /media/image/{path}
     defaults: { _controller: PositibeMediaBundle:File:display }
     requirements:
         method: GET
         path: .*
 
-cmf_media_download:
+positibe_media_download:
     path: /media/download/{path}
     defaults: { _controller: PositibeMediaBundle:File:download }
     requirements:
         method: GET
         path: .*
 
-cmf_media_upload:
+positibe_media_upload:
     path: /media/image/upload/{editor}
     defaults: { _controller: PositibeMediaBundle:File:upload, editor: ckeditor, _format: json }
     requirements:

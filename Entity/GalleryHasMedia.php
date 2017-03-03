@@ -2,9 +2,11 @@
 
 namespace Positibe\Bundle\MediaBundle\Entity;
 
+use Positibe\Bundle\MediaBundle\Model\FileInterface;
 use Positibe\Bundle\MediaBundle\Model\GalleryHasMediaInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Positibe\Bundle\MediaBundle\Model\GalleryInterface;
+use Positibe\Bundle\MediaBundle\Model\ImageInterface;
 use Positibe\Bundle\MediaBundle\Model\MediaInterface;
 use Gedmo\Mapping\Annotation as Gedmo;
 
@@ -18,7 +20,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * @ORM\Entity
  * @ORM\HasLifecycleCallbacks
  */
-class GalleryHasMedia implements GalleryHasMediaInterface
+class GalleryHasMedia implements GalleryHasMediaInterface, FileInterface, ImageInterface
 {
     /**
      * @var integer
@@ -112,6 +114,7 @@ class GalleryHasMedia implements GalleryHasMediaInterface
         $this->createdAt = new \DateTime();
         $this->updatedAt = new \DateTime();
     }
+
     /**
      * @ORM\PreUpdate
      */
@@ -272,7 +275,7 @@ class GalleryHasMedia implements GalleryHasMediaInterface
      */
     public function __toString()
     {
-        return $this->getGallery() . ' | ' . $this->getMedia();
+        return $this->getGallery().' | '.$this->getMedia();
     }
 
     /**
@@ -284,4 +287,231 @@ class GalleryHasMedia implements GalleryHasMediaInterface
     {
         return $this->id;
     }
+
+    /**
+     * Returns the content.
+     *
+     * @return string
+     */
+    public function getContentAsString()
+    {
+        return $this->media->getContentAsString();
+    }
+
+    /**
+     * Set the content.
+     *
+     * @param string $content
+     */
+    public function setContentFromString($content)
+    {
+        $this->media->setContentFromString($content);
+    }
+
+    /**
+     * Copy the content from a file, this allows to optimize copying the data
+     * of a file. It is preferred to use the dedicated content setters if
+     * possible.
+     *
+     * @param FileInterface|\SplFileInfo $file
+     *
+     * @throws \InvalidArgumentException if file is no FileInterface|\SplFileInfo
+     */
+    public function copyContentFromFile($file)
+    {
+        $this->media->copyContentFromFile($file);
+    }
+
+    /**
+     * The mime type of this media element.
+     *
+     * @return string
+     */
+    public function getContentType()
+    {
+        return $this->media->getContentType();
+    }
+
+    /**
+     * Returns the extension of the file.
+     *
+     * @return string
+     */
+    public function getExtension()
+    {
+        return $this->media->getExtension();
+    }
+
+    /**
+     * Get the file size in bytes.
+     *
+     * @return int
+     */
+    public function getSize()
+    {
+        return $this->media->getSize();
+    }
+
+    /**
+     * The name of this media, e.g. for managing media documents.
+     *
+     * For example an image file name.
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->title ?: $this->media->getName();
+    }
+
+    /**
+     * @param $name
+     */
+    public function setName($name)
+    {
+        $this->media->setName($name);
+    }
+
+    /**
+     * The description to show to users, e.g. an image caption or some text
+     * to put after the filename.
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->media->getDescription();
+    }
+
+    /**
+     * @param string $description
+     */
+    public function setDescription($description)
+    {
+        $this->media->setDescription($description);
+    }
+
+    /**
+     * The copyright text, e.g. a license name.
+     *
+     * @return string
+     */
+    public function getCopyright()
+    {
+        return $this->media->getCopyright();
+    }
+
+    /**
+     * @param string $copyright
+     */
+    public function setCopyright($copyright)
+    {
+        $this->media->setCopyright($copyright);
+    }
+
+    /**
+     * The name of the author of the media represented by this object.
+     *
+     * @return string
+     */
+    public function getAuthorName()
+    {
+        return $this->media->getAuthorName();
+    }
+
+    /**
+     * @param string $author
+     */
+    public function setAuthorName($author)
+    {
+        $this->media->setAuthorName($author);
+    }
+
+    /**
+     * Get all metadata.
+     *
+     * @return array
+     */
+    public function getMetadata()
+    {
+        return $this->media->getMetadata();
+    }
+
+    /**
+     * Set all metadata.
+     *
+     * @param array $metadata
+     *
+     * @return mixed
+     */
+    public function setMetadata(array $metadata)
+    {
+        $this->media->setMetadata($metadata);
+    }
+
+    /**
+     * @param string $name
+     * @param string $default to be used if $name is not set in the metadata
+     *
+     * @return string
+     */
+    public function getMetadataValue($name, $default = null)
+    {
+        return $this->media->getMetadataValue($name, $default);
+    }
+
+    /**
+     * The metadata value.
+     *
+     * @param string $name
+     * @param string $value
+     */
+    public function setMetadataValue($name, $value)
+    {
+        $this->media->setMetadataValue($name, $value);
+    }
+
+    /**
+     * Remove a named data from the metadata.
+     *
+     * @param string $name
+     */
+    public function unsetMetadataValue($name)
+    {
+        $this->media->unsetMetadataValue($name);
+    }
+
+    /**
+     * @return string
+     */
+    public function getPath()
+    {
+        return $this->media->getPath();
+    }
+
+    public function setPath($path)
+    {
+        $this->media->setPath($path);
+    }
+
+    /**
+     * Get image width in pixels.
+     *
+     * @return int
+     */
+    public function getWidth()
+    {
+        $this->media->getWidth();
+    }
+
+    /**
+     * Get image height in pixels.
+     *
+     * @return int
+     */
+    public function getHeight()
+    {
+        return $this->media->getHeight();
+    }
+
 }

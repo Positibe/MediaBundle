@@ -129,9 +129,6 @@ class MediaEntityListener implements EventSubscriber
     {
         $em = $args->getEntityManager();
 
-        $em->getUnitOfWork()->recomputeSingleEntityChangeSet(
-            $em->getClassMetadata(get_class($media)),
-            $media
-        );
+        $em->getUnitOfWork()->recomputeSingleEntityChangeSet($em->getClassMetadata(get_class($media)), $media);
     }
 } 

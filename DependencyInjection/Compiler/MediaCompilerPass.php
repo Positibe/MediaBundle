@@ -32,34 +32,36 @@ class MediaCompilerPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        // adding the cmf editor to the own upload editor
-        if ($tags = $container->findTaggedServiceIds('cmf_media.upload_editor_helper')) {
-            if ($container->has('positibe_media.upload_file_helper')) {
-                $manager = $container->findDefinition('positibe_media.upload_file_helper');
+        if (isset($container->getParameter('kernel.bundles')['CmfMediaBundle'])) {
+            // adding the cmf editor to the own upload editor
+            if ($tags = $container->findTaggedServiceIds('cmf_media.upload_editor_helper')) {
+                if ($container->has('positibe_media.upload_file_helper')) {
+                    $manager = $container->findDefinition('positibe_media.upload_file_helper');
 
-                foreach ($tags as $id => $tag) {
-                    $manager->addMethodCall('addEditorHelper', array($tag[0]['alias'], new Reference($id)));
+                    foreach ($tags as $id => $tag) {
+                        $manager->addMethodCall('addEditorHelper', array($tag[0]['alias'], new Reference($id)));
+                    }
+                }
+
+                if ($container->has('positibe_media.upload_image_helper')) {
+                    $manager = $container->findDefinition('positibe_media.upload_image_helper');
+
+                    foreach ($tags as $id => $tag) {
+                        $manager->addMethodCall('addEditorHelper', array($tag[0]['alias'], new Reference($id)));
+                    }
                 }
             }
 
-            if ($container->has('positibe_media.upload_image_helper')) {
-                $manager = $container->findDefinition('positibe_media.upload_image_helper');
+            if ($tags = $container->findTaggedServiceIds('cmf_media.browser_file_helper')) {
+                if ($container->has('positibe_media.browser_file_helper')) {
+                    $manager = $container->findDefinition('positibe_media.browser_file_helper');
 
-                foreach ($tags as $id => $tag) {
-                    $manager->addMethodCall('addEditorHelper', array($tag[0]['alias'], new Reference($id)));
-                }
-            }
-        }
-
-        if ($tags = $container->findTaggedServiceIds('cmf_media.browser_file_helper')) {
-            if ($container->has('positibe_media.browser_file_helper')) {
-                $manager = $container->findDefinition('positibe_media.browser_file_helper');
-
-                foreach ($tags as $id => $tag) {
-                    $manager->addMethodCall(
-                        'addEditorHelper',
-                        array($tag[0]['editor'], $tag[0]['browser'], new Reference($id))
-                    );
+                    foreach ($tags as $id => $tag) {
+                        $manager->addMethodCall(
+                            'addEditorHelper',
+                            array($tag[0]['editor'], $tag[0]['browser'], new Reference($id))
+                        );
+                    }
                 }
             }
         }

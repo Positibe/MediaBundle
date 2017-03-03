@@ -11,6 +11,7 @@
 namespace Positibe\Bundle\MediaBundle\Form\Type;
 
 use Positibe\Bundle\MediaBundle\Form\DataTransformer\ProviderDataTransformer;
+use Positibe\Bundle\MediaBundle\Provider\MediaProviderInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
@@ -43,11 +44,11 @@ class MediaType extends AbstractType
     {
         $builder->addModelTransformer(
             new ProviderDataTransformer(
-                $this->class, array(
+                $this->class, [
                     'provider' => $options['provider'],
                     'empty_on_new' => $options['empty_on_new'],
                     'new_on_update' => $options['new_on_update'],
-                )
+                ]
             )
         );
 
@@ -63,22 +64,22 @@ class MediaType extends AbstractType
         $builder->add(
             'binaryContent',
             'Symfony\Component\Form\Extension\Core\Type\FileType',
-            array(
+            [
                 'required' => false,
                 'translation_domain' => 'PositibeMediaBundle',
-            )
+            ]
         );
 
         $builder->add(
             'unlink',
             'Symfony\Component\Form\Extension\Core\Type\CheckboxType',
-            array(
+            [
                 'mapped' => false,
                 'data' => false,
                 'required' => false,
                 'label' => 'input.unlink',
                 'translation_domain' => 'PositibeMediaBundle',
-            )
+            ]
         );
     }
 
@@ -88,12 +89,12 @@ class MediaType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(
-            array(
+            [
                 'data_class' => $this->class,
-                'provider' => 'positibe_media.media_provider',
+                'provider' => MediaProviderInterface::MEDIA_PROVIDER,
                 'empty_on_new' => true,
                 'new_on_update' => true,
-            )
+            ]
         );
     }
 

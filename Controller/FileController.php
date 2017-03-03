@@ -91,7 +91,7 @@ class FileController extends Controller
      */
     public function uploadAction(Request $request)
     {
-        $this->checkSecurityUpload($request);
+        $this->checkSecurityUpload();
 
         return $this->container->get('positibe_media.upload_file_helper')->getUploadResponse($request);
     }

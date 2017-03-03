@@ -10,21 +10,16 @@
 
 namespace Positibe\Bundle\MediaBundle\Model;
 
-use Symfony\Cmf\Bundle\MediaBundle\ImageInterface;
-use Symfony\Cmf\Bundle\MediaBundle\MediaInterface as CmfMediaInterface;
-use Symfony\Cmf\Bundle\MediaBundle\MetadataInterface;
-use Symfony\Cmf\Bundle\MediaBundle\BinaryInterface;
-use Symfony\Cmf\Bundle\MediaBundle\FileSystemInterface;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
- * Class MediaInterface
- * @package Positibe\Bundle\MediaBundle\Media
+ * Interface MediaInterface
+ * @package Positibe\Bundle\MediaBundle\Model
  *
  * @author Pedro Carlos Abreu <pcabreus@gmail.com>
  */
-interface MediaInterface extends CmfMediaInterface, MetadataInterface, ImageInterface, FileSystemInterface, BinaryInterface
+interface MediaInterface extends MetadataInterface, ImageInterface
 {
     const STATUS_OK = 1;
     const STATUS_SENDING = 2;
@@ -33,11 +28,9 @@ interface MediaInterface extends CmfMediaInterface, MetadataInterface, ImageInte
     const STATUS_ENCODING = 5;
 
     /**
-     * @return string
+     * @return int
      */
-    public function getPath();
-
-    public function setPath($path);
+    public function getId();
 
     /**
      * @return string|File|UploadedFile

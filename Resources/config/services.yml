@@ -1,22 +1,21 @@
 parameters:
+    positibe_media.media.class: 'Positibe\Bundle\MediaBundle\Entity\Media'
     positibe_media.media_basepath: "/web/upload/image"
     positibe_media.filesystem_path: '%kernel.root_dir%/../web/'
     positibe_media.url_path: 'uploads/media'
-    positibe_media.media.class: 'Positibe\Bundle\MediaBundle\Entity\Media'
 
 services:
-
-#### Form Types ####
-
-    positibe_media.form.gallery_type:
-        class: Positibe\Bundle\MediaBundle\Form\Type\GalleryType
+    positibe_media.templating.helper:
+        class: Positibe\Bundle\MediaBundle\Templating\Helper\MediaHelper
+        arguments: ['@router', '@liip_imagine.templating.helper']
         tags:
-            - {name: form.type }
+            - { name: templating.helper, alias: positibe_media }
 
-    positibe_media.form.gallery_has_media_type:
-        class: Positibe\Bundle\MediaBundle\Form\Type\GalleryHasMediaType
+    positibe_media.twig.extension:
+        class: Positibe\Bundle\MediaBundle\Twig\Extension\MediaExtension
+        arguments: ['@positibe_media.templating.helper']
         tags:
-            - {name: form.type}
+            - { name: twig.extension }
 
     positibe_media.media_entity_listener:
         class: Positibe\Bundle\MediaBundle\EventListener\MediaEntityListener
@@ -51,7 +50,7 @@ services:
             - { name: form.type }
 
     positibe_media.media_manager:
-        class: Positibe\Bundle\MediaBundle\Media\MediaManager
+        class: Positibe\Bundle\MediaBundle\Model\MediaManager
         arguments: ['%positibe_media.filesystem_path%', "@doctrine.orm.entity_manager"]
 
     positibe_media.local_gaufrette_adapter:
@@ -61,25 +60,3 @@ services:
     positibe_media.filesystem:
         class: Gaufrette\Filesystem
         arguments: ['@positibe_media.local_gaufrette_adapter']
-
-    positibe_media.upload_file_helper:
-        class: Symfony\Cmf\Bundle\MediaBundle\File\UploadFileHelperDoctrine
-        arguments: ['@doctrine', ~, '%positibe_media.media.class%', '/','@positibe_media.media_manager']
-
-    positibe_media.twig.extension:
-        class: Symfony\Cmf\Bundle\MediaBundle\Twig\Extension\CmfMediaExtension
-        arguments: ['@positibe_media.templating.helper']
-        tags:
-            - { name: twig.extension }
-
-    positibe_media.templating.helper:
-        class: Symfony\Cmf\Bundle\MediaBundle\Templating\Helper\CmfMediaHelper
-        arguments: ['@positibe_media.media_manager', '@router', '@liip_imagine.templating.helper']
-        tags:
-            - { name: templating.helper, alias: cmf_media }
-
-    positibe_media.upload_editor_helper.ckeditor:
-        class: Symfony\Cmf\Bundle\MediaBundle\Editor\Helper\UploadCkeditorHelper
-        arguments: ['@positibe_media.media_manager', '@router']
-        tags:
-            - { name: cmf_media.upload_editor_helper, alias: ckeditor }

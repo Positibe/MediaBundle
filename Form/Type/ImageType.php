@@ -35,7 +35,7 @@ class ImageType extends AbstractType
 
     public function getParent()
     {
-        return 'Positibe\Bundle\MediaBundle\Form\Type\MediaType';
+        return MediaType::class;
     }
 
     /**

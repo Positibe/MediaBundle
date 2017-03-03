@@ -189,15 +189,7 @@ class MediaProvider implements ContainerAwareInterface, MediaProviderInterface
      */
     public function generatePath(MediaInterface $media)
     {
-        $rep_first_level = (int)($media->getId() / 100000);
-        $rep_second_level = (int)(($media->getId() - ($rep_first_level * 100000)) / 1000);
-
-        return sprintf(
-            '%s/%04s/%02s',
-            $this->container->getParameter('positibe_media.url_path'),
-            $rep_first_level + 1,
-            $rep_second_level + 1
-        );
+        return sprintf('%s/%04s/%02s', $this->container->getParameter('positibe_media.url_path'), date('Y'), date('W'));
     }
 
     /**

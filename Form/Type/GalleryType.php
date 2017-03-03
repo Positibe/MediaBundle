@@ -10,6 +10,7 @@
 
 namespace Positibe\Bundle\MediaBundle\Form\Type;
 
+use Positibe\Bundle\MediaBundle\Provider\MediaProviderInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -30,35 +31,33 @@ class GalleryType extends AbstractType
             ->add(
                 'gallery_has_medias',
                 CollectionType::class,
-                array(
+                [
                     'label' => 'gallery.form.gallery_has_medias',
                     'by_reference' => false,
-                    'type' => 'Positibe\Bundle\MediaBundle\Form\Type\GalleryHasMediaType',
                     'allow_add' => true,
                     'allow_delete' => true,
-                    'options' => array(
+                    'entry_type' => $options['provider'] === MediaProviderInterface::IMAGE_PROVIDER ? GalleryHasMediaType::class : MediaCollectionHasMediaType::class,
+                    'entry_options' => array(
                         'required' => false,
                         'provider' => $options['provider'],
                     ),
                     'required' => false,
-                )
+                ]
             );
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(
-            array(
+            [
                 'data_class' => 'Positibe\Bundle\MediaBundle\Entity\Gallery',
-                'provider' => 'positibe_media.image_provider',
-            )
+                'provider' => MediaProviderInterface::IMAGE_PROVIDER,
+            ]
         );
 
-        $resolver->addAllowedValues(
-            'provider', ['positibe_media.image_provider', 'positibe_media.media_provider']
-        );
-
+        $resolver->addAllowedValues('provider', [MediaProviderInterface::IMAGE_PROVIDER, MediaProviderInterface::MEDIA_PROVIDER]);
     }
+
     /**
      * @return string
      */

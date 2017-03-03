@@ -63,3 +63,18 @@ if (!$extension) {
         }
         $width = imagesx($resource);
         $height = imagesy($resource);
+
+Varios formulario dependiendod de si es una imagen o un simple archivo el que no sube ImageType y MediaType, además de GalleryType y MediaCollectionType.
+
+Agregar documentación ayuda para usar el mimetypeGuesser de liip y el extensionGuesser de liip y no usar los ejemplos anteriores
+
+Cambio las extensiones de twig a display_image y download_file con la posibilidad de no chequear las imágnes, en caso que no exista se muestra la opción 'default' pasada en las opciones.
+
+Ahora el GalleryHasMedia implementa interfaces que le permiten acceder a los valores de la mayoría de los datos del media.
+
+Al llamar a la función ``getName()`` primero accede al valor title del GalleryHasMedia si no posee muestra el nombre de la imagen.
+
+** Atención: ** Por algún motivo los archivos .ico no son admitidos por la extensión php.
+
+Agregar soporte para los Uploader que posee el CmfMedia para CKEditor
+

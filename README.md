@@ -19,9 +19,7 @@ Next, be sure to enable the bundles in your application kernel:
         return array(
             // ...
             new Liip\ImagineBundle\LiipImagineBundle(),
-            new Symfony\Cmf\Bundle\MediaBundle\CmfMediaBundle(),
             new Positibe\Bundle\MediaBundle\PositibeMediaBundle(),
-
             // ...
         );
     }

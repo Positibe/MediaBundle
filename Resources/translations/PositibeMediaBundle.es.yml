@@ -1,12 +1,16 @@
 input:
   upload: Añadir archivo
   unlink: Remover archivo
+  add: Añadir archivos
+  remove: Remover
 
 gallery_has_media:
     form:
         media: Imagen:
         title: Título:
         body: Descripción:
+        position: Posición
+        title_help: Nombre del archivo
 gallery:
     form:
         gallery_has_medias: Imágenes:
