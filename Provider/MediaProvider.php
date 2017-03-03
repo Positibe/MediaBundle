@@ -62,7 +62,6 @@ class MediaProvider implements ContainerAwareInterface, MediaProviderInterface
      */
     public function preUpdate(MediaInterface $media)
     {
-        // TODO: Implement preUpdate() method.
     }
 
     /**
@@ -73,7 +72,6 @@ class MediaProvider implements ContainerAwareInterface, MediaProviderInterface
      */
     public function postUpdate(MediaInterface $media)
     {
-        // TODO: Implement postUpdate() method.
     }
 
     /**
@@ -100,7 +98,6 @@ class MediaProvider implements ContainerAwareInterface, MediaProviderInterface
      */
     public function postRemove(MediaInterface $media)
     {
-        // TODO: Implement postRemove() method.
     }
 
     /**
@@ -124,7 +121,6 @@ class MediaProvider implements ContainerAwareInterface, MediaProviderInterface
         if ($media->getBinaryContent() === null) {
             return;
         }
-        //@fixme @todo Esto crear el path de nuevo de la imágen cuando si posee un id, pero cuando se crear el path en el prePersist no tiene id y la coloca siempre en 0001/01
         $this->setFileContents($media);
 
 //        $this->generateThumbnails($media);
