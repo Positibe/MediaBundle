@@ -275,7 +275,7 @@ class GalleryHasMedia implements GalleryHasMediaInterface, FileInterface, ImageI
      */
     public function __toString()
     {
-        return $this->getGallery().' | '.$this->getMedia();
+        return $this->title ?: $this->media->getName();
     }
 
     /**
@@ -366,10 +366,13 @@ class GalleryHasMedia implements GalleryHasMediaInterface, FileInterface, ImageI
 
     /**
      * @param $name
+     * @return $this
      */
     public function setName($name)
     {
         $this->media->setName($name);
+
+        return $this;
     }
 
     /**

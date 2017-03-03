@@ -27,14 +27,33 @@ Next, be sure to enable the bundles in your application kernel:
 Configuration
 -------------
 
-Some `form_themes` are available in twig.
+Load all basic configuration:
+
     # app/config/config.yml
+    imports:
+        # ...
+        - { resource: '@PositibeMediaBundle/Resources/config/config.yml'}
+
+Or you can set those configurations by you own:
+
+    # app/config/config.yml
+    parameters:
+        positibe_media.media.class: 'Positibe\Bundle\MediaBundle\Entity\Media'
+        positibe_media.media_basepath: "/web/upload/image"
+        positibe_media.url_path: 'uploads/media'
+        positibe_media.web_root: %kernel.root_dir%/../web
+        positibe_media.cache_prefix: media/cache
+
     twig:
         form_themes:
             - 'PositibeMediaBundle::_media_type.html.twig'
 
-    # also you have to configure some util filter to be able to properly display the images
     liip_imagine:
+        resolvers:
+            default:
+                web_path:
+                    web_root: %positibe_media.web_root%
+                    cache_prefix: %positibe_media.cache_prefix%
         filter_sets:
             # define the filter to be used with the image preview
             image_upload_thumbnail:
@@ -64,10 +83,12 @@ If they are not already created, you need to create some specific folder to allo
     mkdir web/media/cache
     chmod -R 0777 web/media
 
-You can also integrate it with Sonata MediaBundle. See its documentation on [http://sonata-project.org/bundles/media/master/doc/index.html](http://sonata-project.org/bundles/media/master/doc/index.html) and [Symfony CmfMediaBundle documentation](http://symfony.com/doc/master/cmf/bundles/media/index.html)
+**Note:** You must configure some Gedmo Doctrine Extension timestampable, sortable, translatable
 
 Documentation
 -------------
+
+Documentation is available [here](Resources/doc/index.rst).
 
 A simple example using Media entity:
 
@@ -76,8 +97,6 @@ A simple example using Media entity:
     $media->setBinaryContent(__DIR__ . '/../Resources/public/img/positibelabs_logotipo 2.jpg');
     $manager->persist($media);
     $manager->flush();
-
-**Note:** You have to set createAt and updateAt properties by yourself if you don't use the timestampable gedmo doctrine extension in your project
 
 A simple example using Gallery entity:
 
@@ -95,3 +114,4 @@ A simple example using Gallery entity:
 
     $manager->persist($gallery);
     $manager->flush();
+

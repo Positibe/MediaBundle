@@ -50,7 +50,10 @@ class MediaProvider implements ContainerAwareInterface, MediaProviderInterface
     {
         return self::MEDIA_PROVIDER;
     }
+    public function getThumbnails($path, $filter)
+    {
 
+    }
     /**
      *
      * @param MediaInterface $media
@@ -154,7 +157,7 @@ class MediaProvider implements ContainerAwareInterface, MediaProviderInterface
 
     protected function createPath(MediaInterface $media)
     {
-        return sprintf('%s/%s', $this->generatePath($media), $media->getProviderReference());
+        return sprintf('%s/%s', $this->generatePath(), $media->getProviderReference());
     }
 
     /**
@@ -187,7 +190,7 @@ class MediaProvider implements ContainerAwareInterface, MediaProviderInterface
     /**
      * {@inheritdoc}
      */
-    public function generatePath(MediaInterface $media)
+    public function generatePath()
     {
         return sprintf('%s/%04s/%02s', $this->container->getParameter('positibe_media.url_path'), date('Y'), date('W'));
     }

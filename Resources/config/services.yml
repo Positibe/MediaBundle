@@ -1,9 +1,3 @@
-parameters:
-    positibe_media.media.class: 'Positibe\Bundle\MediaBundle\Entity\Media'
-    positibe_media.media_basepath: "/web/upload/image"
-    positibe_media.filesystem_path: '%kernel.root_dir%/../web/'
-    positibe_media.url_path: 'uploads/media'
-
 services:
     positibe_media.templating.helper:
         class: Positibe\Bundle\MediaBundle\Templating\Helper\MediaHelper
@@ -51,12 +45,16 @@ services:
 
     positibe_media.media_manager:
         class: Positibe\Bundle\MediaBundle\Model\MediaManager
-        arguments: ['%positibe_media.filesystem_path%', "@doctrine.orm.entity_manager"]
+        arguments: ["@doctrine.orm.entity_manager", '%positibe_media.web_root%']
 
     positibe_media.local_gaufrette_adapter:
         class: Gaufrette\Adapter\Local
-        arguments: ['%positibe_media.filesystem_path%']
+        arguments: ['%positibe_media.web_root%']
 
     positibe_media.filesystem:
         class: Gaufrette\Filesystem
         arguments: ['@positibe_media.local_gaufrette_adapter']
+
+    positibe_media.filesystem_resolver:
+        class: Positibe\Bundle\MediaBundle\Imagine\FilesystemResolver
+        arguments: ['@liip_imagine.cache.manager', '@liip_imagine.data.manager', '@liip_imagine.filter.manager', %positibe_media.web_root%, %positibe_media.cache_prefix%]
