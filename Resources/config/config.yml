@@ -1,6 +1,5 @@
 parameters:
     positibe_media.media.class: 'Positibe\Bundle\MediaBundle\Entity\Media'
-    positibe_media.media_basepath: "/web/upload/image"
     positibe_media.url_path: 'uploads/media'
     positibe_media.web_root: %kernel.root_dir%/../web
     positibe_media.cache_prefix: media/cache

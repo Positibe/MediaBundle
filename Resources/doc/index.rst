@@ -1,5 +1,5 @@
-Positibe MediaBundle Documentation
-==================================
+Positibe MediaBundle
+====================
 
 A simple example using ``Media`` entity:
 
@@ -78,6 +78,26 @@ A simple example using ``MediaType``, ``ImageType``, ``GalleryType``, ``MediaCol
             );
         }
     }
+
+To have a good view of your ``input type="file"`` you must add in your html style and javascript the follows lines:
+
+.. code-block:: html
+
+    <!DOCTYPE html>
+    <head>
+        <!-- ... More links with bootstrap .. -->
+        <link href="{{ asset('bundles/positibemedia/jquery-file-upload/css/file-upload.all.min.css') }}" rel="stylesheet">
+        <link href="{{ asset('bundles/positibemedia/css/media.css') }}" rel="stylesheet">
+
+        <!--- ... Customs styles ... -->
+        {% block stylesheets %}{% endblock %}
+    </head>
+    <body>
+        <!-- ... All contents and twigs blocks -->
+        <!-- ... Your Jquery and Bootstrap javascripts -->
+        <script src="{{ asset('bundles/positibemedia/bootstrap-fileupload/bootstrap-fileupload.js') }}" type="application/javascript"></script>
+        <!-- ... Your custom and init functions -->
+    </body>
 
 Twig functions
 --------------
@@ -163,7 +183,7 @@ How to extract extension, mime type and some information
         case 'image/jpeg':
             $resource = @imagecreatefromjpeg($filename);
             break;
-        case 'image/gir':
+        case 'image/gif':
             $resource = @imagecreatefromgif($filename);
             break;
         case 'image/png':
