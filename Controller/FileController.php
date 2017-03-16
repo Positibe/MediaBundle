@@ -106,7 +106,7 @@ class FileController extends Controller
     protected function checkSecurityUpload()
     {
         if ($this->container->get('security.authorization_checker')->isGranted(
-            $this->container->getParameter('cmf_media.upload_file_role')
+            $this->container->getParameter('positibe_media.upload_file_role')
         )
         ) {
             return;

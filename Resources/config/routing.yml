@@ -1,5 +1,5 @@
 positibe_media_image_display:
-    path: /media/image/{path}
+    path: /media/display/{path}
     defaults: { _controller: PositibeMediaBundle:File:display }
     requirements:
         method: GET

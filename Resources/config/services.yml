@@ -47,6 +47,19 @@ services:
         class: Positibe\Bundle\MediaBundle\Model\MediaManager
         arguments: ["@doctrine.orm.entity_manager", '%positibe_media.web_root%']
 
+    positibe_orm_media.upload_editor_helper.ckeditor:
+        class: Positibe\Bundle\MediaBundle\Helper\UploadCkeditorHelper
+        arguments: ['@positibe_media.media_manager', '@router']
+        public: false
+        tags:
+            - { name: cmf_media.upload_editor_helper, alias: ckeditor }
+
+    positibe_media.upload_file_helper:
+        class: Positibe\Bundle\MediaBundle\Helper\UploadFileHelper
+        arguments: ['@doctrine', ~, '%positibe_media.media.class%', '/','@positibe_media.media_manager']
+        calls:
+            - [addEditorHelper, ["default", "@positibe_orm_media.upload_editor_helper.ckeditor"]]
+
     positibe_media.local_gaufrette_adapter:
         class: Gaufrette\Adapter\Local
         arguments: ['%positibe_media.web_root%']

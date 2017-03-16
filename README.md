@@ -72,6 +72,8 @@ Add the public routes for the image's download.
     positibe_media:
         resource: "@PositibeMediaBundle/Resources/config/routing.yml"
 
+** Note:** If you are using the Ckeditor you have to set the role ``ROLE_EDITOR`` to that users who can upload images
+
 If they are not already created, you need to create some specific folder to allow uploading:
 
     [bash]

@@ -196,7 +196,15 @@ How to extract extension, mime type and some information
 
 ** Warning: ** By some matter .ico file doesn't work.
 
-TODO
-----
+Using CKEditor Helper
+---------------------
 
-Agregar soporte para los Uploader que posee el CmfMedia para CKEditor
+The helpers are including by default in the ``service_container``. But before you star using it you must
+ensure yours editor users have the ``ROLE_EDITOR`` role.
+
+.. code-block:: yaml
+
+    security:
+        role_hierarchy:
+            ROLE_ADMIN:       [ROLE_USER, ROLE_EDITOR]
+            ROLE_SUPER_ADMIN: ROLE_ADMIN
