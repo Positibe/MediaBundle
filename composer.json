@@ -1,7 +1,7 @@
 {
     "name": "positibe/media-bundle",
     "type": "symfony-bundle",
-    "description": "Symfony PositibeMediaBundle",
+    "description": "Symfony Positibe Media Bundle",
     "keywords": [
         "cmf",
         "media",
@@ -10,7 +10,7 @@
         "positibe",
         "positibelabs"
     ],
-    "homepage": "https://github.com/Positibe/MediaBundle",
+    "homepage": "http://www.positibelabs.com/bundles/media",
     "license": "MIT",
     "version": "1.0.0-RC3",
     "authors": [
@@ -21,7 +21,7 @@
         },
         {
             "name": "PositibeLabs",
-            "homepage": "https://github.com/Positibe"
+            "homepage": "http://www.positibelabs.com"
         }
     ],
     "require": {
