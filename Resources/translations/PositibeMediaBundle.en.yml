@@ -1,5 +1,6 @@
 input:
   upload: Upload file
+  upload_image: Upload image
   unlink: Remove file
   add: Add files
   remove: Remove

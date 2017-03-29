@@ -70,4 +70,4 @@ services:
 
     positibe_media.filesystem_resolver:
         class: Positibe\Bundle\MediaBundle\Imagine\FilesystemResolver
-        arguments: ['@liip_imagine.cache.manager', '@liip_imagine.data.manager', '@liip_imagine.filter.manager', %positibe_media.web_root%, %positibe_media.cache_prefix%]
+        arguments: ['@liip_imagine.cache.manager', '@liip_imagine.data.manager', '@liip_imagine.filter.manager', "%positibe_media.web_root%", "%positibe_media.cache_prefix%"]

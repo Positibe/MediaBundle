@@ -1,7 +1,7 @@
 parameters:
     positibe_media.media.class: 'Positibe\Bundle\MediaBundle\Entity\Media'
     positibe_media.url_path: 'uploads/media'
-    positibe_media.web_root: "%kernel.root_dir%/../web"
+    positibe_media.web_root: "%kernel.root_dir%/../web/"
     positibe_media.cache_prefix: media/cache
     positibe_media.upload_file_role: ROLE_EDITOR
 
@@ -15,6 +15,10 @@ liip_imagine:
             web_path:
                 web_root: "%positibe_media.web_root%"
                 cache_prefix: "%positibe_media.cache_prefix%"
+    loaders:
+        default:
+            filesystem:
+                data_root: "%positibe_media.web_root%"  # %kernel.root_dir%/../web/
     filter_sets:
         # define the filter to be used with the image preview
         image_upload_thumbnail:
