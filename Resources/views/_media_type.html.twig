@@ -32,7 +32,7 @@
                 </div>
             </div>
             <div class="form-control fileupload-preview fileupload-exists">
-                {% if value is not empty and value.id %}{{ value.metadata['filename'] }}{% endif %}
+                {% if value and value.id %}{{ value.metadata['filename'] }}{% endif %}
             </div>
         </div>
         <div class="col-2">
