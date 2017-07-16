@@ -61,7 +61,7 @@ class UploadCkeditorHelper
     {
         if (!isset($files[0]) && !$files[0] instanceof FileInterface) {
             throw new \InvalidArgumentException(
-                'Provide at least one Symfony\Cmf\Bundle\MediaBundle\FileInterface file.'
+                'Provide at least one Positibe\Bundle\MediaBundle\Model\FileInterface file.'
             );
         }
 
