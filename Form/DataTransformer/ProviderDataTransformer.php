@@ -67,7 +67,7 @@ class ProviderDataTransformer implements DataTransformerInterface
             return $media;
         }
 
-        // no update, but the the media exists ...
+        // no update, but the media exists ...
         if (empty($binaryContent) && $media->getId() !== null) {
             return $media;
         }
@@ -78,9 +78,11 @@ class ProviderDataTransformer implements DataTransformerInterface
         $newMedia->setBinaryContent($binaryContent);
 
         $newMedia->setProviderName($media->getProviderName());
-        if (!$newMedia->getProviderName() && $this->options['provider']) {
+        if ($this->options['provider']) {
             $newMedia->setProviderName($this->options['provider']);
         }
+
+        //@todo Remover el archivo sustituido $media, con remover full por si es imagen que borre las cache.
 
         return $newMedia;
     }

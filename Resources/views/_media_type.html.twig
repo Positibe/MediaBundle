@@ -1,5 +1,5 @@
 {% block positibe_image_widget %}
-    {% set attr = attr|merge({class: (attr.class|default('') ~ 'form-image')|trim}) %}
+    {% set attr = attr|merge({class: (attr.class|default('') ~ ' form-image')|trim}) %}
 
     <div {{ block('widget_attributes') }} data-provides="fileupload">
         <div class="fileupload-preview fileupload-exists thumbnail">
@@ -20,10 +20,10 @@
 {% endblock positibe_image_widget %}
 
 {% block positibe_media_widget %}
-    {% set attr = attr|merge({class: (attr.class|default('') ~ 'form-media row')|trim}) %}
+    {% set attr = attr|merge({class: (attr.class|default('') ~ ' form-media row')|trim}) %}
 
     <div {{ block('widget_attributes') }} data-provides="fileupload">
-        <div class="input-group col-10">
+        <div class="input-group col-md-10">
             <div class="input-group-btn">
                 <div class="btn btn-info btn-sm fileinput-button">
                     <i class="fa fa-paperclip"></i>
@@ -35,7 +35,7 @@
                 {% if value and value.id %}{{ value.metadata['filename'] }}{% endif %}
             </div>
         </div>
-        <div class="col-2">
+        <div class="col-md-2">
             <div class="btn-file-remove">
                 {{ form_widget(form.unlink) }}
             </div>
