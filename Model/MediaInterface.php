@@ -135,4 +135,35 @@ interface MediaInterface extends MetadataInterface, ImageInterface
      * @return mixed
      */
     public function setUpdatedAt($createdAt);
+
+    /**
+     * @return mixed
+     */
+    public function getPreview();
+
+    /**
+     * @param $path
+     * @return mixed
+     */
+    public function setPreview($path);
+
+    /**
+     * @return mixed
+     */
+    public function getBinaryContentPreview();
+
+    /**
+     * @param $binaryContentPreview
+     * @return mixed
+     */
+    public function setBinaryContentPreview($binaryContentPreview);
+    /**
+     * @return mixed
+     */
+    public function getUrlPathParameter();
+
+    /**
+     * @param mixed $urlPathParameter
+     */
+    public function setUrlPathParameter($urlPathParameter);
 }

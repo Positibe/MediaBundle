@@ -30,3 +30,6 @@ liip_imagine:
         image_thumbnail_small:
             filters:
                 thumbnail: { size: [50, 50], mode: outbound }
+        image_preview:
+            filters:
+                thumbnail: { size: [190, 190], mode: outbound }

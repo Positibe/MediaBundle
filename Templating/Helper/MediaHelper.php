@@ -62,19 +62,19 @@ class MediaHelper extends Helper
     /**
      * Generates a display URL from the given image.
      *
-     * @param ImageInterface $file
+     * @param ImageInterface|string $file
      * @param array $options
      * @param int $referenceType The type of reference (one of the constants in UrlGeneratorInterface)
      *
      * @return string The generated URL
      */
     public function displayImage(
-        ImageInterface $file = null,
+        $file = null,
         array $options = array(),
         $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH
     ) {
-        if (!$file || !$urlSafePath = $file->getPath()) {
-            return isset($options['default']) ? $options['default'] : null;
+        if (!$file || !$urlSafePath = $file instanceof ImageInterface ? $file->getPath() : $file) {
+            return isset($options['default']) ? $options['default'] : '/bundles/positibemedia/images/photo.png';
         }
 
         if ($this->imagineHelper && isset($options['imagine_filter']) && is_string($options['imagine_filter'])) {

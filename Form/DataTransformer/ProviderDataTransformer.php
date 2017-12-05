@@ -10,6 +10,7 @@
 
 namespace Positibe\Bundle\MediaBundle\Form\DataTransformer;
 
+use Doctrine\ORM\EntityManager;
 use Positibe\Bundle\MediaBundle\Model\MediaInterface;
 use Symfony\Component\Form\DataTransformerInterface;
 
@@ -24,13 +25,16 @@ class ProviderDataTransformer implements DataTransformerInterface
 {
     protected $options;
     protected $class;
+    protected $em;
 
     /**
+     * @param EntityManager $entityManager
      * @param $class
      * @param array $options
      */
-    public function __construct($class, array $options = array())
+    public function __construct(EntityManager $entityManager, $class, array $options = array())
     {
+        $this->em = $entityManager;
         $this->options = $options;
         $this->class = $class;
     }
@@ -57,18 +61,23 @@ class ProviderDataTransformer implements DataTransformerInterface
         }
 
         $binaryContent = $media->getBinaryContent();
+        if ($media->getBinaryContentPreview()) {
+            $media->setUpdatedAt(new \DateTime());
+        }
 
         // no binary content and no media id
         if (empty($binaryContent) && $media->getId() === null) {
-            if ($this->options['empty_on_new']) {
+            if ($this->options['empty_on_new'] && empty($media->getPath())) {
                 return null;
             }
+            $media->setProviderName($this->options['provider']);
 
             return $media;
         }
 
         // no update, but the media exists ...
         if (empty($binaryContent) && $media->getId() !== null) {
+            $media->setProviderName($this->options['provider']);
             return $media;
         }
 
@@ -76,13 +85,14 @@ class ProviderDataTransformer implements DataTransformerInterface
         $newMedia = $this->options['new_on_update'] ? new $this->class : $media;
 
         $newMedia->setBinaryContent($binaryContent);
+        $newMedia->setBinaryContentPreview($media->getBinaryContentPreview());
 
         $newMedia->setProviderName($media->getProviderName());
         if ($this->options['provider']) {
             $newMedia->setProviderName($this->options['provider']);
         }
 
-        //@todo Remover el archivo sustituido $media, con remover full por si es imagen que borre las cache.
+        $this->em->remove($media);
 
         return $newMedia;
     }

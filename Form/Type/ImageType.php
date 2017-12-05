@@ -10,7 +10,9 @@
 
 namespace Positibe\Bundle\MediaBundle\Form\Type;
 
+use Positibe\Bundle\MediaBundle\Provider\ImageProvider;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -24,11 +26,19 @@ class ImageType extends AbstractType
     /**
      * {@inheritdoc}
      */
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder->remove('binaryContentPreview');
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(
             array(
-                'provider' => 'positibe_media.image_provider',
+                'provider' => ImageProvider::getName(),
             )
         );
     }

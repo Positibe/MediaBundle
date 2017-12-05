@@ -12,7 +12,7 @@
     ],
     "homepage": "http://www.positibelabs.com/bundles/media",
     "license": "MIT",
-    "version": "1.0.0-RC7",
+    "version": "1.0.0",
     "authors": [
         {
             "name": "Pedro Carlos Abreu Jiménez",
@@ -32,7 +32,7 @@
         "knplabs/gaufrette": "~0.2"
     },
     "suggest": {
-        "symfony-cmf/media-bundle": "~1.3"
+        "positibe/cms-bundle": "~1.0"
     },
     "autoload": {
         "psr-4": {

@@ -68,19 +68,30 @@ class FileController extends Controller
     {
         $mediaManager = $this->container->get('positibe_media.media_manager');
         try {
-            $media = $mediaManager->getMediaByPath($path);
+            if ($media = $mediaManager->getMediaByPath($path)) {
+                $response = new Response(
+                    $this->container->get('positibe_media.local_gaufrette_adapter')->read(
+                        $media->getContentAsString()
+                    )
+                );
+                $response->headers->set('Content-Type', $media->getContentType());
+
+                return $response;
+            } elseif ($media = $mediaManager->getMediaByPreviewPath($path)) {
+                $file = $this->container->get('positibe_media.local_gaufrette_adapter')->read(
+                    $media->getPreview()
+                );
+                $response = new Response($file);
+                $response->headers->set('Content-Type', 'image');
+
+                return $response;
+            }
+
         } catch (\OutOfBoundsException $e) {
             throw new NotFoundHttpException($e->getMessage());
         }
 
-        $response = new Response(
-            $this->container->get('positibe_media.local_gaufrette_adapter')->read(
-                $media->getContentAsString()
-            )
-        );
-        $response->headers->set('Content-Type', $media->getContentType());
 
-        return $response;
     }
 
     /**

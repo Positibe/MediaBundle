@@ -16,31 +16,62 @@
                 {{ form_widget(form.unlink) }}
             {% endif %}
         </div>
+        <div class="btn-file-remove">
+            {{ form_widget(form.configure) }}
+        </div>
+        <div class="p-1">
+            {{ form_row(form.name) }}
+            {{ form_row(form.path) }}
+        </div>
     </div>
+
 {% endblock positibe_image_widget %}
 
 {% block positibe_media_widget %}
     {% set attr = attr|merge({class: (attr.class|default('') ~ ' form-media row')|trim}) %}
-
-    <div {{ block('widget_attributes') }} data-provides="fileupload">
-        <div class="input-group col-md-10">
-            <div class="input-group-btn">
-                <div class="btn btn-info btn-sm fileinput-button">
-                    <i class="fa fa-paperclip"></i>
-                    {{ 'input.upload' | trans({}, 'PositibeMediaBundle') }}
-                    {{ form_widget(form.binaryContent, {'required':false, 'attr': {'style': 'cursor: pointer;' }}) }}
+    <div class="">
+        <div {{ block('widget_attributes') }} data-provides="fileupload">
+            <div class="input-group col-md-8">
+                <div class="input-group-btn" style="height: 35px">
+                    <div class="btn btn-info btn-sm fileinput-button">
+                        <i class="fa fa-paperclip"></i>
+                        {{ 'input.upload' | trans({}, 'PositibeMediaBundle') }}
+                        {{ form_widget(form.binaryContent, {'required':false, 'attr': {'style': 'cursor: pointer;' }}) }}
+                    </div>
+                </div>
+                <div class="form-control fileupload-preview fileupload-exists">
+                    {% if value and value.id %}{{ value.metadata['filename'] }}{% endif %}
                 </div>
             </div>
-            <div class="form-control fileupload-preview fileupload-exists">
-                {% if value and value.id %}{{ value.metadata['filename'] }}{% endif %}
+            <div class="col-md-2">
+                <div class="btn-file-remove">
+                    {{ form_widget(form.unlink) }}
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="btn-file-remove">
+                    {{ form_widget(form.configure) }}
+                </div>
             </div>
         </div>
-        <div class="col-md-2">
-            <div class="btn-file-remove">
-                {{ form_widget(form.unlink) }}
+        {{ form_row(form.name) }}
+        {{ form_row(form.path) }}
+        <div class="mt-1 md-form md-form-vertical" data-provides="fileupload">
+            <div class="btn btn-info btn-sm fileinput-button" style="float: left">
+                <i class="fa fa-paperclip"></i>
+                {{ 'input.preview' | trans({}, 'PositibeMediaBundle') ~' ' ~ form.vars['label'] }}
+                {{ form_widget(form.binaryContentPreview, {'required':false, 'attr': {'style': 'cursor: pointer;' }}) }}
             </div>
+            <div class="fileupload-preview fileupload-exists thumbnail "
+                 style="display: inline-block; max-width: 60px; max-height: 60px; margin-left: 10px">
+                <img src="{{ value.preview ? '/' ~ value.preview : asset('bundles/positibemedia/images/photo.png') }}"
+                     style="margin: 6px;">
+            </div>
+
         </div>
+
     </div>
+
 {% endblock positibe_media_widget %}
 
 {% block positibe_gallery_widget %}

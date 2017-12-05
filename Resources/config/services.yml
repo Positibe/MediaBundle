@@ -33,7 +33,7 @@ services:
 
     positibe_media.form.media_type:
         class: Positibe\Bundle\MediaBundle\Form\Type\MediaType
-        arguments: ['%positibe_media.media.class%']
+        arguments: ['@doctrine.orm.entity_manager','%positibe_media.media.class%']
         tags:
             - { name: form.type }
 

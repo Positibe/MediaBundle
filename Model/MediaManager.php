@@ -64,6 +64,15 @@ class MediaManager implements MediaManagerInterface
     }
 
     /**
+     * @param $path
+     * @return \Positibe\Bundle\MediaBundle\Entity\Media
+     */
+    public function getMediaByPreviewPath($path)
+    {
+        return $this->manager->getRepository('PositibeMediaBundle:Media')->findOneBy(array('preview' => $path));
+    }
+
+    /**
      * Get the filename location of a given media
      *
      * @param Media $media

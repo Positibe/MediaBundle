@@ -2,6 +2,7 @@
 
 namespace Positibe\Bundle\MediaBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Positibe\Bundle\MediaBundle\Model\MediaInterface;
 use Positibe\Bundle\MediaBundle\Provider\MediaProviderInterface;
@@ -14,7 +15,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * @author Pedro Carlos Abreu <pcabreus@gmail.com>
  *
  * @ORM\Table(name="positibe_media")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Positibe\Bundle\MediaBundle\Repository\MediaRepository")
  * @ORM\EntityListeners({"Positibe\Bundle\MediaBundle\EventListener\MediaEntityListener"})
  */
 class Media implements MediaInterface
@@ -42,6 +43,21 @@ class Media implements MediaInterface
      */
     protected $path;
 
+    /**
+     * @var string $path
+     *
+     * @ORM\Column(name="preview_path", type="string", length=255, nullable=TRUE)
+     */
+    protected $preview;
+
+    /**
+     * this property is used to define the url_path to use to store the file from web/
+     * e.j. media/uploads/videos or media/videos/sitio.cu
+     */
+    protected $urlPathParameter;
+
+    protected $binaryContent;
+    protected $binaryContentPreview;
     /**
      * @var string $description
      *
@@ -86,8 +102,6 @@ class Media implements MediaInterface
      * @ORM\Column(name="updated_at", type="datetime")
      */
     protected $updatedAt;
-
-    protected $binaryContent;
 
     /**
      * @var string
@@ -145,15 +159,46 @@ class Media implements MediaInterface
     protected $height;
 
     /**
+     * @var GalleryHasMedia[]|ArrayCollection
+     *
+     * @ORM\OrderBy({"position" = "ASC"})
+     * @ORM\OneToMany(targetEntity="Positibe\Bundle\MediaBundle\Entity\GalleryHasMedia", mappedBy="gallery", cascade={"persist", "remove"}, orphanRemoval=TRUE, fetch="EXTRA_LAZY")
+     */
+    protected $galleryHasMedias;
+
+    /**
      * @var string
      *
      * @Gedmo\Locale
      */
     protected $locale;
 
+    public function __construct()
+    {
+        $this->galleryHasMedias = new ArrayCollection();
+    }
+
     public function __toString()
     {
         return $this->name;
+    }
+
+    public function isVideoType()
+    {
+        if (in_array($this->contentType, ['video/webm', 'video/mp4', 'video/ogg'])) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public function isImageType()
+    {
+        if (in_array($this->contentType, ['image/gif', 'image/jpeg', 'image/png'])) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -538,4 +583,69 @@ class Media implements MediaInterface
     {
         unset($this->metadata[$name]);
     }
+
+    /**
+     * @return string
+     */
+    public function getPreview()
+    {
+        return $this->preview;
+    }
+
+    /**
+     * @param string $preview
+     */
+    public function setPreview($preview)
+    {
+        $this->preview = $preview;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getBinaryContentPreview()
+    {
+        return $this->binaryContentPreview;
+    }
+
+    /**
+     * @param $binaryContentPreview
+     */
+    public function setBinaryContentPreview($binaryContentPreview)
+    {
+        $this->binaryContentPreview = $binaryContentPreview;
+    }
+
+    /**
+     * @return ArrayCollection|GalleryHasMedia[]
+     */
+    public function getGalleryHasMedias()
+    {
+        return $this->galleryHasMedias;
+    }
+
+    /**
+     * @param ArrayCollection|GalleryHasMedia[] $galleryHasMedias
+     */
+    public function setGalleryHasMedias($galleryHasMedias)
+    {
+        $this->galleryHasMedias = $galleryHasMedias;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUrlPathParameter()
+    {
+        return $this->urlPathParameter;
+    }
+
+    /**
+     * @param mixed $urlPathParameter
+     */
+    public function setUrlPathParameter($urlPathParameter)
+    {
+        $this->urlPathParameter = $urlPathParameter;
+    }
+
 }

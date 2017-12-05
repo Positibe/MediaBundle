@@ -4,7 +4,10 @@ input:
   unlink: Remove file
   add: Add files
   remove: Remove
-
+  preview: Preview
+  path: Relative path to the file
+  name: Name of the file
+  configure: Configuring file
 gallery_has_media:
     form:
         media: Image:

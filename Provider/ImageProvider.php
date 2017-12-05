@@ -10,6 +10,7 @@
 
 namespace Positibe\Bundle\MediaBundle\Provider;
 
+use Positibe\Bundle\MediaBundle\Form\Type\ImageType;
 use Positibe\Bundle\MediaBundle\Model\MediaInterface;
 
 /**
@@ -47,5 +48,10 @@ class ImageProvider extends MediaProvider
     public static function getName()
     {
         return self::IMAGE_PROVIDER;
+    }
+
+    public static function getFormTypeClass()
+    {
+        return ImageType::class;
     }
 } 

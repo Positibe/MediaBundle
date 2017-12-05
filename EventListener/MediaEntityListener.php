@@ -53,6 +53,10 @@ class MediaEntityListener implements EventSubscriber
             return;
         }
 
+        if($media->getPath()) {
+            $provider->updateMediaFromPath($media, null);
+        }
+
         $provider->transform($media);
         $provider->prePersist($media);
     }
@@ -91,6 +95,10 @@ class MediaEntityListener implements EventSubscriber
     {
         if (!($provider = $this->getProvider($media))) {
             return;
+        }
+
+        if(isset($args->getEntityChangeSet()['path']) && $media->getPath()) {
+            $provider->updateMediaFromPath($media, $args->getEntityChangeSet()['path'][0]);
         }
 
         $provider->transform($media);

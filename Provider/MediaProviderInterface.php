@@ -30,6 +30,18 @@ interface MediaProviderInterface
     public static function getName();
 
     /**
+     * @return string
+     */
+    public static function getFormTypeClass();
+
+    /**
+     * @param MediaInterface $media
+     * @param $pathToRemove
+     * @return mixed
+     */
+    public function updateMediaFromPath(MediaInterface $media, $pathToRemove);
+
+    /**
      *
      * @param MediaInterface $media
      *
