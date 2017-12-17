@@ -91,7 +91,7 @@ class FileController extends Controller
             throw new NotFoundHttpException($e->getMessage());
         }
 
-
+        throw new NotFoundHttpException();
     }
 
     /**
