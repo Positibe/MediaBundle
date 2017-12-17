@@ -1,0 +1,106 @@
+{% extends '@PositibeCms/layout.html.twig' %}
+
+{% from '@PositibeCore/Grid/_pagination.html.twig' import pagination %}
+{% from '@PositibeCore/Grid/_pagination.html.twig' import filter %}
+
+{% block title %}Multimedias{% endblock %}
+{% block subtitle %}Listado de multimedias{% endblock %}
+{% set menu_active = 'content' %}
+{% set content_menu = 'multimedia' %}
+{% block stylesheets %}
+    <style>
+        .img-preview, .img-preview img, .img-preview video, .img-preview audio {
+            height: 150px;
+        }
+    </style>
+{% endblock %}
+{% block breadcrumb_list %}
+    <li class="breadcrumb-item">
+        <a href="{{ path('positibe_media_index') }}">Multimedias</a>
+    </li>
+{% endblock %}
+
+{% block content %}
+    <form action="" method="get" id="form_media_filter" name="criteria"></form>
+    <div class="card-header white">
+        <div class="card-title text-muted text-uppercase text-right">
+            <div class="card-title-caption">
+                <h4><i class="fa fa-files-o"></i> Páginas
+                    <small>Lista de páginas</small>
+                </h4>
+            </div>
+            <div class="card-title-actions">
+                {#<a href="{{ path('positibe_media_create') }}" class="btn btn-sm btn-default">#}
+                {#<i class="fa fa-plus-circle"></i> Crear nueva página#}
+                {#</a>#}
+            </div>
+        </div>
+    </div>
+
+    <div class="card-block">
+        <div class="row">
+            <div class="col-lg-2">
+                <h6 class="">Ordernar: <span class="badge badge-pill">{{ grid_render_sorting('name', 'Título') }}</span>
+                </h6>
+
+                <h6>Filtrar:</h6>
+
+                <div class="table-field-filter">
+                    {{ filter('name', 'form_media_filter') }}
+                    <select name="criteria[contentType]" class="form-control " form="form_media_filter">
+                        <option></option>
+                        {% for contentType in mimeTypes %}
+                            <option value="{{ contentType['contentType'] }}"
+                                    {% if app.request.get('criteria').contentType | default() == contentType['contentType'] %}selected="selected"{% endif %}>{{ contentType['contentType'] }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <button class="btn btn-sm btn-default" type="submit"
+                        form="form_media_filter"><i class="fa fa-search"></i> {{ 'action.filter' | trans }}
+                </button>
+            </div>
+            <div class="col-lg-10">
+                {{ pagination(medias) }}
+                {% set count = medias.maxPerPage * (medias.currentPage - 1) %}
+                <div class="row">
+                    {% for media in medias %}
+                        <div class="col-md-2 mb-1">
+                            <div class="card">
+                                <div class="card-img img-preview">
+                                    {% if media.isVideoType() %}
+                                        <video controls src="{{ download_file(media) }}"
+                                               poster="{{ display_image(media.preview, {'default': asset('bundles/positibemedia/images/video.png')}) }}"
+                                               class="img-fluid">
+                                            Sorry, your browser doesn't support embedded videos,
+                                            but don't worry, you can
+                                            <a href="{{ download_file(media) }}">download it</a>
+                                            and watch it with your favorite video player!
+                                        </video>
+                                    {% elseif media.isImageType() %}
+                                        <img src="{{ display_image(media, {'imagine_filter': 'image_thumbnail'}) }}"
+                                             class="imf-fluid">
+                                    {% else %}
+                                        <img src="{{ display_image(media.preview, {'imagine_filter': 'image_thumbnail'}) }}"
+                                             class="imf-fluid">
+                                    {% endif %}
+                                </div>
+                                <div class="card-block p-2">
+                                    <div class="card-text">
+                                        <a href="{{ path('positibe_media_update', {'id': media.id}) }}"
+                                           title="{{ media }}">
+                                            <small>{{ media.name | truncate(20) }}</small>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div>No hay elementos</div>
+                    {% endfor %}
+                </div>
+                {{ pagination(medias) }}
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

@@ -1,0 +1,13 @@
+positibe_media_update:
+    path: /multimedias/{id}
+    methods: [GET, PUT]
+    defaults: { _controller: PositibeMediaBundle:Media:update }
+
+positibe_media_delete:
+    path: /multimedias/{id}
+    methods: [DELETE]
+    defaults: { _controller: PositibeMediaBundle:Media:update }
+
+positibe_media_index:
+    path: /multimedias
+    defaults: { _controller: PositibeMediaBundle:Media:index }

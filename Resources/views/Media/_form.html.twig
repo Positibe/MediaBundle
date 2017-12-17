@@ -1,0 +1,27 @@
+<div class="card-header white">
+    <div class="card-title text-muted text-uppercase text-right">
+        <div class="card-title-caption">
+            <h4><i class="fa fa-users"></i> Formulario de multimedias
+            </h4>
+        </div>
+        <div class="card-title-actions">
+            <a href="{{ go_back('positibe_media_index') }}"
+               name="back" class="btn btn-default btn-sm"><i class="fa fa-angle-left"></i> Atras
+            </a>
+            <a href="{{ app.request.server.get('REQUEST_URI') }}" class="btn btn-default btn-sm "><i
+                        class="fa fa-refresh"></i> Resetear
+            </a>
+            <button class="btn btn-primary btn-sm" type="submit"><i class="fa fa-check"></i> Guardar</button>
+        </div>
+    </div>
+</div>
+<div class="card-block">
+    {{ form_row(form, {'label': 'Archivo'}) }}
+    {{ form_row(form.name) }}
+</div>
+<div class="card-footer text-right">
+    <div class="card-block">
+        <a href="{{ go_back('positibe_media_index') }}" class="btn btn-default">Cancelar</a>
+        <button class="btn btn-primary"><i class="fa fa-check"></i> Guardar</button>
+    </div>
+</div>

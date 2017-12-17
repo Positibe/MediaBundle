@@ -1,0 +1,25 @@
+{% extends '@PositibeCms/layout.html.twig' %}
+
+{% from '@PositibeCore/_buttons.html.twig' import delete_confirm %}
+
+{% block title %}Multimedias{% endblock %}
+{% block subtitle %}Editar multimedia{% endblock %}
+{% set menu_active  = 'content' %}
+{% set content_menu = 'media' %}
+
+{% block breadcrumb_list %}
+    <li class="breadcrumb-item">
+        <a href="{{ path('positibe_media_index') }}">Multimedias</a>
+    </li>
+    <li class="breadcrumb-item">
+        {{ media }}
+    </li>
+{% endblock %}
+
+{% block content %}
+    {{ form_start(form,{'attr': {'class': 'form-horizontal inbox-compose' }}) }}
+    <input type="hidden" name="_method" value="PUT"/>
+    {{ include('@PositibeMedia/Media/_form.html.twig') }}
+    {{ form_end(form) }}
+    {{ delete_confirm('positibe_media_remove', path('positibe_media_delete', {'id': media.id}), media) }}
+{% endblock %}
