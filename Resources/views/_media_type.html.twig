@@ -16,13 +16,15 @@
                 {{ form_widget(form.unlink) }}
             {% endif %}
         </div>
-        <div class="btn-file-remove">
-            {{ form_widget(form.configure) }}
-        </div>
-        <div class="p-1">
-            {{ form_row(form.name) }}
-            {{ form_row(form.path) }}
-        </div>
+        {% if form.configure is defined %}
+            <div class="btn-file-remove">
+                {{ form_widget(form.configure) }}
+            </div>
+            <div class="p-1">
+                {{ form_row(form.name) }}
+                {{ form_row(form.path) }}
+            </div>
+        {% endif %}
     </div>
 
 {% endblock positibe_image_widget %}
@@ -48,27 +50,31 @@
                     {{ form_widget(form.unlink) }}
                 </div>
             </div>
-            <div class="col-md-2">
-                <div class="btn-file-remove">
-                    {{ form_widget(form.configure) }}
+            {% if form.configure is defined %}
+                <div class="col-md-2">
+                    <div class="btn-file-remove">
+                        {{ form_widget(form.configure) }}
+                    </div>
                 </div>
-            </div>
+            {% endif %}
         </div>
-        {{ form_row(form.name) }}
-        {{ form_row(form.path) }}
-        <div class="mt-1 md-form md-form-vertical" data-provides="fileupload">
-            <div class="btn btn-info btn-sm fileinput-button" style="float: left">
-                <i class="fa fa-paperclip"></i>
-                {{ 'input.preview' | trans({}, 'PositibeMediaBundle') ~' ' ~ form.vars['label'] }}
-                {{ form_widget(form.binaryContentPreview, {'required':false, 'attr': {'style': 'cursor: pointer;' }}) }}
-            </div>
-            <div class="fileupload-preview fileupload-exists thumbnail "
-                 style="display: inline-block; max-width: 60px; max-height: 60px; margin-left: 10px">
-                <img src="{{ value.preview ? '/' ~ value.preview : asset('bundles/positibemedia/images/photo.png') }}"
-                     style="margin: 6px;">
-            </div>
+        {% if form.configure is defined %}
+            {{ form_row(form.name) }}
+            {{ form_row(form.path) }}
+            <div class="mt-1 md-form md-form-vertical" data-provides="fileupload">
+                <div class="btn btn-info btn-sm fileinput-button" style="float: left">
+                    <i class="fa fa-paperclip"></i>
+                    {{ 'input.preview' | trans({}, 'PositibeMediaBundle') ~' ' ~ form.vars['label'] }}
+                    {{ form_widget(form.binaryContentPreview, {'required':false, 'attr': {'style': 'cursor: pointer;' }}) }}
+                </div>
+                <div class="fileupload-preview fileupload-exists thumbnail "
+                     style="display: inline-block; max-width: 60px; max-height: 60px; margin-left: 10px">
+                    <img src="{{ value.preview ? '/' ~ value.preview : asset('bundles/positibemedia/images/photo.png') }}"
+                         style="margin: 6px;">
+                </div>
 
-        </div>
+            </div>
+        {% endif %}
 
     </div>
 

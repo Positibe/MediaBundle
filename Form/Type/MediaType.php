@@ -80,66 +80,68 @@ class MediaType extends AbstractType
             ]
         );
 
+        if ($options['allow_configuration'] === true) {
+            $builder->addEventListener(
+                FormEvents::POST_SET_DATA,
+                function (FormEvent $formEvent) {
+                    $form = $formEvent->getForm();
+                    $form->add(
+                        'configure',
+                        CheckboxType::class,
+                        [
+                            'mapped' => false,
+                            'label' => 'input.configure',
+                            'translation_domain' => 'PositibeMediaBundle',
+                            'required' => false,
+                        ]
+                    );
 
-        $builder->addEventListener(
-            FormEvents::POST_SET_DATA,
-            function (FormEvent $formEvent) {
-                $form = $formEvent->getForm();
-                $form->add(
-                    'configure',
-                    CheckboxType::class,
-                    [
-                        'mapped' => false,
-                        'label' => 'input.configure',
-                        'translation_domain' => 'PositibeMediaBundle',
-                        'required' => false,
-                    ]
-                );
+                    $form->add(
+                        'name',
+                        TextType::class,
+                        [
+                            'label' => 'input.name',
+                            'required' => false,
+                            'translation_domain' => 'PositibeMediaBundle',
+                            'attr' => [
+                                'class' => 'form-toggle form-toggle-if',
+                                'data-toggle_if_for' => $form->getParent()->getName().'_'.$form->getName().'_configure',
+                                'data-toggle_if_value' => '1',
+                            ],
+                        ]
+                    );
 
-                $form->add(
-                    'name',
-                    TextType::class,
-                    [
-                        'label' => 'input.name',
-                        'required' => false,
-                        'translation_domain' => 'PositibeMediaBundle',
-                        'attr' => [
-                            'class' => 'form-toggle form-toggle-if',
-                            'data-toggle_if_for' => $form->getParent()->getName().'_'.$form->getName().'_configure',
-                            'data-toggle_if_value' => '1',
-                        ],
-                    ]
-                );
+                    $form->add(
+                        'path',
+                        'Symfony\Component\Form\Extension\Core\Type\TextType',
+                        [
+                            'label' => 'input.path',
+                            'required' => false,
+                            'translation_domain' => 'PositibeMediaBundle',
+                            'attr' => [
+                                'class' => 'form-toggle form-toggle-if',
+                                'data-toggle_if_for' => $form->getParent()->getName().'_'.$form->getName().'_configure',
+                                'data-toggle_if_value' => '1',
+                            ],
+                        ]
+                    );
+                    $form->add(
+                        'binaryContentPreview',
+                        'Symfony\Component\Form\Extension\Core\Type\FileType',
+                        [
+                            'required' => false,
+                            'translation_domain' => 'PositibeMediaBundle',
+                            'attr' => [
+                                'class' => 'form-toggle form-toggle-if',
+                                'data-toggle_if_for' => $form->getParent()->getName().'_'.$form->getName().'_configure',
+                                'data-toggle_if_value' => '1',
+                            ],
+                        ]
+                    );
+                }
+            );
+        }
 
-                $form->add(
-                    'path',
-                    'Symfony\Component\Form\Extension\Core\Type\TextType',
-                    [
-                        'label' => 'input.path',
-                        'required' => false,
-                        'translation_domain' => 'PositibeMediaBundle',
-                        'attr' => [
-                            'class' => 'form-toggle form-toggle-if',
-                            'data-toggle_if_for' => $form->getParent()->getName().'_'.$form->getName().'_configure',
-                            'data-toggle_if_value' => '1',
-                        ],
-                    ]
-                );
-                $form->add(
-                    'binaryContentPreview',
-                    'Symfony\Component\Form\Extension\Core\Type\FileType',
-                    [
-                        'required' => false,
-                        'translation_domain' => 'PositibeMediaBundle',
-                        'attr' => [
-                            'class' => 'form-toggle form-toggle-if',
-                            'data-toggle_if_for' => $form->getParent()->getName().'_'.$form->getName().'_configure',
-                            'data-toggle_if_value' => '1',
-                        ],
-                    ]
-                );
-            }
-        );
 
         $builder->add(
             'unlink',
@@ -165,6 +167,7 @@ class MediaType extends AbstractType
                 'provider' => MediaProvider::getName(),
                 'empty_on_new' => true,
                 'new_on_update' => true,
+                'allow_configuration' => true,
             ]
         );
     }

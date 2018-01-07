@@ -176,6 +176,8 @@ class Media implements MediaInterface
     public function __construct()
     {
         $this->galleryHasMedias = new ArrayCollection();
+        $this->createdAt = new \DateTime();
+        $this->updatedAt = new \DateTime();
     }
 
     public function __toString()
