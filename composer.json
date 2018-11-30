@@ -26,10 +26,10 @@
     ],
     "require": {
         "symfony/framework-bundle": "^3.4 || ^4.0",
-        "gedmo/doctrine-extensions": "~2.4",
-        "doctrine/orm": "~2.5",
-        "liip/imagine-bundle": "1.7.*",
-        "knplabs/gaufrette": "~0.2"
+        "gedmo/doctrine-extensions": "^2.4",
+        "doctrine/orm": "^2.5",
+        "liip/imagine-bundle": "^2.1",
+        "knplabs/gaufrette": "^0.7"
     },
     "autoload": {
         "psr-4": {
