@@ -12,7 +12,7 @@
     ],
     "homepage": "http://www.positibelabs.com/bundles/media",
     "license": "MIT",
-    "version": "1.0.3",
+    "version": "1.1.0",
     "authors": [
         {
             "name": "Pedro Carlos Abreu Jiménez",
@@ -25,7 +25,7 @@
         }
     ],
     "require": {
-        "symfony/framework-bundle": "~2.8|~3.0",
+        "symfony/framework-bundle": "^3.4 || ^4.0",
         "gedmo/doctrine-extensions": "~2.4",
         "doctrine/orm": "~2.5",
         "liip/imagine-bundle": "1.7.*",
@@ -38,7 +38,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "1.0.x-dev"
+            "dev-master": "1.1.x-dev"
         }
     }
 }

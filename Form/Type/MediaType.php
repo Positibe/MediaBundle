@@ -80,7 +80,7 @@ class MediaType extends AbstractType
             ]
         );
 
-        if ($options['allow_configuration'] === true) {
+        if ($options['allow_configuration']) {
             $builder->addEventListener(
                 FormEvents::POST_SET_DATA,
                 function (FormEvent $formEvent) {
