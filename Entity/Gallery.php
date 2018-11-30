@@ -4,6 +4,8 @@ namespace Positibe\Bundle\MediaBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Gedmo\Sluggable\Util\Urlizer;
+use Pcabreus\Utils\Entity\TimestampTrait;
+use Pcabreus\Utils\Entity\TranslationTrait;
 use Positibe\Bundle\MediaBundle\Model\GalleryHasMediaInterface;
 use Positibe\Bundle\MediaBundle\Model\GalleryInterface;
 use Doctrine\ORM\Mapping as ORM;
@@ -17,10 +19,12 @@ use Gedmo\Mapping\Annotation as Gedmo;
  *
  * @ORM\Table(name="positibe_gallery")
  * @ORM\Entity
- * @ORM\HasLifecycleCallbacks
+ * @ORM\HasLifecycleCallbacks()
  */
 class Gallery implements GalleryInterface
 {
+    use TimestampTrait;
+    use TranslationTrait;
     /**
      * @var integer
      *

@@ -29,7 +29,8 @@
         "gedmo/doctrine-extensions": "^2.4",
         "doctrine/orm": "^2.5",
         "liip/imagine-bundle": "^2.1",
-        "knplabs/gaufrette": "^0.7"
+        "knplabs/gaufrette": "^0.7",
+        "pcabreus-utils/entity-traits": "^1.2"
     },
     "autoload": {
         "psr-4": {

@@ -2,6 +2,9 @@
 
 namespace Positibe\Bundle\MediaBundle\Entity;
 
+use Pcabreus\Utils\Entity\TimestampTrait;
+use Pcabreus\Utils\Entity\ToggleableTrait;
+use Pcabreus\Utils\Entity\TranslationTrait;
 use Positibe\Bundle\MediaBundle\Model\FileInterface;
 use Positibe\Bundle\MediaBundle\Model\GalleryHasMediaInterface;
 use Doctrine\ORM\Mapping as ORM;
@@ -18,10 +21,14 @@ use Gedmo\Mapping\Annotation as Gedmo;
  *
  * @ORM\Table(name="positibe_gallery_media")
  * @ORM\Entity
- * @ORM\HasLifecycleCallbacks
+ * @ORM\HasLifecycleCallbacks()
  */
 class GalleryHasMedia implements GalleryHasMediaInterface, FileInterface, ImageInterface
 {
+    use TimestampTrait;
+    use TranslationTrait;
+    use ToggleableTrait;
+
     /**
      * @var integer
      *
@@ -70,36 +77,6 @@ class GalleryHasMedia implements GalleryHasMediaInterface, FileInterface, ImageI
      */
     protected $position;
 
-    /**
-     * @var boolean $enabled
-     *
-     * @ORM\Column(name="enabled", type="boolean")
-     */
-    protected $enabled;
-
-    /**
-     * @var \DateTime
-     *
-     * @Gedmo\Timestampable(on="create")
-     * @ORM\Column(name="created_at", type="datetime")
-     */
-    protected $createdAt;
-
-    /**
-     * @var \DateTime
-     *
-     * @Gedmo\Timestampable(on="update")
-     * @ORM\Column(name="updated_at", type="datetime")
-     */
-    protected $updatedAt;
-
-    /**
-     * @var string
-     *
-     * @Gedmo\Locale
-     */
-    protected $locale;
-
     public function __construct()
     {
         $this->position = 0;
@@ -107,20 +84,21 @@ class GalleryHasMedia implements GalleryHasMediaInterface, FileInterface, ImageI
     }
 
     /**
-     * @ORM\PrePersist
+     * {@inheritdoc}
      */
-    public function prePersist()
+    public function __toString()
     {
-        $this->createdAt = new \DateTime();
-        $this->updatedAt = new \DateTime();
+        return $this->title ?: $this->media->getName();
     }
 
     /**
-     * @ORM\PreUpdate
+     * Get id
+     *
+     * @return integer $id
      */
-    public function preUpdate()
+    public function getId()
     {
-        $this->updatedAt = new \DateTime();
+        return $this->id;
     }
 
     /**
@@ -153,57 +131,6 @@ class GalleryHasMedia implements GalleryHasMediaInterface, FileInterface, ImageI
     public function setTitle($title)
     {
         $this->title = $title;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getLocale()
-    {
-        return $this->locale;
-    }
-
-    /**
-     * @param $locale
-     * @return $this
-     */
-    public function setLocale($locale)
-    {
-        $this->locale = $locale;
-
-        return $this;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setCreatedAt(\DateTime $createdAt = null)
-    {
-        $this->createdAt = $createdAt;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getCreatedAt()
-    {
-        return $this->createdAt;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setEnabled($enabled)
-    {
-        $this->enabled = $enabled;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getEnabled()
-    {
-        return $this->enabled;
     }
 
     /**
@@ -252,40 +179,6 @@ class GalleryHasMedia implements GalleryHasMediaInterface, FileInterface, ImageI
     public function getPosition()
     {
         return $this->position;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setUpdatedAt(\DateTime $updatedAt = null)
-    {
-        $this->updatedAt = $updatedAt;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getUpdatedAt()
-    {
-        return $this->updatedAt;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function __toString()
-    {
-        return $this->title ?: $this->media->getName();
-    }
-
-    /**
-     * Get id
-     *
-     * @return integer $id
-     */
-    public function getId()
-    {
-        return $this->id;
     }
 
     /**

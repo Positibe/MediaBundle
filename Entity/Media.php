@@ -4,6 +4,8 @@ namespace Positibe\Bundle\MediaBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Pcabreus\Utils\Entity\TimestampTrait;
+use Pcabreus\Utils\Entity\TranslationTrait;
 use Positibe\Bundle\MediaBundle\Model\MediaInterface;
 use Positibe\Bundle\MediaBundle\Provider\MediaProviderInterface;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -17,9 +19,13 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * @ORM\Table(name="positibe_media")
  * @ORM\Entity(repositoryClass="Positibe\Bundle\MediaBundle\Repository\MediaRepository")
  * @ORM\EntityListeners({"Positibe\Bundle\MediaBundle\EventListener\MediaEntityListener"})
+ * @ORM\HasLifecycleCallbacks()
  */
 class Media implements MediaInterface
 {
+    use TimestampTrait;
+    use TranslationTrait;
+
     /**
      * @var integer
      *
@@ -88,22 +94,6 @@ class Media implements MediaInterface
     protected $metadata;
 
     /**
-     * @var \DateTime
-     *
-     * @Gedmo\Timestampable(on="create")
-     * @ORM\Column(name="created_at", type="datetime")
-     */
-    protected $createdAt;
-
-    /**
-     * @var \DateTime
-     *
-     * @Gedmo\Timestampable(on="update")
-     * @ORM\Column(name="updated_at", type="datetime")
-     */
-    protected $updatedAt;
-
-    /**
      * @var string
      *
      * @ORM\Column(name="provider_name", type="string", length=255, nullable=TRUE)
@@ -166,18 +156,9 @@ class Media implements MediaInterface
      */
     protected $galleryHasMedias;
 
-    /**
-     * @var string
-     *
-     * @Gedmo\Locale
-     */
-    protected $locale;
-
     public function __construct()
     {
         $this->galleryHasMedias = new ArrayCollection();
-        $this->createdAt = new \DateTime();
-        $this->updatedAt = new \DateTime();
     }
 
     public function __toString()
@@ -211,14 +192,6 @@ class Media implements MediaInterface
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getUpdatedAt()
-    {
-        return $this->updatedAt;
     }
 
     /**
@@ -432,51 +405,6 @@ class Media implements MediaInterface
     public function getHeight()
     {
         return $this->height;
-    }
-
-    /**
-     * @return \DateTime
-     */
-    public function getCreatedAt()
-    {
-        return $this->createdAt;
-    }
-
-    /**
-     * @param $createdAt
-     * @return mixed|void
-     */
-    public function setCreatedAt($createdAt)
-    {
-        $this->createdAt = $createdAt;
-    }
-
-    /**
-     * @param $updatedAt
-     * @return mixed|void
-     */
-    public function setUpdatedAt($updatedAt)
-    {
-        $this->updatedAt = $updatedAt;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getLocale()
-    {
-        return $this->locale;
-    }
-
-    /**
-     * @param $locale
-     * @return $this
-     */
-    public function setLocale($locale)
-    {
-        $this->locale = $locale;
-
-        return $this;
     }
 
     /**
