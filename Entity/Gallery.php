@@ -5,6 +5,7 @@ namespace Positibe\Bundle\MediaBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Gedmo\Sluggable\Util\Urlizer;
 use Pcabreus\Utils\Entity\TimestampTrait;
+use Pcabreus\Utils\Entity\ToggleableTrait;
 use Pcabreus\Utils\Entity\TranslationTrait;
 use Positibe\Bundle\MediaBundle\Model\GalleryHasMediaInterface;
 use Positibe\Bundle\MediaBundle\Model\GalleryInterface;
@@ -25,6 +26,8 @@ class Gallery implements GalleryInterface
 {
     use TimestampTrait;
     use TranslationTrait;
+    use ToggleableTrait;
+
     /**
      * @var integer
      *
@@ -54,29 +57,6 @@ class Gallery implements GalleryInterface
      */
     protected $name;
 
-    /**
-     * @var boolean $enabled
-     *
-     * @ORM\Column(name="enabled", type="boolean")
-     */
-    protected $enabled;
-
-    /**
-     * @var \DateTime
-     *
-     * @Gedmo\Timestampable(on="create")
-     * @ORM\Column(name="created_at", type="datetime")
-     */
-    protected $createdAt;
-
-    /**
-     * @var \DateTime
-     *
-     * @Gedmo\Timestampable(on="update")
-     * @ORM\Column(name="updated_at", type="datetime")
-     */
-    protected $updatedAt;
-
     protected $defaultFormat;
 
     /**
@@ -98,23 +78,6 @@ class Gallery implements GalleryInterface
     }
 
     /**
-     * @ORM\PrePersist
-     */
-    public function prePersist()
-    {
-        $this->createdAt = new \DateTime();
-        $this->updatedAt = new \DateTime();
-    }
-
-    /**
-     * @ORM\PreUpdate
-     */
-    public function preUpdate()
-    {
-        $this->updatedAt = new \DateTime();
-    }
-
-    /**
      * {@inheritdoc}
      */
     public function setName($name)
@@ -128,54 +91,6 @@ class Gallery implements GalleryInterface
     public function getName()
     {
         return $this->name;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setEnabled($enabled)
-    {
-        $this->enabled = $enabled;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getEnabled()
-    {
-        return $this->enabled;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setUpdatedAt(\DateTime $updatedAt = null)
-    {
-        $this->updatedAt = $updatedAt;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getUpdatedAt()
-    {
-        return $this->updatedAt;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setCreatedAt(\DateTime $createdAt = null)
-    {
-        $this->createdAt = $createdAt;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getCreatedAt()
-    {
-        return $this->createdAt;
     }
 
     /**
