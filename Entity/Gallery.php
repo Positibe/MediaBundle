@@ -4,7 +4,7 @@ namespace Positibe\Bundle\MediaBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Gedmo\Sluggable\Util\Urlizer;
-use Pcabreus\Utils\Entity\TimestampTrait;
+use Pcabreus\Utils\Entity\TimestampableTrait;
 use Pcabreus\Utils\Entity\ToggleableTrait;
 use Pcabreus\Utils\Entity\TranslationTrait;
 use Positibe\Bundle\MediaBundle\Model\GalleryHasMediaInterface;
@@ -24,7 +24,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  */
 class Gallery implements GalleryInterface
 {
-    use TimestampTrait;
+    use TimestampableTrait;
     use TranslationTrait;
     use ToggleableTrait;
 

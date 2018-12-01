@@ -4,7 +4,7 @@ namespace Positibe\Bundle\MediaBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Pcabreus\Utils\Entity\TimestampTrait;
+use Pcabreus\Utils\Entity\TimestampableTrait;
 use Pcabreus\Utils\Entity\TranslationTrait;
 use Positibe\Bundle\MediaBundle\Model\MediaInterface;
 use Positibe\Bundle\MediaBundle\Provider\MediaProviderInterface;
@@ -23,7 +23,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  */
 class Media implements MediaInterface
 {
-    use TimestampTrait;
+    use TimestampableTrait;
     use TranslationTrait;
 
     /**

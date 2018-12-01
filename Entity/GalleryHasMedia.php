@@ -3,7 +3,7 @@
 namespace Positibe\Bundle\MediaBundle\Entity;
 
 use Pcabreus\Utils\Entity\TimestampableInterface;
-use Pcabreus\Utils\Entity\TimestampTrait;
+use Pcabreus\Utils\Entity\TimestampableTrait;
 use Pcabreus\Utils\Entity\ToggleableInterface;
 use Pcabreus\Utils\Entity\ToggleableTrait;
 use Pcabreus\Utils\Entity\TranslationTrait;
@@ -27,7 +27,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  */
 class GalleryHasMedia implements GalleryHasMediaInterface, FileInterface, ImageInterface
 {
-    use TimestampTrait;
+    use TimestampableTrait;
     use TranslationTrait;
     use ToggleableTrait;
 
