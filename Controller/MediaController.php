@@ -10,8 +10,9 @@
 
 namespace Positibe\Bundle\MediaBundle\Controller;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Positibe\Bundle\MediaBundle\Entity\Media;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -20,12 +21,11 @@ use Symfony\Component\HttpFoundation\Request;
  *
  * @author Pedro Carlos Abreu <pcabreus@gmail.com>
  */
-class MediaController extends Controller
+class MediaController extends AbstractController
 {
-    public function indexAction(Request $request)
+    public function indexAction(Request $request, EntityManagerInterface $manager)
     {
-        $manager = $this->get('doctrine.orm.entity_manager');
-        $medias = $this->get('doctrine.orm.entity_manager')->getRepository(
+        $medias = $manager->getRepository(
             'PositibeMediaBundle:Media'
         )->createPagination($request->query->get('criteria', []), $request->query->get('sorting', []));
         $medias->setMaxPerPage($request->query->get('limit', 30));
@@ -45,14 +45,13 @@ class MediaController extends Controller
         );
     }
 
-    public function updateAction(Request $request, Media $media)
+    public function updateAction(Request $request, EntityManagerInterface $manager, Media $media)
     {
         $form = $this->createForm($this->get($media->getProviderName())->getFormTypeClass(), $media);
         $form->add('name', null, ['label' => 'Nombre']);
         if ($request->isMethod('PUT')) {
             $form->handleRequest($request);
             if ($form->isValid()) {
-                $manager = $this->get('doctrine.orm.entity_manager');
                 $media->setUpdatedAt(new \DateTime());
                 $manager->persist($media);
                 $manager->flush();

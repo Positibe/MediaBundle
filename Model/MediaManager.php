@@ -10,7 +10,7 @@
 
 namespace Positibe\Bundle\MediaBundle\Model;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Positibe\Bundle\MediaBundle\Entity\Media;
 
 /**
@@ -21,13 +21,14 @@ use Positibe\Bundle\MediaBundle\Entity\Media;
  */
 class MediaManager implements MediaManagerInterface
 {
-    protected $manager;
-    protected $filesystemPath;
 
-    public function __construct(EntityManager $entityManager, $filesystemPath)
+    protected $manager;
+    protected $mediaFilesystemPath;
+
+    public function __construct(EntityManagerInterface $entityManager, $mediaFilesystemPath)
     {
         $this->manager = $entityManager;
-        $this->filesystemPath = $filesystemPath;
+        $this->mediaFilesystemPath = $mediaFilesystemPath;
     }
 
     /**
@@ -80,7 +81,7 @@ class MediaManager implements MediaManagerInterface
      */
     public function getFilename(Media $media)
     {
-        return $this->filesystemPath.$media->getPath();
+        return $this->mediaFilesystemPath.$media->getPath();
     }
 
     /**
@@ -88,14 +89,14 @@ class MediaManager implements MediaManagerInterface
      */
     public function getFilesystemPath()
     {
-        return $this->filesystemPath;
+        return $this->mediaFilesystemPath;
     }
 
     /**
-     * @param mixed $filesystemPath
+     * @param mixed $mediaFilesystemPath
      */
-    public function setFilesystemPath($filesystemPath)
+    public function setFilesystemPath($mediaFilesystemPath)
     {
-        $this->filesystemPath = $filesystemPath;
+        $this->mediaFilesystemPath = $mediaFilesystemPath;
     }
 } 

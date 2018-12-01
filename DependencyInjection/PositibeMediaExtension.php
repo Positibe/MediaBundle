@@ -2,6 +2,7 @@
 
 namespace Positibe\Bundle\MediaBundle\DependencyInjection;
 
+use Positibe\Bundle\MediaBundle\Provider\MediaProviderInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
@@ -19,10 +20,12 @@ class PositibeMediaExtension extends Extension
      */
     public function load(array $configs, ContainerBuilder $container)
     {
-        $configuration = new Configuration();
-        $config = $this->processConfiguration($configuration, $configs);
+        $container->registerForAutoconfiguration(MediaProviderInterface::class)
+            ->addTag('positibe.media.provider')
+            ->setAutowired(true);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
+
     }
 }

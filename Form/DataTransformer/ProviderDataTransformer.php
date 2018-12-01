@@ -10,10 +10,9 @@
 
 namespace Positibe\Bundle\MediaBundle\Form\DataTransformer;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Positibe\Bundle\MediaBundle\Model\MediaInterface;
 use Symfony\Component\Form\DataTransformerInterface;
-
 
 /**
  * Class ProviderDataTransformer
@@ -24,19 +23,20 @@ use Symfony\Component\Form\DataTransformerInterface;
 class ProviderDataTransformer implements DataTransformerInterface
 {
     protected $options;
-    protected $class;
+    protected $mediaClass;
     protected $em;
 
     /**
-     * @param EntityManager $entityManager
-     * @param $class
+     * ProviderDataTransformer constructor.
+     * @param EntityManagerInterface $entityManager
+     * @param $mediaClass
      * @param array $options
      */
-    public function __construct(EntityManager $entityManager, $class, array $options = array())
+    public function __construct(EntityManagerInterface $entityManager, $mediaClass, array $options = array())
     {
         $this->em = $entityManager;
         $this->options = $options;
-        $this->class = $class;
+        $this->mediaClass = $mediaClass;
     }
 
     /**
@@ -45,7 +45,7 @@ class ProviderDataTransformer implements DataTransformerInterface
     public function transform($value)
     {
         if ($value === null) {
-            return new $this->class;
+            return new $this->mediaClass;
         }
 
         return $value;
@@ -78,11 +78,12 @@ class ProviderDataTransformer implements DataTransformerInterface
         // no update, but the media exists ...
         if (empty($binaryContent) && $media->getId() !== null) {
             $media->setProviderName($this->options['provider']);
+
             return $media;
         }
 
         // create a new media to avoid erasing other media or not ...
-        $newMedia = $this->options['new_on_update'] ? new $this->class : $media;
+        $newMedia = $this->options['new_on_update'] ? new $this->mediaClass : $media;
 
         $newMedia->setBinaryContent($binaryContent);
         $newMedia->setBinaryContentPreview($media->getBinaryContentPreview());

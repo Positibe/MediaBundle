@@ -10,7 +10,7 @@
 
 namespace Positibe\Bundle\MediaBundle\Form\Type;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Positibe\Bundle\MediaBundle\Form\DataTransformer\ProviderDataTransformer;
 use Positibe\Bundle\MediaBundle\Provider\MediaProvider;
 use Symfony\Component\Form\AbstractType;
@@ -30,16 +30,18 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class MediaType extends AbstractType
 {
-    protected $class;
+    protected $mediaClass;
     protected $em;
 
     /**
-     * @param $class
+     * MediaType constructor.
+     * @param EntityManagerInterface $entityManager
+     * @param $mediaClass
      */
-    public function __construct(EntityManager $entityManager, $class)
+    public function __construct(EntityManagerInterface $entityManager, $mediaClass)
     {
         $this->em = $entityManager;
-        $this->class = $class;
+        $this->mediaClass = $mediaClass;
     }
 
     /**
@@ -50,7 +52,7 @@ class MediaType extends AbstractType
         $builder->addModelTransformer(
             new ProviderDataTransformer(
                 $this->em,
-                $this->class,
+                $this->mediaClass,
                 [
                     'provider' => $options['provider'],
                     'empty_on_new' => $options['empty_on_new'],
@@ -163,7 +165,7 @@ class MediaType extends AbstractType
     {
         $resolver->setDefaults(
             [
-                'data_class' => $this->class,
+                'data_class' => $this->mediaClass,
                 'provider' => MediaProvider::getName(),
                 'empty_on_new' => true,
                 'new_on_update' => true,

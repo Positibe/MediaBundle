@@ -10,6 +10,9 @@
 
 namespace Positibe\Bundle\MediaBundle\Provider;
 
+use Gaufrette\Filesystem;
+use Imagine\Image\ImagineInterface;
+use Liip\ImagineBundle\Imagine\Cache\CacheManager;
 use Positibe\Bundle\MediaBundle\Form\Type\ImageType;
 use Positibe\Bundle\MediaBundle\Model\MediaInterface;
 
@@ -21,6 +24,18 @@ use Positibe\Bundle\MediaBundle\Model\MediaInterface;
  */
 class ImageProvider extends MediaProvider
 {
+    protected $imagine;
+
+    public function __construct(
+        CacheManager $cacheManager,
+        Filesystem $filesystem,
+        ImagineInterface $imagine,
+        $mediaUrlPath
+    ) {
+        parent::__construct($cacheManager, $filesystem, $mediaUrlPath);
+        $this->imagine = $imagine;
+    }
+
     public function transform(MediaInterface $media)
     {
         parent::transform($media);
@@ -30,7 +45,7 @@ class ImageProvider extends MediaProvider
         }
 
         try {
-            $image = $this->container->get('liip_imagine')->open($media->getBinaryContent()->getPathname());
+            $image =  $this->imagine->open($media->getBinaryContent()->getPathname());
         } catch (\RuntimeException $e) {
             $media->setProviderStatus(MediaInterface::STATUS_ERROR);
 

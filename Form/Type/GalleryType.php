@@ -55,7 +55,10 @@ class GalleryType extends AbstractType
             ]
         );
 
-        $resolver->addAllowedValues('provider', [MediaProviderInterface::IMAGE_PROVIDER, MediaProviderInterface::MEDIA_PROVIDER]);
+        $resolver->addAllowedValues(
+            'provider',
+            [MediaProviderInterface::IMAGE_PROVIDER, MediaProviderInterface::MEDIA_PROVIDER]
+        );
     }
 
     /**

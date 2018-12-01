@@ -10,13 +10,17 @@
 
 namespace Positibe\Bundle\MediaBundle\Model;
 
+use Pcabreus\Utils\Entity\TimestampableInterface;
+use Pcabreus\Utils\Entity\ToggleableInterface;
+
 /**
  * Interface GalleryHasMediaInterface
  * @package Positibe\Bundle\MediaBundle\Model
  *
  * @author Pedro Carlos Abreu <pcabreus@gmail.com>
  */
-interface GalleryHasMediaInterface {
+interface GalleryHasMediaInterface extends ToggleableInterface, TimestampableInterface
+{
     /**
      * @param boolean $enabled
      *

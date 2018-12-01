@@ -10,7 +10,7 @@
 
 namespace Positibe\Bundle\MediaBundle\Templating\Helper;
 
-use Liip\ImagineBundle\Templating\Helper\ImagineHelper;
+use Liip\ImagineBundle\Templating\Helper\FilterHelper;
 use Positibe\Bundle\MediaBundle\Model\FileInterface;
 use Positibe\Bundle\MediaBundle\Model\ImageInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -31,14 +31,13 @@ class MediaHelper extends Helper
      * Constructor.
      *
      * @param UrlGeneratorInterface $router A Router instance
-     * @param ImagineHelper $imagineHelper Imagine helper to use if available
+     * @param FilterHelper $imagineHelper Imagine helper to use if available
      */
-    public function __construct(
-        UrlGeneratorInterface $router,
-        ImagineHelper $imagineHelper = null
-    ) {
+    public function __construct(UrlGeneratorInterface $router, FilterHelper $imagineHelper = null)
+    {
         $this->generator = $router;
         $this->imagineHelper = $imagineHelper;
+
 
     }
 
@@ -64,17 +63,13 @@ class MediaHelper extends Helper
      *
      * @param ImageInterface|string $file
      * @param array $options
-     * @param int $referenceType The type of reference (one of the constants in UrlGeneratorInterface)
      *
      * @return string The generated URL
      */
-    public function displayImage(
-        $file = null,
-        array $options = array(),
-        $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH
-    ) {
+    public function getImagePath($file = null, array $options = array())
+    {
         if (!$file || !$urlSafePath = $file instanceof ImageInterface ? $file->getPath() : $file) {
-            return isset($options['default']) ? $options['default'] : '/bundles/positibemedia/images/photo.png';
+            return isset($options['default']) ? $options['default'] : 'bundles/positibemedia/images/photo.png';
         }
 
         if ($this->imagineHelper && isset($options['imagine_filter']) && is_string($options['imagine_filter'])) {
@@ -85,11 +80,14 @@ class MediaHelper extends Helper
             );
         }
 
-        return $this->generator->generate(
-            'positibe_media_image_display',
-            array('path' => $urlSafePath),
-            $referenceType
-        );
+//      @deprecated Never return the route, it's not needed on filesystem files
+//        return $this->generator->generate(
+//            'positibe_media_image_display',
+//            array('path' => $urlSafePath),
+//            $referenceType
+//        );
+
+        return $urlSafePath;
     }
 
     /**

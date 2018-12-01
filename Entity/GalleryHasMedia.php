@@ -2,7 +2,9 @@
 
 namespace Positibe\Bundle\MediaBundle\Entity;
 
+use Pcabreus\Utils\Entity\TimestampableInterface;
 use Pcabreus\Utils\Entity\TimestampTrait;
+use Pcabreus\Utils\Entity\ToggleableInterface;
 use Pcabreus\Utils\Entity\ToggleableTrait;
 use Pcabreus\Utils\Entity\TranslationTrait;
 use Positibe\Bundle\MediaBundle\Model\FileInterface;
@@ -337,8 +339,6 @@ class GalleryHasMedia implements GalleryHasMediaInterface, FileInterface, ImageI
      * Set all metadata.
      *
      * @param array $metadata
-     *
-     * @return mixed
      */
     public function setMetadata(array $metadata)
     {
@@ -397,7 +397,7 @@ class GalleryHasMedia implements GalleryHasMediaInterface, FileInterface, ImageI
      */
     public function getWidth()
     {
-        $this->media->getWidth();
+        return $this->media->getWidth();
     }
 
     /**

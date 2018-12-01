@@ -11,6 +11,7 @@
 namespace Positibe\Bundle\MediaBundle\Twig\Extension;
 
 use Positibe\Bundle\MediaBundle\Templating\Helper\MediaHelper;
+use Symfony\Component\Asset\Packages;
 
 /**
  * Class MediaExtension
@@ -21,12 +22,16 @@ use Positibe\Bundle\MediaBundle\Templating\Helper\MediaHelper;
 class MediaExtension extends \Twig_Extension
 {
     protected $mediaHelper;
+    protected $packages;
 
     /**
+     * MediaExtension constructor.
+     * @param Packages $packages
      * @param MediaHelper $mediaHelper
      */
-    public function __construct(MediaHelper $mediaHelper)
+    public function __construct(Packages $packages, MediaHelper $mediaHelper)
     {
+        $this->packages = $packages;
         $this->mediaHelper = $mediaHelper;
     }
 
@@ -39,8 +44,20 @@ class MediaExtension extends \Twig_Extension
     {
         return array(
             new \Twig_SimpleFunction('download_file', [$this->mediaHelper, 'downloadFile'], ['is_safe' => ['html']]),
-            new \Twig_SimpleFunction('display_image', [$this->mediaHelper, 'displayImage'], ['is_safe' => ['html']]),
+            new \Twig_SimpleFunction('display_image', [$this, 'displayImage'], ['is_safe' => ['html']]),
         );
+    }
+
+    /**
+     * Display the path of the media property
+     *
+     * @param null $file
+     * @param array $options
+     * @return string
+     */
+    public function displayImage($file = null, array $options = [])
+    {
+        return $this->packages->getUrl($this->mediaHelper->getImagePath($file, $options));
     }
 
     public function getName()

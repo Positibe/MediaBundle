@@ -1,73 +1,41 @@
+parameters:
+    positibe_media.media_class: 'Positibe\Bundle\MediaBundle\Entity\Media'
+    positibe_media.url_path: 'uploads/media'
+    positibe_media.web_root: "%kernel.root_dir%/../public/"
+    positibe_media.cache_prefix: 'media/cache'
+    positibe_media.upload_file_role: ROLE_EDITOR
+
 services:
-    positibe_media.templating.helper:
-        class: Positibe\Bundle\MediaBundle\Templating\Helper\MediaHelper
-        arguments: ['@router', '@liip_imagine.templating.helper']
-        tags:
-            - { name: templating.helper, alias: positibe_media }
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+        bind:
+            $mediaUrlPath: "%positibe_media.url_path%"
+            $mediaClass: "%positibe_media.media_class%"
+            $mediaFilesystemPath: "%positibe_media.web_root%"
+            $mediaCachePath: "%positibe_media.cache_prefix%"
 
-    positibe_media.twig.extension:
-        class: Positibe\Bundle\MediaBundle\Twig\Extension\MediaExtension
-        arguments: ['@positibe_media.templating.helper']
-        tags:
-            - { name: twig.extension }
 
-    positibe_media.media_entity_listener:
-        class: Positibe\Bundle\MediaBundle\EventListener\MediaEntityListener
-        arguments: ["@service_container"]
+    Positibe\Bundle\MediaBundle\:
+        resource: '../../*'
+        exclude: '../../{DependencyInjection,Entity,Resources}'
+
+    # controllers are imported separately to make sure services can be injected
+    # as action arguments even if you don't extend any base controller class
+    Positibe\Bundle\MediaBundle\Controller\:
+        resource: '../../Controller'
+        tags: ['controller.service_arguments']
+
+    Positibe\Bundle\MediaBundle\EventListener\MediaEntityListener:
         tags:
             - { name: doctrine.orm.entity_listener }
 
-    positibe_media.media_provider:
-        class: Positibe\Bundle\MediaBundle\Provider\MediaProvider
-        calls:
-            - [ setContainer, ['@service_container']]
-        tags:
-            - { name: positibe.media.provider }
-
-    positibe_media.image_provider:
-        class: Positibe\Bundle\MediaBundle\Provider\ImageProvider
-        calls:
-            - [ setContainer, ['@service_container']]
-        tags:
-            - { name: positibe.media.provider }
-
-    positibe_media.form.media_type:
-        class: Positibe\Bundle\MediaBundle\Form\Type\MediaType
-        arguments: ['@doctrine.orm.entity_manager','%positibe_media.media.class%']
-        tags:
-            - { name: form.type }
-
-    positibe_media.form.image_type:
-        class: Positibe\Bundle\MediaBundle\Form\Type\ImageType
-        arguments: ['%positibe_media.media.class%']
-        tags:
-            - { name: form.type }
-
-    positibe_media.media_manager:
-        class: Positibe\Bundle\MediaBundle\Model\MediaManager
-        arguments: ["@doctrine.orm.entity_manager", '%positibe_media.web_root%']
-
-    positibe_orm_media.upload_editor_helper.ckeditor:
-        class: Positibe\Bundle\MediaBundle\Helper\UploadCkeditorHelper
-        arguments: ['@positibe_media.media_manager', '@router']
-        public: false
-        tags:
-            - { name: cmf_media.upload_editor_helper, alias: ckeditor }
-
-    positibe_media.upload_file_helper:
-        class: Positibe\Bundle\MediaBundle\Helper\UploadFileHelper
-        arguments: ['@doctrine', ~, '%positibe_media.media.class%', '/','@positibe_media.media_manager']
-        calls:
-            - [addEditorHelper, ["default", "@positibe_orm_media.upload_editor_helper.ckeditor"]]
-
-    positibe_media.local_gaufrette_adapter:
-        class: Gaufrette\Adapter\Local
+    Gaufrette\Adapter\Local:
         arguments: ['%positibe_media.web_root%']
 
-    positibe_media.filesystem:
-        class: Gaufrette\Filesystem
-        arguments: ['@positibe_media.local_gaufrette_adapter']
+    Gaufrette\Filesystem:
+        arguments: ['@Gaufrette\Adapter\Local']
 
-    positibe_media.filesystem_resolver:
-        class: Positibe\Bundle\MediaBundle\Imagine\FilesystemResolver
-        arguments: ['@liip_imagine.cache.manager', '@liip_imagine.data.manager', '@liip_imagine.filter.manager', "%positibe_media.web_root%", "%positibe_media.cache_prefix%"]
+    Liip\ImagineBundle\Templating\Helper\FilterHelper: "@liip_imagine.templating.filter_helper"
+    Imagine\Image\ImagineInterface: "@liip_imagine"

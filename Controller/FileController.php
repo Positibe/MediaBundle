@@ -10,12 +10,15 @@
 
 namespace Positibe\Bundle\MediaBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Gaufrette\Adapter\Local;
+use Positibe\Bundle\MediaBundle\Helper\UploadFileHelper;
+use Positibe\Bundle\MediaBundle\Model\MediaManager;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 
@@ -25,11 +28,16 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
  *
  * @author Pedro Carlos Abreu <pcabreus@gmail.com>
  */
-class FileController extends Controller
+class FileController
 {
-    public function downloadAction($path)
+    /**
+     * @param MediaManager $mediaManager
+     * @param Local $localAdapter
+     * @param $path
+     * @return BinaryFileResponse|Response
+     */
+    public function downloadAction(MediaManager $mediaManager, Local $localAdapter, $path)
     {
-        $mediaManager = $this->container->get('positibe_media.media_manager');
         try {
             $media = $mediaManager->getMediaByPath($path);
         } catch (\OutOfBoundsException $e) {
@@ -42,7 +50,7 @@ class FileController extends Controller
             $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $media->getName());
         } else {
             $response = new Response(
-                $this->container->get('positibe_media.local_gaufrette_adapter')->read($media->getContentAsString())
+                $localAdapter->read($media->getContentAsString())
             );
             $response->headers->set('Content-Type', $media->getContentType());
             $response->headers->set('Content-Length', $media->getSize());
@@ -59,18 +67,21 @@ class FileController extends Controller
     }
 
     /**
+     * @deprecated It's not needed on filesystem files
+     *
      * Action to display an image object that has a route
      *
+     * @param MediaManager $mediaManager
+     * @param Local $localAdapter
      * @param $path
      * @return Response
      */
-    public function displayAction($path)
+    public function displayAction(MediaManager $mediaManager, Local $localAdapter, $path)
     {
-        $mediaManager = $this->container->get('positibe_media.media_manager');
         try {
             if ($media = $mediaManager->getMediaByPath($path)) {
                 $response = new Response(
-                    $this->container->get('positibe_media.local_gaufrette_adapter')->read(
+                    $localAdapter->read(
                         $media->getContentAsString()
                     )
                 );
@@ -78,7 +89,7 @@ class FileController extends Controller
 
                 return $response;
             } elseif ($media = $mediaManager->getMediaByPreviewPath($path)) {
-                $file = $this->container->get('positibe_media.local_gaufrette_adapter')->read(
+                $file = $localAdapter->read(
                     $media->getPreview()
                 );
                 $response = new Response($file);
@@ -97,32 +108,24 @@ class FileController extends Controller
     /**
      * Action to upload a file
      *
-     * @param  Request $request
-     * @return Response
+     * @param UploadFileHelper $uploadFileHelper
+     * @param Request $request
+     * @param AuthorizationCheckerInterface $authorizationChecker
+     * @param $uploadFileRole
+     * @return mixed
      */
-    public function uploadAction(Request $request)
-    {
-        $this->checkSecurityUpload();
-
-        return $this->container->get('positibe_media.upload_file_helper')->getUploadResponse($request);
-    }
-
-    /**
-     * Decide whether the user is allowed to upload a file.
-     *
-     * @throws AccessDeniedException if the current user is not allowed to
-     *                               upload.
-     *
-     */
-    protected function checkSecurityUpload()
-    {
-        if ($this->container->get('security.authorization_checker')->isGranted(
-            $this->container->getParameter('positibe_media.upload_file_role')
-        )
-        ) {
-            return;
+    public function uploadAction(
+        UploadFileHelper $uploadFileHelper,
+        Request $request,
+        AuthorizationCheckerInterface $authorizationChecker,
+        $uploadFileRole
+    ) {
+        // Decide whether the user is allowed to upload a file.
+        if (!$authorizationChecker->isGranted($uploadFileRole)) {
+            throw new AccessDeniedException();
         }
 
-        throw new AccessDeniedException();
+
+        return $uploadFileHelper->getUploadResponse($request);
     }
 } 

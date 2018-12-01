@@ -15,7 +15,6 @@ use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Events;
 use Positibe\Bundle\MediaBundle\Model\MediaInterface;
 use Positibe\Bundle\MediaBundle\Provider\MediaProviderInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 
 /**
@@ -26,12 +25,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 class MediaEntityListener implements EventSubscriber
 {
-    protected $container;
-
-    public function __construct(ContainerInterface $container)
-    {
-        $this->container = $container;
-    }
+    protected $providers;
 
     /**
      * @return array
@@ -47,13 +41,18 @@ class MediaEntityListener implements EventSubscriber
         ];
     }
 
+    public function addProvider(MediaProviderInterface $mediaProvider)
+    {
+        $this->providers[$mediaProvider::getName()] = $mediaProvider;
+    }
+
     public function prePersist(MediaInterface $media, LifecycleEventArgs $args)
     {
         if (!($provider = $this->getProvider($media))) {
             return;
         }
 
-        if($media->getPath()) {
+        if ($media->getPath()) {
             $provider->updateMediaFromPath($media, null);
         }
 
@@ -97,7 +96,7 @@ class MediaEntityListener implements EventSubscriber
             return;
         }
 
-        if(isset($args->getEntityChangeSet()['path']) && $media->getPath()) {
+        if (isset($args->getEntityChangeSet()['path']) && $media->getPath()) {
             $provider->updateMediaFromPath($media, $args->getEntityChangeSet()['path'][0]);
         }
 
@@ -126,7 +125,7 @@ class MediaEntityListener implements EventSubscriber
      */
     protected function getProvider(MediaInterface $media)
     {
-        return $this->container->get($media->getProviderName());
+        return $this->providers[$media->getProviderName()];
     }
 
     /**

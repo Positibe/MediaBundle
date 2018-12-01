@@ -11,10 +11,9 @@
 namespace Positibe\Bundle\MediaBundle\Provider;
 
 use Gaufrette\Filesystem;
+use Liip\ImagineBundle\Imagine\Cache\CacheManager;
 use Positibe\Bundle\MediaBundle\Form\Type\MediaType;
 use Positibe\Bundle\MediaBundle\Model\MediaInterface;
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -25,23 +24,25 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  *
  * @author Pedro Carlos Abreu <pcabreus@gmail.com>
  */
-class MediaProvider implements ContainerAwareInterface, MediaProviderInterface
+class MediaProvider implements MediaProviderInterface
 {
-    /**
-     * @var ContainerInterface
-     */
-    protected $container;
+    /** @var  CacheManager */
+    protected $cacheManager;
+    /** @var Filesystem */
+    protected $filesystem;
+    protected $mediaUrlPath;
 
     /**
-     * Sets the Container.
-     *
-     * @param ContainerInterface|null $container A ContainerInterface instance or null
-     *
-     * @api
+     * MediaProvider constructor.
+     * @param CacheManager $cacheManager
+     * @param Filesystem $filesystem
+     * @param $mediaUrlPath
      */
-    public function setContainer(ContainerInterface $container = null)
+    public function __construct(CacheManager $cacheManager, Filesystem $filesystem, $mediaUrlPath)
     {
-        $this->container = $container;
+        $this->cacheManager = $cacheManager;
+        $this->filesystem = $filesystem;
+        $this->mediaUrlPath = $mediaUrlPath;
     }
 
     /**
@@ -107,14 +108,14 @@ class MediaProvider implements ContainerAwareInterface, MediaProviderInterface
 
     public function removeFile($file)
     {
-        $this->container->get('liip_imagine.cache.manager')->remove($file);
+        $this->cacheManager->remove($file);
 
         //Remove only files inside of uploadable directory
-        if ($file && $this->getFilesystem()->has($file) && substr_count(
+        if ($file && $this->filesystem->has($file) && substr_count(
                 $file,
-                $this->container->getParameter('positibe_media.url_path')
+                $this->mediaUrlPath
             )) {
-            $this->getFilesystem()->delete($file);
+            $this->filesystem->delete($file);
         }
     }
 
@@ -168,11 +169,11 @@ class MediaProvider implements ContainerAwareInterface, MediaProviderInterface
      */
     public function updateMediaFromPath(MediaInterface $media, $pathToRemove)
     {
-        $file = $this->getFilesystem()->get($media->getPath());
+        $file = $this->filesystem->get($media->getPath());
 
         $parts = explode('/', $file->getName());
         $media->setName($parts[count($parts) - 1]);
-        $media->setContentType($this->getFilesystem()->mimeType($media->getPath()));
+        $media->setContentType($this->filesystem->mimeType($media->getPath()));
         $media->setSize($file->getSize());
         $media->setProviderReference($media->getName());
         $media->setProviderStatus(1);
@@ -235,7 +236,7 @@ class MediaProvider implements ContainerAwareInterface, MediaProviderInterface
      */
     protected function setFileContents(MediaInterface $media, $contents = null)
     {
-        $file = $this->getFilesystem()->get($this->createPath($media), true);
+        $file = $this->filesystem->get($this->createPath($media), true);
 
         if (!$contents) {
             $contents = $media->getBinaryContent()->getRealPath();
@@ -248,25 +249,16 @@ class MediaProvider implements ContainerAwareInterface, MediaProviderInterface
      * Set the file contents for an image
      *
      * @param \Positibe\Bundle\MediaBundle\Model\MediaInterface $media
-     * @param string $contents path to contents, defaults to MediaInterface BinaryContent
      *
      * @return void
      */
-    protected function setFilePreviewContents(MediaInterface $media, $contents = null)
+    protected function setFilePreviewContents(MediaInterface $media)
     {
-        $filePreview = $this->getFilesystem()->get($this->createPreviewPath($media), true);
+        $filePreview = $this->filesystem->get($this->createPreviewPath($media), true);
 
         $contents = $media->getBinaryContentPreview()->getRealPath();
 
         $filePreview->setContent(file_get_contents($contents));
-    }
-
-    /**
-     * @return Filesystem
-     */
-    public function getFilesystem()
-    {
-        return $this->container->get('positibe_media.filesystem');
     }
 
     /**
@@ -275,7 +267,7 @@ class MediaProvider implements ContainerAwareInterface, MediaProviderInterface
     public function generatePath(MediaInterface $media)
     {
         return $media->getUrlPathParameter() ?:
-            sprintf('%s/%04s/%02s', $this->container->getParameter('positibe_media.url_path'), date('Y'), date('W'));
+            sprintf('%s/%04s/%02s', $this->mediaUrlPath, date('Y'), date('W'));
     }
 
     /**

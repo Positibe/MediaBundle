@@ -10,12 +10,9 @@ class PositibeMediaBundle extends Bundle
 {
     public function build(ContainerBuilder $container)
     {
-        if (!class_exists('Doctrine\ORM\Version')
-            || !class_exists('Symfony\Bridge\Doctrine\DependencyInjection\CompilerPass\RegisterMappingsPass')
-            || !class_exists('Doctrine\Bundle\DoctrineBundle\DependencyInjection\Compiler\DoctrineOrmMappingsPass')
-        ) {
-            return;
-        }
+        parent::build($container);
+
         $container->addCompilerPass(new MediaCompilerPass());
     }
+
 }

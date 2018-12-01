@@ -35,28 +35,28 @@ class FilesystemResolver implements ResolverInterface
     protected $filterManager;
 
     /** @var string */
-    protected $webRoot;
+    protected $mediaFilesystemPath;
 
     /** @var string */
     protected $cachePrefix;
 
     /** @var string */
-    protected $cacheRoot;
+    protected $mediaCachePath;
 
     public function __construct(
         CacheManager $cacheManager,
         DataManager $dataManager,
         FilterManager $filterManager,
-        $webRootDir,
-        $cachePrefix = 'media/cache'
+        $mediaFilesystemPath,
+        $mediaCachePath
     ) {
         $this->cacheManager = $cacheManager;
         $this->dataManager = $dataManager;
         $this->filterManager = $filterManager;
 
-        $this->webRoot = rtrim(str_replace('//', '/', $webRootDir), '/');
-        $this->cachePrefix = ltrim(str_replace('//', '/', $cachePrefix), '/');
-        $this->cacheRoot = $this->webRoot.'/'.$this->cachePrefix;
+        $this->mediaFilesystemPath = rtrim(str_replace('//', '/', $mediaFilesystemPath), '/');
+        $this->cachePrefix = ltrim(str_replace('//', '/', $mediaCachePath), '/');
+        $this->mediaCachePath = $this->mediaFilesystemPath.'/'.$this->cachePrefix;
     }
 
     /**
@@ -85,7 +85,7 @@ class FilesystemResolver implements ResolverInterface
     public function resolve($path, $filter = null)
     {
         if (!$filter) {
-            return $this->webRoot.'/'.$path;
+            return $this->mediaFilesystemPath.'/'.$path;
         }
         if (!$this->cacheManager->isStored($path, $filter)) {
             $binary = $this->dataManager->find($filter, $path);
@@ -97,7 +97,7 @@ class FilesystemResolver implements ResolverInterface
             );
         }
 
-        return $this->cacheRoot.'/'.$filter.'/'.$path;
+        return $this->mediaCachePath.'/'.$filter.'/'.$path;
     }
 
     /**

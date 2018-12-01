@@ -82,7 +82,6 @@ interface MetadataInterface
      *
      * @param array $metadata
      *
-     * @return mixed
      */
     public function setMetadata(array $metadata);
 

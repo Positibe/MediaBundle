@@ -39,7 +39,7 @@ class GalleryHasMediaType extends AbstractType
                 'title',
                 null,
                 array(
-                    'label' => 'gallery_has_media.form.title'
+                    'label' => 'gallery_has_media.form.title',
                 )
             )
             ->add(

@@ -10,6 +10,7 @@
 
 namespace Positibe\Bundle\MediaBundle\Model;
 
+use Pcabreus\Utils\Entity\TimestampableInterface;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -19,7 +20,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  *
  * @author Pedro Carlos Abreu <pcabreus@gmail.com>
  */
-interface MediaInterface extends MetadataInterface, ImageInterface
+interface MediaInterface extends MetadataInterface, ImageInterface, TimestampableInterface
 {
     const STATUS_OK = 1;
     const STATUS_SENDING = 2;
@@ -123,18 +124,6 @@ interface MediaInterface extends MetadataInterface, ImageInterface
      * @return mixed
      */
     public function setHeight($height);
-
-    /**
-     * @param $createdAt
-     * @return mixed
-     */
-    public function setCreatedAt($createdAt);
-
-    /**
-     * @param $createdAt
-     * @return mixed
-     */
-    public function setUpdatedAt($createdAt);
 
     /**
      * @return mixed

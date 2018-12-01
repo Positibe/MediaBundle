@@ -66,6 +66,7 @@ class UploadCkeditorHelper
         }
 
         $urlSafePath = $this->mediaManager->getUrlSafePath($files[0]);
+        //@todo Review this link if it's needed
         $url = $this->router->generate('positibe_media_image_display', array('path' => $urlSafePath));
         $funcNum = $request->query->get('CKEditorFuncNum');
 
