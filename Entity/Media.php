@@ -98,7 +98,7 @@ class Media implements MediaInterface
      *
      * @ORM\Column(name="provider_name", type="string", length=255, nullable=TRUE)
      */
-    protected $providerName = MediaProviderInterface::MEDIA_PROVIDER;
+    protected $providerName;
 
     /**
      * @var integer $provider_status
@@ -156,9 +156,10 @@ class Media implements MediaInterface
      */
     protected $galleryHasMedias;
 
-    public function __construct()
+    public function __construct($providerName = MediaProviderInterface::MEDIA_PROVIDER)
     {
         $this->galleryHasMedias = new ArrayCollection();
+        $this->providerName = $providerName;
     }
 
     public function __toString()

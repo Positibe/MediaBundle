@@ -25,6 +25,7 @@ use Positibe\Bundle\MediaBundle\Provider\MediaProviderInterface;
  */
 class MediaEntityListener implements EventSubscriber
 {
+    /** @var  MediaProviderInterface[] */
     protected $providers;
 
     /**

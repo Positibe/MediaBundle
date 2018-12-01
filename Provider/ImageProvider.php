@@ -22,7 +22,7 @@ use Positibe\Bundle\MediaBundle\Model\MediaInterface;
  *
  * @author Pedro Carlos Abreu <pcabreus@gmail.com>
  */
-class ImageProvider extends MediaProvider
+class ImageProvider extends AbstractProvider implements MediaProviderInterface
 {
     protected $imagine;
 
@@ -45,7 +45,7 @@ class ImageProvider extends MediaProvider
         }
 
         try {
-            $image =  $this->imagine->open($media->getBinaryContent()->getPathname());
+            $image = $this->imagine->open($media->getBinaryContent()->getPathname());
         } catch (\RuntimeException $e) {
             $media->setProviderStatus(MediaInterface::STATUS_ERROR);
 

@@ -13,28 +13,18 @@ To install the bundle just add the dependent bundles:
 Next, be sure to enable the bundles in your application kernel:
 
     <?php
-    // app/AppKernel.php
-    public function registerBundles()
-    {
-        return array(
-            // ...
-            new Liip\ImagineBundle\LiipImagineBundle(),
-            new Positibe\Bundle\MediaBundle\PositibeMediaBundle(),
-            // ...
-        );
-    }
+    // config/kernel.php
+    return [
+        // ...
+        Liip\ImagineBundle\LiipImagineBundle::class => ['all' => true],
+        Positibe\Bundle\MediaBundle\PositibeMediaBundle::class => ['all' => true],
+    ];
+
 
 Configuration
 -------------
 
-Load all basic configuration:
-
-    # app/config/config.yml
-    imports:
-        # ...
-        - { resource: '@PositibeMediaBundle/Resources/config/config.yml'}
-
-Or you can set those configurations by you own:
+Create your configuration file:
 
     # config/packages/positibe_media.yml
     parameters:
@@ -140,7 +130,8 @@ Documentation is available [here](Resources/doc/index.rst).
 A simple example using Media entity:
 
     [php]
-    $media = new Media();
+    //$media = new Media(); //Default provider MediaProvider::getName()
+    $media = new Media(ImageProvider::getName()); //Image provider
     $media->setBinaryContent(__DIR__ . '/../Resources/public/img/positibelabs_logotipo 2.jpg');
     $manager->persist($media);
     $manager->flush();
@@ -148,7 +139,7 @@ A simple example using Media entity:
 A simple example using Gallery entity:
 
     [php]
-    $media = new Media();
+    $media = new Media(ImageProvider::getName());
     $media->setBinaryContent(__DIR__.'/../../Resources/public/img/positibelabs_logotipo 2.jpg');
 
     $gallery = new Gallery();
